@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import cx from 'classnames';
 import useReducedMotion from '../../hooks/useReducedMotion';
+import getImageUrl from '../../helpers/getImageUrl';
 
 const TextScrambleView = ({ data, isEditMode, className }) => {
   const prefersReducedMotion = useReducedMotion();
@@ -12,6 +13,9 @@ const TextScrambleView = ({ data, isEditMode, className }) => {
   const fontSize = data?.fontSize || '3rem';
   const textAlign = data?.textAlign || 'center';
   const fontFamily = data?.fontFamily || 'monospace';
+  const textColor = data?.textColor || '';
+  const blockHeight = data?.blockHeight || 'm';
+  const backgroundImage = data?.backgroundImage || null;
 
   const [displayText, setDisplayText] = useState(prefersReducedMotion ? headline : '');
   const [hasTriggered, setHasTriggered] = useState(false);
@@ -86,22 +90,33 @@ const TextScrambleView = ({ data, isEditMode, className }) => {
     };
   }, [trigger, scramble, hasTriggered, prefersReducedMotion, headline]);
 
+  const imageUrl = getImageUrl(backgroundImage);
+  const heightClass = `cinematic-text-scramble--h-${blockHeight}`;
+
   return (
     <div
       ref={containerRef}
-      className={cx('block cinematic-text-scramble', className)}
-      style={{ textAlign }}
+      className={cx('block cinematic-text-scramble', className, heightClass)}
+      style={{
+        textAlign,
+        color: textColor || undefined,
+        backgroundImage: imageUrl ? `url(${imageUrl})` : 'none',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
       role="region"
       aria-label={headline}
     >
-      <h2
-        className="cinematic-text-scramble__headline"
-        style={{ fontSize, fontFamily }}
-        aria-live="polite"
-        aria-atomic="true"
-      >
-        {prefersReducedMotion ? headline : displayText}
-      </h2>
+      <div className={`cinematic-text-scramble__inner ${heightClass}`}>
+        <h2
+          className="cinematic-text-scramble__headline"
+          style={{ fontSize, fontFamily }}
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          {prefersReducedMotion ? headline : displayText}
+        </h2>
+      </div>
     </div>
   );
 };

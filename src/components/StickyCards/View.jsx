@@ -40,7 +40,7 @@ const StickyCardsView = ({ data, isEditMode, className }) => {
           }}
         >
           <div className="cinematic-sticky-cards__content">
-            <h3 className="cinematic-sticky-cards__title">{card.title}</h3>
+            <p className="cinematic-sticky-cards__title">{card.title}</p>
             <p className="cinematic-sticky-cards__description">{card.description}</p>
           </div>
         </article>

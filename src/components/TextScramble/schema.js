@@ -1,4 +1,5 @@
 import { defineMessages } from 'react-intl';
+import config from '@plone/volto/registry';
 
 const messages = defineMessages({
   TextScrambleBlock: { id: 'cinematicTextScramble', defaultMessage: 'Text Scramble' },
@@ -10,6 +11,9 @@ const messages = defineMessages({
 
   textAlign: { id: 'cinematicTextScrambleAlign', defaultMessage: 'Text Alignment' },
   fontFamily: { id: 'cinematicTextScrambleFont', defaultMessage: 'Font Family' },
+  blockHeight: { id: 'cinematicTextScrambleBlockHeight', defaultMessage: 'Block Height' },
+  textColor: { id: 'cinematicTextScrambleTextColor', defaultMessage: 'Text Color' },
+  backgroundImage: { id: 'cinematicTextScrambleBackgroundImage', defaultMessage: 'Background Image' },
 });
 
 export const TextScrambleSchema = (props) => {
@@ -19,7 +23,7 @@ export const TextScrambleSchema = (props) => {
     fieldsets: [
       { id: 'default', title: 'Content', fields: ['headline'] },
       { id: 'animation', title: 'Animation', fields: ['trigger', 'scrambleChars', 'decodeSpeed'] },
-      { id: 'styling', title: 'Styling', fields: ['fontSize', 'textAlign', 'fontFamily'] },
+      { id: 'styling', title: 'Styling', fields: ['fontSize', 'textAlign', 'fontFamily', 'blockHeight', 'textColor', 'backgroundImage'] },
     ],
     properties: {
       headline: {
@@ -58,6 +62,21 @@ export const TextScrambleSchema = (props) => {
         title: intl.formatMessage(messages.fontFamily),
         default: 'monospace',
         choices: [['monospace', 'Monospace'], ['inherit', 'Inherit'], ['sans-serif', 'Sans Serif']],
+      },
+      blockHeight: {
+        title: intl.formatMessage(messages.blockHeight),
+        widget: 'image_size',
+        default: 'm',
+      },
+      textColor: {
+        title: intl.formatMessage(messages.textColor),
+        type: 'color',
+        widget: 'style_simple_color',
+        available_colors: config.settings?.available_colors,
+      },
+      backgroundImage: {
+        title: intl.formatMessage(messages.backgroundImage),
+        widget: 'image',
       },
     },
     required: [],

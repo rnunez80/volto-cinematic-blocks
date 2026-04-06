@@ -326,15 +326,21 @@
 }
 
 /* ==========================================================================
-   5. Text Scramble Block
-   ========================================================================== */
+    5. Text Scramble Block
+    ========================================================================== */
 
 .cinematic-text-scramble {
-  padding: 4rem 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 300px;
+  background-size: cover;
+  background-position: center;
+}
+
+.cinematic-text-scramble__inner {
+  max-width: 900px;
+  width: 100%;
+  height: inherit;
 }
 
 .cinematic-text-scramble__headline {
@@ -343,6 +349,25 @@
   margin: 0;
   max-width: 900px;
   letter-spacing: -0.02em;
+}
+
+.cinematic-text-scramble--h-s {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+.cinematic-text-scramble--h-m {
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+.cinematic-text-scramble--h-l {
+  padding-top: 4em;
+  padding-bottom: 4em;
+}
+
+.cinematic-text-scramble--h-full {
+  height: 100vh;
 }
 
 /* ==========================================================================
