@@ -62,12 +62,12 @@ const StickyCardsView = ({ data, isEditMode, className }) => {
             className="cinematic-sticky-cards__card"
             style={{
               position: 'sticky',
-              top: `${index * 40}px`,
+              top: `${300 + index * 40}px`,
               height: cardHeight,
               backgroundColor: card.bgColor || '#1a1a2e',
               color: card.textColor || '#ffffff',
               borderRadius,
-               zIndex: index,
+              zIndex: index,
             }}
           >
             <div className="cinematic-sticky-cards__content">
