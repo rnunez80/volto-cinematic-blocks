@@ -75,31 +75,44 @@ const FlipCardsView = ({ data, isEditMode, className }) => {
                 transition: prefersReducedMotion ? 'none' : 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
               }}
             >
-              <div
-                className="cinematic-flip-cards__front"
-                style={{ backgroundColor: card.frontBg || '#333', borderRadius }}
-                aria-hidden={isFlipped}
-              >
-                <h3 className="cinematic-flip-cards__front-title">{card.frontTitle}</h3>
-              </div>
-              <div
-                className="cinematic-flip-cards__back"
-                style={{ backgroundColor: card.backBg || '#222', borderRadius }}
-                aria-hidden={!isFlipped}
-              >
-                <h3 className="cinematic-flip-cards__back-title">{card.backTitle}</h3>
-                <p className="cinematic-flip-cards__back-desc">{card.backDesc}</p>
-                {card.ctaText && (
-                  <a
-                    href={isEditMode ? undefined : resolvedLink}
-                    className="cinematic-flip-cards__cta"
-                    onClick={(e) => isEditMode && e.preventDefault()}
-                    tabIndex={isFlipped ? 0 : -1}
-                  >
-                    {card.ctaText}
-                  </a>
-                )}
-              </div>
+               <div
+                 className="cinematic-flip-cards__front"
+                 style={{
+                   backgroundColor: card.frontBg || '#333',
+                   backgroundImage: card.frontBgImage ? `url('${card.frontBgImage}')` : 'none',
+                   backgroundSize: 'cover',
+                   backgroundPosition: 'center',
+                   borderRadius,
+                 }}
+                 aria-hidden={isFlipped}
+               >
+                 <h3 className="cinematic-flip-cards__front-title" style={{ color: card.frontTitleColor || '#fff' }}>{card.frontTitle}</h3>
+               </div>
+               <div
+                 className="cinematic-flip-cards__back"
+                 style={{
+                   backgroundColor: card.backBg || '#222',
+                   backgroundImage: card.backBgImage ? `url('${card.backBgImage}')` : 'none',
+                   backgroundSize: 'cover',
+                   backgroundPosition: 'center',
+                   borderRadius,
+                 }}
+                 aria-hidden={!isFlipped}
+               >
+                 <h3 className="cinematic-flip-cards__back-title" style={{ color: card.backTitleColor || '#fff' }}>{card.backTitle}</h3>
+                 <p className="cinematic-flip-cards__back-desc" style={{ color: card.backDescColor || '#ddd' }}>{card.backDesc}</p>
+                 {card.ctaText && (
+                   <a
+                     href={isEditMode ? undefined : resolvedLink}
+                     className="cinematic-flip-cards__cta"
+                     onClick={(e) => isEditMode && e.preventDefault()}
+                     tabIndex={isFlipped ? 0 : -1}
+                     style={{ color: card.ctaTextColor || '#fff' }}
+                   >
+                     {card.ctaText}
+                   </a>
+                 )}
+               </div>
             </div>
 
             {prefersReducedMotion && (
