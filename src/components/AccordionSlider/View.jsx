@@ -86,9 +86,9 @@ const AccordionSliderView = ({ data, isEditMode, className }) => {
               className="cinematic-accordion-slider__content"
               role="tabpanel"
             >
-              <h3 className="cinematic-accordion-slider__title">
+              <p className="cinematic-accordion-slider__title">
                 {panel.title}
-              </h3>
+              </p>
               {isActive && panel.description && (
                 <p className="cinematic-accordion-slider__description">
                   {panel.description}
