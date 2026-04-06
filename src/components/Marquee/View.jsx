@@ -13,22 +13,26 @@ const MarqueeView = ({ data, isEditMode, className }) => {
   const fontWeight = data?.fontWeight || '800';
   const pauseOnHover = data?.pauseOnHover !== false;
 
-  if (!bands.length) {
-    return (
-      <div className={cx('block cinematic-marquee', className)}>
-        <p>{isEditMode ? 'Configure marquee bands in the sidebar →' : ''}</p>
-      </div>
-    );
-  }
+   if (!bands.length) {
+     return (
+       <div
+         className={cx('block cinematic-marquee', className, 'full-width', {
+           'cinematic-marquee--empty': isEditMode,
+         })}
+       >
+         {isEditMode && <span className="cinematic-marquee__empty-text">Configure marquee bands in the sidebar →</span>}
+       </div>
+     );
+   }
 
-  return (
-    <div
-      className={cx('block cinematic-marquee', className, {
-        'cinematic-marquee--pause-hover': pauseOnHover,
-      })}
-      role="marquee"
-      aria-label="Scrolling text display"
-    >
+   return (
+     <div
+       className={cx('block cinematic-marquee', className, 'full-width', {
+         'cinematic-marquee--pause-hover': pauseOnHover,
+       })}
+       role="marquee"
+       aria-label="Scrolling text display"
+     >
       {bands.map((band, index) => {
         const bandText = band.text || '';
         const isReverse = direction === 'right'
