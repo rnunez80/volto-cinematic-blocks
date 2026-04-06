@@ -9,16 +9,17 @@
    ========================================================================== */
 
 .cinematic-typewriter {
-  padding: 4rem 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 300px;
+  background-size: cover;
+  background-position: center;
 }
 
 .cinematic-typewriter__inner {
   max-width: 900px;
   width: 100%;
+  height: inherit;
 }
 
 .cinematic-typewriter__text {
@@ -51,6 +52,26 @@
     animation: none;
     opacity: 1;
   }
+}
+
+/* Height variants */
+.cinematic-typewriter--h-s {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+.cinematic-typewriter--h-m {
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+.cinematic-typewriter--h-l {
+  padding-top: 4em;
+  padding-bottom: 4em;
+}
+
+.cinematic-typewriter--h-full {
+  height: 100vh;
 }
 
 /* ==========================================================================

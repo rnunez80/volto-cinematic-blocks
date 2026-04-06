@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import cx from 'classnames';
 import useReducedMotion from '../../hooks/useReducedMotion';
+import getImageUrl from '../../helpers/getImageUrl';
 
 const TypewriterView = ({ data, isEditMode, className }) => {
   const staticText = data?.staticText || '';
@@ -15,7 +16,8 @@ const TypewriterView = ({ data, isEditMode, className }) => {
   const cursorColor = data?.cursorColor || '#e74c3c';
   const fontSize = data?.fontSize || '3rem';
   const textAlign = data?.textAlign || 'center';
-  const blockHeight = data?.blockHeight || 'auto';
+  const blockHeight = data?.blockHeight || 'm';
+  const backgroundImage = data?.backgroundImage || null;
   const loop = data?.loop !== false;
 
   const prefersReducedMotion = useReducedMotion();
@@ -30,23 +32,19 @@ const TypewriterView = ({ data, isEditMode, className }) => {
     if (prefersReducedMotion) return;
 
     if (!isDeleting) {
-      // Typing forward
       if (displayedText.length < fullPhrase.length) {
         setDisplayedText(fullPhrase.substring(0, displayedText.length + 1));
         timeoutRef.current = setTimeout(tick, typingSpeed);
       } else {
-        // Finished typing, pause then start deleting
         timeoutRef.current = setTimeout(() => {
           setIsDeleting(true);
         }, pauseDuration);
       }
     } else {
-      // Deleting
       if (displayedText.length > 0) {
         setDisplayedText(fullPhrase.substring(0, displayedText.length - 1));
         timeoutRef.current = setTimeout(tick, deleteSpeed);
       } else {
-        // Finished deleting, move to next phrase
         setIsDeleting(false);
         const nextIndex = (phraseIndex + 1) % phrases.length;
         if (!loop && nextIndex === 0) return;
@@ -77,19 +75,25 @@ const TypewriterView = ({ data, isEditMode, className }) => {
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, [tick, prefersReducedMotion]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [tick, prefersReducedMotion]);
 
-  // Build the full text for aria-label
   const ariaText = `${staticText}${phrases.join(', ')} ${postfixText}`.trim();
+  const imageUrl = getImageUrl(backgroundImage);
+  const heightClass = `cinematic-typewriter--h-${blockHeight}`;
 
   return (
     <div
-      className={cx('block cinematic-typewriter', className)}
-      style={{ textAlign, height: blockHeight }}
+      className={cx('block cinematic-typewriter', className, heightClass)}
+      style={{
+        textAlign,
+        backgroundImage: imageUrl ? `url(${imageUrl})` : 'none',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
       role="region"
       aria-label={ariaText}
     >
-      <div className="cinematic-typewriter__inner" style={{ height: blockHeight }}>
+      <div className={`cinematic-typewriter__inner ${heightClass}`} style={{}}>
         <h2
           className="cinematic-typewriter__text"
           style={{ fontSize, color: textColor || undefined }}

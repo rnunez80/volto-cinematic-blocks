@@ -1,5 +1,6 @@
 import { defineMessages } from 'react-intl';
 import config from '@plone/volto/registry';
+import { imageSizeChoices } from '@plone/volto/components/theme/ImageSize/ImageSizeWidget';
 
 const messages = defineMessages({
   TypewriterBlock: {
@@ -88,6 +89,7 @@ export const TypewriterSchema = (props) => {
           'cursorColor',
           'textAlign',
           'blockHeight',
+          'backgroundImage',
         ],
       },
     ],
@@ -167,16 +169,14 @@ export const TypewriterSchema = (props) => {
         actions: ['left', 'center', 'right'],
         default: 'center',
       },
-      blockHeight: {
+       blockHeight: {
         title: intl.formatMessage(messages.blockHeight),
-        default: 'auto',
-        choices: [
-          ['auto', 'Auto'],
-          ['100px', 'Small'],
-          ['200px', 'Medium'],
-          ['300px', 'Large'],
-          ['400px', 'Extra Large'],
-        ],
+        widget: 'image_size',
+        default: 'm',
+      },
+       backgroundImage: {
+        title: 'Background Image',
+        widget: 'image',
       },
     },
     required: ['phrases'],
