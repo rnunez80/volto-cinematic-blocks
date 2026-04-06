@@ -1,0 +1,121 @@
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import cx from 'classnames';
+import useReducedMotion from '../../hooks/useReducedMotion';
+
+const TypewriterView = ({ data, isEditMode, className }) => {
+  const staticText = data?.staticText || '';
+  const postfixText = data?.postfixText || '';
+  const phrasesRaw = data?.phrases || 'websites, applications, experiences';
+  const phrases = phrasesRaw.split(',').map((p) => p.trim()).filter(Boolean);
+  const textColor = data?.textColor || '';
+  const typingSpeed = data?.typingSpeed || 80;
+  const deleteSpeed = data?.deleteSpeed || 40;
+  const pauseDuration = data?.pauseDuration || 1500;
+  const cursorChar = data?.cursorChar || '|';
+  const cursorColor = data?.cursorColor || '#e74c3c';
+  const fontSize = data?.fontSize || '3rem';
+  const textAlign = data?.textAlign || 'center';
+  const blockHeight = data?.blockHeight || 'auto';
+  const loop = data?.loop !== false;
+
+  const prefersReducedMotion = useReducedMotion();
+  const [displayedText, setDisplayedText] = useState('');
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const timeoutRef = useRef(null);
+
+  const fullPhrase = phrases[phraseIndex] || '';
+
+  const tick = useCallback(() => {
+    if (prefersReducedMotion) return;
+
+    if (!isDeleting) {
+      // Typing forward
+      if (displayedText.length < fullPhrase.length) {
+        setDisplayedText(fullPhrase.substring(0, displayedText.length + 1));
+        timeoutRef.current = setTimeout(tick, typingSpeed);
+      } else {
+        // Finished typing, pause then start deleting
+        timeoutRef.current = setTimeout(() => {
+          setIsDeleting(true);
+        }, pauseDuration);
+      }
+    } else {
+      // Deleting
+      if (displayedText.length > 0) {
+        setDisplayedText(fullPhrase.substring(0, displayedText.length - 1));
+        timeoutRef.current = setTimeout(tick, deleteSpeed);
+      } else {
+        // Finished deleting, move to next phrase
+        setIsDeleting(false);
+        const nextIndex = (phraseIndex + 1) % phrases.length;
+        if (!loop && nextIndex === 0) return;
+        setPhraseIndex(nextIndex);
+      }
+    }
+  }, [
+    displayedText,
+    isDeleting,
+    fullPhrase,
+    phraseIndex,
+    phrases.length,
+    typingSpeed,
+    deleteSpeed,
+    pauseDuration,
+    loop,
+    prefersReducedMotion,
+  ]);
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setDisplayedText(fullPhrase);
+      return;
+    }
+
+    timeoutRef.current = setTimeout(tick, isDeleting ? deleteSpeed : typingSpeed);
+
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [tick, prefersReducedMotion]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Build the full text for aria-label
+  const ariaText = `${staticText}${phrases.join(', ')} ${postfixText}`.trim();
+
+  return (
+    <div
+      className={cx('block cinematic-typewriter', className)}
+      style={{ textAlign, height: blockHeight }}
+      role="region"
+      aria-label={ariaText}
+    >
+      <div className="cinematic-typewriter__inner" style={{ height: blockHeight }}>
+        <h2
+          className="cinematic-typewriter__text"
+          style={{ fontSize, color: textColor || undefined }}
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <span className="cinematic-typewriter__static">{staticText}</span>
+          <span className="cinematic-typewriter__dynamic">
+            {prefersReducedMotion ? fullPhrase : displayedText}
+          </span>
+          <span
+            className={cx('cinematic-typewriter__cursor', {
+              'cinematic-typewriter__cursor--blink': !isDeleting,
+            })}
+            style={{ color: cursorColor }}
+            aria-hidden="true"
+          >
+            {cursorChar}
+          </span>
+          {postfixText && (
+            <span className="cinematic-typewriter__postfix">{postfixText}</span>
+          )}
+        </h2>
+      </div>
+    </div>
+  );
+};
+
+export default TypewriterView;

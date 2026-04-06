@@ -1,0 +1,18 @@
+import React from 'react';
+import { SidebarPortal } from '@plone/volto/components';
+import Sidebar from './Sidebar';
+import View from './View';
+
+const MarqueeEdit = (props) => {
+  const { data, block, onChangeBlock, selected } = props;
+  return (
+    <>
+      <View {...props} isEditMode />
+      <SidebarPortal selected={selected}>
+        <Sidebar {...props} data={data} block={block} onChangeBlock={onChangeBlock} />
+      </SidebarPortal>
+    </>
+  );
+};
+
+export default MarqueeEdit;

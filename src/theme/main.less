@@ -1,0 +1,601 @@
+/* ==========================================================================
+   volto-cinematic-blocks — Theme Styles
+   All block styles with ADA focus outlines, reduced-motion fallbacks,
+   and responsive breakpoints.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Typewriter Block
+   ========================================================================== */
+
+.cinematic-typewriter {
+  padding: 4rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+}
+
+.cinematic-typewriter__inner {
+  max-width: 900px;
+  width: 100%;
+}
+
+.cinematic-typewriter__text {
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.cinematic-typewriter__dynamic {
+  border-right: none;
+}
+
+.cinematic-typewriter__cursor {
+  display: inline-block;
+  font-weight: 200;
+  margin-left: 2px;
+}
+
+.cinematic-typewriter__cursor--blink {
+  animation: cinematic-cursor-blink 0.8s infinite;
+}
+
+@keyframes cinematic-cursor-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-typewriter__cursor--blink {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   2. Accordion Slider Block
+   ========================================================================== */
+
+.cinematic-accordion-slider {
+  display: flex;
+  gap: 8px;
+  overflow: hidden;
+  padding: 2rem;
+}
+
+.cinematic-accordion-slider__panel {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-end;
+}
+
+.cinematic-accordion-slider__panel:focus-visible {
+  outline: 3px solid #4A90D9;
+  outline-offset: -3px;
+}
+
+.cinematic-accordion-slider__overlay {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  pointer-events: none;
+}
+
+.cinematic-accordion-slider__content {
+  position: relative;
+  z-index: 1;
+  padding: 2rem;
+  color: #fff;
+}
+
+.cinematic-accordion-slider__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.cinematic-accordion-slider__description {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  margin: 0;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.cinematic-accordion-slider__empty {
+  color: #999;
+  text-align: center;
+  padding: 3rem;
+}
+
+/* ==========================================================================
+   3. Flip Cards Block
+   ========================================================================== */
+
+.cinematic-flip-cards {
+  padding: 2rem;
+}
+
+.cinematic-flip-cards__card {
+  cursor: pointer;
+}
+
+.cinematic-flip-cards__card:focus-visible {
+  outline: 3px solid #4A90D9;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.cinematic-flip-cards__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.cinematic-flip-cards__front,
+.cinematic-flip-cards__back {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  backface-visibility: hidden;
+  color: #fff;
+}
+
+.cinematic-flip-cards__back {
+  transform: rotateY(180deg);
+}
+
+.cinematic-flip-cards__front-title,
+.cinematic-flip-cards__back-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+}
+
+.cinematic-flip-cards__back-desc {
+  font-size: 0.95rem;
+  text-align: center;
+  opacity: 0.9;
+  margin: 0 0 1.5rem;
+}
+
+.cinematic-flip-cards__cta {
+  display: inline-block;
+  padding: 0.6rem 1.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.cinematic-flip-cards__cta:hover,
+.cinematic-flip-cards__cta:focus-visible {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* Reduced motion: hide flip, show stacked content */
+.cinematic-flip-cards__card--reduced .cinematic-flip-cards__inner {
+  display: none;
+}
+
+.cinematic-flip-cards__reduced-fallback {
+  padding: 2rem;
+  background: #222;
+  color: #fff;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .cinematic-flip-cards {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ==========================================================================
+   4. Kinetic Marquee Block
+   ========================================================================== */
+
+.cinematic-marquee {
+  overflow: hidden;
+  padding: 1rem 0;
+}
+
+.cinematic-marquee__band {
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 0.5rem 0;
+}
+
+.cinematic-marquee__track {
+  display: inline-flex;
+  animation: cinematic-marquee-scroll linear infinite;
+}
+
+.cinematic-marquee__band--reverse .cinematic-marquee__track {
+  animation-direction: reverse;
+}
+
+.cinematic-marquee__text {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+@keyframes cinematic-marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.cinematic-marquee--pause-hover:hover .cinematic-marquee__track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-marquee__track {
+    animation-play-state: paused !important;
+  }
+}
+
+/* ==========================================================================
+   5. Text Scramble Block
+   ========================================================================== */
+
+.cinematic-text-scramble {
+  padding: 4rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+}
+
+.cinematic-text-scramble__headline {
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+  max-width: 900px;
+  letter-spacing: -0.02em;
+}
+
+/* ==========================================================================
+   6. Sticky Cards Block
+   ========================================================================== */
+
+.cinematic-sticky-cards {
+  padding: 2rem;
+}
+
+.cinematic-sticky-cards__card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.3);
+}
+
+.cinematic-sticky-cards__content {
+  max-width: 600px;
+  padding: 3rem;
+  text-align: center;
+}
+
+.cinematic-sticky-cards__title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+}
+
+.cinematic-sticky-cards__description {
+  font-size: 1.1rem;
+  opacity: 0.85;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ==========================================================================
+   7. Horizontal Scroll Block
+   ========================================================================== */
+
+.cinematic-horizontal-scroll {
+  position: relative;
+  overflow: hidden;
+}
+
+.cinematic-horizontal-scroll__track {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  padding: 0 4rem;
+  will-change: transform;
+}
+
+.cinematic-horizontal-scroll__item {
+  border-radius: 20px;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+  height: 60vh;
+}
+
+.cinematic-horizontal-scroll__item:focus-visible {
+  outline: 3px solid #4A90D9;
+  outline-offset: 4px;
+}
+
+.cinematic-horizontal-scroll__item-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+}
+
+.cinematic-horizontal-scroll__item-desc {
+  font-size: 1rem;
+  opacity: 0.85;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Fallback/edit mode */
+.cinematic-horizontal-scroll--fallback .cinematic-horizontal-scroll__fallback-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 3rem;
+}
+
+/* ==========================================================================
+   8. Zoom Parallax Block
+   ========================================================================== */
+
+.cinematic-zoom-parallax__bg {
+  position: absolute;
+  inset: -10%;
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
+}
+
+.cinematic-zoom-parallax__overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.cinematic-zoom-parallax__mid {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+.cinematic-zoom-parallax__mid-text {
+  font-size: 4rem;
+  font-weight: 800;
+  text-align: center;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  margin: 0;
+}
+
+.cinematic-zoom-parallax__fg {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 15%;
+  will-change: transform;
+}
+
+.cinematic-zoom-parallax__fg-text {
+  font-size: 1.2rem;
+  text-align: center;
+  opacity: 0.9;
+  margin: 0 0 2rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.cinematic-zoom-parallax__cta {
+  display: inline-block;
+  padding: 0.9rem 2.5rem;
+  background: #e74c3c;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(231, 76, 60, 0.4);
+}
+
+.cinematic-zoom-parallax__cta:hover,
+.cinematic-zoom-parallax__cta:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(231, 76, 60, 0.6);
+}
+
+.cinematic-zoom-parallax__cta:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 768px) {
+  .cinematic-zoom-parallax__mid-text {
+    font-size: 2rem;
+  }
+}
+
+/* ==========================================================================
+   9. Split Scroll Block
+   ========================================================================== */
+
+.cinematic-split-scroll {
+  overflow: hidden;
+}
+
+.cinematic-split-scroll__grid {
+  display: grid;
+  gap: 2rem;
+  padding: 3rem;
+  min-height: inherit;
+}
+
+.cinematic-split-scroll__left,
+.cinematic-split-scroll__right {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  will-change: transform;
+}
+
+.cinematic-split-scroll__item {
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cinematic-split-scroll__image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.cinematic-split-scroll__item-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+}
+
+.cinematic-split-scroll__item-desc {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .cinematic-split-scroll__grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ==========================================================================
+   10. Curtain Reveal Block
+   ========================================================================== */
+
+.cinematic-curtain-reveal__curtain {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  will-change: transform;
+}
+
+.cinematic-curtain-reveal__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 3rem;
+  text-align: center;
+}
+
+.cinematic-curtain-reveal__title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin: 0 0 1rem;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+.cinematic-curtain-reveal__description {
+  font-size: 1.15rem;
+  max-width: 600px;
+  line-height: 1.6;
+  margin: 0 0 2rem;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+}
+
+.cinematic-curtain-reveal__cta {
+  display: inline-block;
+  padding: 0.9rem 2.5rem;
+  background: #e74c3c;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(231, 76, 60, 0.4);
+}
+
+.cinematic-curtain-reveal__cta:hover,
+.cinematic-curtain-reveal__cta:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(231, 76, 60, 0.6);
+}
+
+.cinematic-curtain-reveal__cta:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 768px) {
+  .cinematic-curtain-reveal__title {
+    font-size: 2rem;
+  }
+}
+
+/* ==========================================================================
+   Global ADA — Focus-visible outlines
+   ========================================================================== */
+
+[class*='cinematic-'] a:focus-visible,
+[class*='cinematic-'] button:focus-visible,
+[class*='cinematic-'] [role='button']:focus-visible,
+[class*='cinematic-'] [role='tab']:focus-visible {
+  outline: 3px solid #4A90D9;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [class*='cinematic-'] *,
+  [class*='cinematic-'] *::before,
+  [class*='cinematic-'] *::after {
+    animation-duration: 0.001s !important;
+    transition-duration: 0.001s !important;
+  }
+}
+
+/* ==========================================================================
+   Responsive — Accordion panels
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .cinematic-accordion-slider {
+    flex-direction: column;
+  }
+
+  .cinematic-accordion-slider__panel {
+    min-height: 120px;
+  }
+}
