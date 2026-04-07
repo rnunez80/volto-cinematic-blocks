@@ -42,9 +42,11 @@ const AccordionSliderView = ({ data, isEditMode, className }) => {
       {panels.map((panel, index) => {
         const isActive = activeIndex === index;
         const flexValue = isActive ? expandedRatio : 1;
-        const imageUrl = getImageUrl(panel.bgImage);
+        const imageValue = panel?.bgImage;
+        const imageUrl = imageValue && typeof imageValue === 'string' ? imageValue : (imageValue?.url || imageValue?.['@id'] || imageValue?.id || null);
         const isFirst = index === 0;
-        const panelBgColor = panel.bgColor || (isFirst ? '#000000' : 'transparent');
+        console.log('AccordionSlider DEBUG:', { index, imageValue, imageUrl, hasImageUrl: !!imageUrl });
+        const panelBgColor = panel.bgColor || (isFirst ? '#000000' : '#000000');
         const panelTextColor = panel.textColor || (isFirst ? '#ffffff' : '#000000');
 
         return (

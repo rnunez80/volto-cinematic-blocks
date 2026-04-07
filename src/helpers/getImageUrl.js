@@ -26,9 +26,10 @@ const getImageUrl = (image, scale = 'large') => {
       : id;
   }
 
-  // object with @id
-  if (typeof image === 'object' && image['@id']) {
-    const id = image['@id'];
+  // object with url or @id
+  if (typeof image === 'object' && image) {
+    const id = image['@id'] || image.url || image.id;
+    if (!id) return null;
     return isInternalURL(id)
       ? `${flattenToAppURL(id)}/@@images/image/${scale}`
       : id;

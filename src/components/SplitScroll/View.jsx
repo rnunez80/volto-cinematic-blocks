@@ -1,16 +1,48 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import cx from 'classnames';
 import useReducedMotion from '../../hooks/useReducedMotion';
+import useGsap from '../../hooks/useGsap';
 import getImageUrl from '../../helpers/getImageUrl';
 
 const SplitScrollView = ({ data, isEditMode, className }) => {
   const prefersReducedMotion = useReducedMotion();
+  const { gsap, ScrollTrigger, loaded } = useGsap();
 
   const leftItems = Array.isArray(data?.leftItems) ? data.leftItems : [];
   const rightItems = Array.isArray(data?.rightItems) ? data.rightItems : [];
-  const minHeight = data?.sectionHeight || '100vh';
-  const stickyColumn = data?.stickyColumn || 'left';
-  const gap = data?.gap || '0rem';
+  const sectionHeight = data?.sectionHeight || '100vh';
+  const gap = data?.gap || '2rem';
+  const scrollRatio = parseFloat(data?.scrollRatio || '1.5');
+
+  const sectionRef = useRef(null);
+  const rightRef = useRef(null);
+
+  useEffect(() => {
+    if (!loaded || !gsap || !ScrollTrigger || prefersReducedMotion || isEditMode) return;
+
+    const section = sectionRef.current;
+    const rightCol = rightRef.current;
+    if (!section || !rightCol) return;
+
+    const tween = gsap.to(rightCol, {
+      yPercent: -(scrollRatio - 1) * 100,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: section,
+        start: 'top center',
+        end: 'bottom center',
+        scrub: 1,
+        invalidateOnRefresh: true,
+      },
+    });
+
+    return () => {
+      tween.kill();
+      ScrollTrigger.getAll().forEach((t) => {
+        if (t.trigger === section) t.kill();
+      });
+    };
+  }, [loaded, gsap, ScrollTrigger, prefersReducedMotion, isEditMode, scrollRatio]);
 
   const resolveLink = (link) => {
     if (!link) return '#';
@@ -19,84 +51,64 @@ const SplitScrollView = ({ data, isEditMode, className }) => {
     return link;
   };
 
-  const renderItem = (item, index, columnClass) => {
+  const renderItem = (item, index) => {
     const isFirst = index === 0;
     const itemBgColor = item.bgColor || (isFirst ? '#000000' : 'transparent');
     const itemTextColor = item.textColor || (isFirst ? '#ffffff' : '#000000');
     const imageUrl = getImageUrl(item.image);
-    const bgImage = getImageUrl(item.bgImage);
-    
     return (
       <article
         key={item['@id'] || index}
         className="cinematic-split-scroll__item"
         style={{
           backgroundColor: itemBgColor,
+          backgroundImage: item.bgImage ? `url('${item.bgImage}')` : 'none',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
           color: itemTextColor,
         }}
       >
-        {bgImage && (
-           <div 
-             className="cinematic-split-scroll__bg-image" 
-             style={{ backgroundImage: `url('${bgImage}')` }} 
-           />
+        {imageUrl && (
+          <img
+            src={imageUrl}
+            className="cinematic-split-scroll__image"
+            alt={item.title || ''}
+            loading="lazy"
+          />
         )}
-        <div className="cinematic-split-scroll__item-inner">
-          {imageUrl && (
-            <img
-              src={imageUrl}
-              className="cinematic-split-scroll__image"
-              alt={item.title || ''}
-              loading="lazy"
-            />
-          )}
-          <div className="cinematic-split-scroll__content">
-            {item.title && <h3 className="cinematic-split-scroll__item-title">{item.title}</h3>}
-            {item.description && <p className="cinematic-split-scroll__item-desc">{item.description}</p>}
-            {item.buttonLabel && (
-              <a
-                href={isEditMode ? undefined : resolveLink(item.buttonLink)}
-                className={`ui ${item.buttonPrimary ? 'primary' : 'secondary'} button`}
-                onClick={(e) => isEditMode && e.preventDefault()}
-              >
-                {item.buttonLabel}
-              </a>
-            )}
-          </div>
-        </div>
+        <h3 className="cinematic-split-scroll__title">{item.title}</h3>
+        <p className="cinematic-split-scroll__desc">{item.description}</p>
+        {item.buttonLabel && (
+          <a
+            href={isEditMode ? undefined : resolveLink(item.buttonLink)}
+            className={`ui ${item.buttonPrimary ? 'primary' : 'secondary'} button`}
+            onClick={(e) => isEditMode && e.preventDefault()}
+          >
+            {item.buttonLabel}
+          </a>
+        )}
       </article>
     );
   };
 
   return (
     <div
+      ref={sectionRef}
       className={cx('block cinematic-split-scroll', className, {
         'cinematic-split-scroll--reduced': prefersReducedMotion,
       })}
+      style={{ minHeight: sectionHeight, gap }}
     >
-      <div className="cinematic-split-scroll__grid" style={{ minHeight, gap }}>
-        <div
-          className={cx('cinematic-split-scroll__column cinematic-split-scroll__left', {
-            'cinematic-split-scroll__column--sticky': stickyColumn === 'left' && !prefersReducedMotion,
-            'cinematic-split-scroll__column--scroll': stickyColumn !== 'left' || prefersReducedMotion,
-          })}
-        >
-          <div className="cinematic-split-scroll__column-inner">
-            {leftItems.map((item, index) => renderItem(item, index, 'left'))}
-            {!leftItems.length && isEditMode && <p style={{padding: '2rem'}}>Add left column items in the sidebar →</p>}
-          </div>
-        </div>
-        <div
-          className={cx('cinematic-split-scroll__column cinematic-split-scroll__right', {
-            'cinematic-split-scroll__column--sticky': stickyColumn === 'right' && !prefersReducedMotion,
-            'cinematic-split-scroll__column--scroll': stickyColumn !== 'right' || prefersReducedMotion,
-          })}
-        >
-          <div className="cinematic-split-scroll__column-inner">
-            {rightItems.map((item, index) => renderItem(item, index, 'right'))}
-            {!rightItems.length && isEditMode && <p style={{padding: '2rem', color: '#fff'}}>Add right column items in the sidebar →</p>}
-          </div>
-        </div>
+      <div className="cinematic-split-scroll__column cinematic-split-scroll__left">
+        {leftItems.map(renderItem)}
+        {!leftItems.length && isEditMode && <p>Add left column items in the sidebar →</p>}
+      </div>
+      <div
+        ref={rightRef}
+        className="cinematic-split-scroll__column cinematic-split-scroll__right"
+      >
+        {rightItems.map(renderItem)}
+        {!rightItems.length && isEditMode && <p>Add right column items in the sidebar →</p>}
       </div>
     </div>
   );
