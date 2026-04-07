@@ -7,7 +7,7 @@ const messages = defineMessages({
   rightItems: { id: 'cinematicSplitRight', defaultMessage: 'Right Column Items' },
   sectionHeight: { id: 'cinematicSplitHeight', defaultMessage: 'Section Height' },
   gap: { id: 'cinematicSplitGap', defaultMessage: 'Column Gap' },
-  scrollRatio: { id: 'cinematicSplitRatio', defaultMessage: 'Scroll Speed Ratio' },
+  stickyColumn: { id: 'cinematicSplitSticky', defaultMessage: 'Sticky Column' },
 });
 
 const ItemSchema = (props) => ({
@@ -19,11 +19,11 @@ const ItemSchema = (props) => ({
   ],
   properties: {
     title: { title: 'Title' },
-    description: { title: 'Description' },
+    description: { title: 'Description', widget: 'textarea' },
     image: { title: 'Image', widget: 'image', default: null },
     bgImage: { title: 'Background Image', widget: 'image', default: null },
-    bgColor: { title: 'Fallback Background Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#eeeeee' },
-    textColor: { title: 'Text Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#000000' },
+    bgColor: { title: 'Fallback Background Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: 'transparent' },
+    textColor: { title: 'Text Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: 'inherit' },
     buttonLabel: { title: 'Button Label' },
     buttonLink: { title: 'Button Link', widget: 'url' },
     buttonPrimary: { title: 'Primary Button', type: 'boolean', default: true },
@@ -37,7 +37,7 @@ export const SplitScrollSchema = (props) => {
     title: intl.formatMessage(messages.SplitScrollBlock),
     fieldsets: [
       { id: 'default', title: 'Content', fields: ['leftItems', 'rightItems'] },
-      { id: 'styling', title: 'Layout', fields: ['sectionHeight', 'gap', 'scrollRatio'] },
+      { id: 'styling', title: 'Layout', fields: ['sectionHeight', 'gap', 'stickyColumn'] },
     ],
     properties: {
       leftItems: {
@@ -57,14 +57,14 @@ export const SplitScrollSchema = (props) => {
       },
       gap: {
         title: intl.formatMessage(messages.gap),
-        default: '2rem',
-        choices: [['1rem', 'Small'], ['2rem', 'Medium'], ['4rem', 'Large']],
+        default: '0rem',
+        choices: [['0rem', 'None'], ['1rem', 'Small'], ['2rem', 'Medium'], ['4rem', 'Large']],
       },
-      scrollRatio: {
-        title: intl.formatMessage(messages.scrollRatio),
-        description: 'How much faster the right column scrolls relative to the left',
-        default: '1.5',
-        choices: [['1.2', 'Subtle'], ['1.5', 'Medium'], ['2', 'Strong']],
+      stickyColumn: {
+        title: intl.formatMessage(messages.stickyColumn),
+        description: 'Which column stays pinned while the other side scrolls relative to it.',
+        default: 'left',
+        choices: [['left', 'Left Column'], ['right', 'Right Column'], ['none', 'None (Standard Scroll)']],
       },
     },
     required: [],

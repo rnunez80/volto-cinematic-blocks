@@ -15,8 +15,8 @@ const PanelSchema = (props) => ({
   title: 'Panel',
   addMessage: 'Add panel',
   fieldsets: [
-    { id: 'content', title: 'Content', fields: ['title', 'description', 'buttonLabel', 'buttonLink', 'buttonPrimary'] },
-    { id: 'styling', title: 'Styling', fields: ['bgImage', 'bgColor', 'textColor'] },
+    { id: 'content', title: 'Content', fields: ['bgImage', 'title', 'description', 'buttonLabel', 'buttonLink'] },
+    { id: 'styling', title: 'Styling', fields: ['bgColor', 'textColor', 'buttonPrimary'] },
   ],
   properties: {
     title: { title: 'Title' },
