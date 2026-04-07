@@ -43,8 +43,12 @@
 }
 
 @keyframes cinematic-cursor-blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -117,13 +121,25 @@
   font-weight: 700;
   margin: 0 0 0.5rem;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  clear: both;
+  display: inline-block;
+  width: 100%;
 }
 
 .cinematic-accordion-slider__description {
   font-size: 0.95rem;
-  opacity: 0.9;
-  margin: 0;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.3s ease, max-height 0.3s ease, padding 0.3s ease;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  margin: 0;
+}
+
+.cinematic-accordion-slider__panel--active .cinematic-accordion-slider__description {
+  opacity: 0.9;
+  max-height: 200px;
+  padding-top: 0.5rem;
 }
 
 .cinematic-accordion-slider__empty {
@@ -295,8 +311,12 @@
 }
 
 @keyframes cinematic-marquee-scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .cinematic-marquee--pause-hover:hover .cinematic-marquee__track {
@@ -638,7 +658,7 @@
   border-radius: 20px;
   max-height: 60vh;
   margin-bottom: 2rem;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .cinematic-split-scroll__item-title {
@@ -668,27 +688,32 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
 }
 
 @media (max-width: 768px) {
   .cinematic-split-scroll__grid {
     flex-direction: column;
   }
+
   .cinematic-split-scroll__column {
     width: 100%;
   }
+
   .cinematic-split-scroll__column--sticky {
     position: static;
     height: auto;
     min-height: 50vh;
   }
+
   .cinematic-split-scroll__column--scroll .cinematic-split-scroll__item {
     min-height: 50vh;
   }
+
   .cinematic-split-scroll__item-inner {
     padding: 2rem;
   }
+
   .cinematic-split-scroll__item-title {
     font-size: 2rem;
   }
@@ -1109,6 +1134,7 @@
   .cinematic-slider .list .item .content {
     padding-right: 0;
   }
+
   .cinematic-slider .list .item .content .title {
     font-size: 30px;
   }
@@ -1130,6 +1156,10 @@
 }
 
 @keyframes runningTime {
-  from { width: 100% }
-  to { width: 0 }
+  from {
+    width: 100%
+  }
+  to {
+    width: 0
+  }
 }

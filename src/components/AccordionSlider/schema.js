@@ -16,14 +16,14 @@ const PanelSchema = (props) => ({
   addMessage: 'Add panel',
   fieldsets: [
     { id: 'content', title: 'Content', fields: ['bgImage', 'title', 'description', 'buttonLabel', 'buttonLink'] },
-    { id: 'styling', title: 'Styling', fields: ['bgColor', 'textColor', 'buttonPrimary'] },
+    { id: 'styling', title: 'Styling', fields: ['textColor','bgColor', 'buttonPrimary'] },
   ],
   properties: {
     title: { title: 'Title' },
     description: { title: 'Description' },
     bgImage: { title: 'Background Image', widget: 'image', default: null },
     bgColor: { title: 'Fallback Background Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#eeeeee' },
-    textColor: { title: 'Text Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#000000' },
+    textColor: { title: 'Text Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#ffffff' },
     buttonLabel: { title: 'Button Label' },
     buttonLink: { title: 'Button Link', widget: 'url' },
     buttonPrimary: { title: 'Primary Button', type: 'boolean', default: true },

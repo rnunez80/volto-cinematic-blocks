@@ -44,7 +44,7 @@ const AccordionSliderView = ({ data, isEditMode, className }) => {
         const flexValue = isActive ? expandedRatio : 1;
         const scale = 'large';
         const imageValue = panel?.bgImage;
-        const imageUrl = imageValue && typeof imageValue === 'string' 
+        const imageUrl = imageValue && typeof imageValue === 'string'
           ? imageValue.includes('/@@images/image/')
             ? imageValue
             : `${imageValue}/@@images/image/${scale}`
@@ -55,7 +55,7 @@ const AccordionSliderView = ({ data, isEditMode, className }) => {
               : (imageValue?.['@id'] || imageValue?.id || null));
         const isFirst = index === 0;
         const panelBgColor = panel.bgColor || (isFirst ? '#000000' : '#000000');
-        const panelTextColor = panel.textColor || (isFirst ? '#ffffff' : '#000000');
+        const panelTextColor = panel.textColor || (isFirst ? '#ffffff' : '#ffffff');
 
         return (
           <div
@@ -108,9 +108,9 @@ const AccordionSliderView = ({ data, isEditMode, className }) => {
               role="tabpanel"
               style={{ color: panelTextColor }}
             >
-              <p className="cinematic-accordion-slider__title">
+              <strong className="cinematic-accordion-slider__title">
                 {panel.title}
-              </p>
+              </strong>
               {isActive && panel.description && (
                 <p className="cinematic-accordion-slider__description">
                   {panel.description}
