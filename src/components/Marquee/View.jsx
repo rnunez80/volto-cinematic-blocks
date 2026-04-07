@@ -13,26 +13,33 @@ const MarqueeView = ({ data, isEditMode, className }) => {
   const fontWeight = data?.fontWeight || '800';
   const pauseOnHover = data?.pauseOnHover !== false;
 
-   if (!bands.length) {
-     return (
-       <div
-         className={cx('block cinematic-marquee', className, 'full-width', {
-           'cinematic-marquee--empty': isEditMode,
-         })}
-       >
-         {isEditMode && <span className="cinematic-marquee__empty-text">Configure marquee bands in the sidebar →</span>}
-       </div>
-     );
-   }
+  if (!bands.length) {
+    return (
+      <div
+        className={cx('block cinematic-marquee', className, 'full-width', {
+          'cinematic-marquee--empty': isEditMode,
+        })}
+      >
+        {isEditMode && <span className="cinematic-marquee__empty-text">Configure marquee bands in the sidebar →</span>}
+      </div>
+    );
+  }
 
-   return (
-     <div
-       className={cx('block cinematic-marquee', className, 'full-width', {
-         'cinematic-marquee--pause-hover': pauseOnHover,
-       })}
-       role="marquee"
-       aria-label="Scrolling text display"
-     >
+  const resolveLink = (link) => {
+    if (!link) return '#';
+    if (Array.isArray(link) && link[0]?.['@id']) return link[0]['@id'];
+    if (typeof link === 'object' && link['@id']) return link['@id'];
+    return link;
+  };
+
+  return (
+    <div
+      className={cx('block cinematic-marquee', className, 'full-width', {
+        'cinematic-marquee--pause-hover': pauseOnHover,
+      })}
+      role="marquee"
+      aria-label="Scrolling text display"
+    >
       {bands.map((band, index) => {
         const bandText = band.text || '';
         const isReverse = direction === 'right'
@@ -54,12 +61,26 @@ const MarqueeView = ({ data, isEditMode, className }) => {
               style={{
                 animationDuration: `${speed}s`,
                 animationPlayState: prefersReducedMotion ? 'paused' : 'running',
+                backgroundColor: band.fallbackBgColor || 'transparent',
+                backgroundImage: band.bgImage ? `url('${band.bgImage}')` : 'none',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
               }}
             >
-              <span className="cinematic-marquee__text">{repeatedContent}</span>
-              <span className="cinematic-marquee__text" aria-hidden="true">
+              <span className="cinematic-marquee__text" style={{ color: band.textColor || '#ffffff' }}>{repeatedContent}</span>
+              <span className="cinematic-marquee__text" aria-hidden="true" style={{ color: band.textColor || '#ffffff' }}>
                 {repeatedContent}
               </span>
+              {band.buttonLabel && (
+                <a
+                  href={isEditMode ? undefined : resolveLink(band.buttonLink)}
+                  className={`ui ${band.buttonPrimary ? 'primary' : 'secondary'} button`}
+                  onClick={(e) => isEditMode && e.preventDefault()}
+                  style={{ color: band.textColor || '#ffffff' }}
+                >
+                  {band.buttonLabel}
+                </a>
+              )}
             </div>
           </div>
         );

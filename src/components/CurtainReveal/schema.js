@@ -8,11 +8,10 @@ const messages = defineMessages({
   revealDirection: { id: 'cinematicCurtainDirection', defaultMessage: 'Reveal Direction' },
   title: { id: 'cinematicCurtainTitle', defaultMessage: 'Title' },
   description: { id: 'cinematicCurtainDescription', defaultMessage: 'Description' },
-  backgroundImage: { id: 'cinematicCurtainBgImage', defaultMessage: 'Background Image' },
-  ctaText: { id: 'cinematicCurtainCtaText', defaultMessage: 'CTA Text' },
-  ctaLink: { id: 'cinematicCurtainCtaLink', defaultMessage: 'CTA Link' },
   sectionHeight: { id: 'cinematicCurtainHeight', defaultMessage: 'Section Height' },
-
+  ctaText: { id: 'cinematicCurtainCTAText', defaultMessage: 'CTA Button Text' },
+  ctaLink: { id: 'cinematicCurtainCTALink', defaultMessage: 'CTA Link' },
+  ctaPrimary: { id: 'cinematicCurtainCTAPrimary', defaultMessage: 'Primary CTA' },
 });
 
 export const CurtainRevealSchema = (props) => {
@@ -20,9 +19,8 @@ export const CurtainRevealSchema = (props) => {
   return {
     title: intl.formatMessage(messages.CurtainRevealBlock),
     fieldsets: [
-      { id: 'default', title: 'Content', fields: ['title', 'description', 'backgroundImage', 'ctaText', 'ctaLink'] },
-      { id: 'curtain', title: 'Curtain', fields: ['curtainColor', 'curtainGradient', 'revealDirection'] },
-      { id: 'styling', title: 'Styling', fields: ['sectionHeight'] },
+      { id: 'content', title: 'Content', fields: ['title', 'description', 'backgroundImage', 'ctaText', 'ctaLink', 'ctaPrimary'] },
+      { id: 'styling', title: 'Styling', fields: ['fallbackBgColor', 'textColor', 'curtainColor', 'curtainGradient', 'revealDirection', 'sectionHeight'] },
     ],
     properties: {
       title: {
@@ -35,17 +33,22 @@ export const CurtainRevealSchema = (props) => {
         default: 'Content emerges as the curtain slides away, creating a dramatic reveal moment.',
       },
       backgroundImage: {
-        title: intl.formatMessage(messages.backgroundImage),
+        title: 'Background Image',
         widget: 'image',
       },
-      ctaText: {
-        title: intl.formatMessage(messages.ctaText),
-        default: 'Explore',
+      fallbackBgColor: {
+        title: 'Fallback Background Color',
+        type: 'color',
+        widget: 'style_simple_color',
+        available_colors: config.settings?.available_colors,
+        default: '#1a1a2e',
       },
-      ctaLink: {
-        title: intl.formatMessage(messages.ctaLink),
-        widget: 'url',
-        default: '',
+      textColor: {
+        title: 'Text Color',
+        type: 'color',
+        widget: 'style_simple_color',
+        available_colors: config.settings?.available_colors,
+        default: '#ffffff',
       },
       curtainColor: {
         title: intl.formatMessage(messages.curtainColor),
@@ -69,7 +72,18 @@ export const CurtainRevealSchema = (props) => {
         default: '100vh',
         choices: [['60vh', 'Short'], ['80vh', 'Medium'], ['100vh', 'Full Screen']],
       },
-
+      ctaText: {
+        title: intl.formatMessage(messages.ctaText),
+      },
+      ctaLink: {
+        title: intl.formatMessage(messages.ctaLink),
+        widget: 'url',
+      },
+      ctaPrimary: {
+        title: intl.formatMessage(messages.ctaPrimary),
+        type: 'boolean',
+        default: true,
+      },
     },
     required: [],
   };

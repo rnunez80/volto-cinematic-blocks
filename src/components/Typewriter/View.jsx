@@ -18,7 +18,12 @@ const TypewriterView = ({ data, isEditMode, className }) => {
   const textAlign = data?.textAlign || 'center';
   const blockHeight = data?.blockHeight || 'm';
   const backgroundImage = data?.backgroundImage || null;
+  const fallbackBgColor = data?.fallbackBgColor || '#000000';
   const loop = data?.loop !== false;
+  const foregroundText = data?.foregroundText || '';
+  const ctaText = data?.ctaText || '';
+  const ctaLink = data?.ctaLink || '#';
+  const ctaPrimary = data?.ctaPrimary !== false;
 
   const prefersReducedMotion = useReducedMotion();
   const [displayedText, setDisplayedText] = useState('');
@@ -77,6 +82,13 @@ const TypewriterView = ({ data, isEditMode, className }) => {
     };
   }, [tick, prefersReducedMotion]);
 
+  const resolveLink = (link) => {
+    if (!link) return '#';
+    if (Array.isArray(link) && link[0]?.['@id']) return link[0]['@id'];
+    if (typeof link === 'object' && link['@id']) return link['@id'];
+    return link;
+  };
+
   const ariaText = `${staticText}${phrases.join(', ')} ${postfixText}`.trim();
   const imageUrl = getImageUrl(backgroundImage);
   const heightClass = `cinematic-typewriter--h-${blockHeight}`;
@@ -87,6 +99,7 @@ const TypewriterView = ({ data, isEditMode, className }) => {
       style={{
         textAlign,
         backgroundImage: imageUrl ? `url(${imageUrl})` : 'none',
+        backgroundColor: fallbackBgColor,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
@@ -117,6 +130,16 @@ const TypewriterView = ({ data, isEditMode, className }) => {
             <span className="cinematic-typewriter__postfix">{postfixText}</span>
           )}
         </h2>
+        {ctaText && (
+          <a
+            href={isEditMode ? undefined : resolveLink(ctaLink)}
+            className={`ui ${ctaPrimary ? 'primary' : 'secondary'} button`}
+            onClick={(e) => isEditMode && e.preventDefault()}
+            style={{ color: textColor || undefined }}
+          >
+            {ctaText}
+          </a>
+        )}
       </div>
     </div>
   );

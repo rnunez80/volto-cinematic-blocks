@@ -8,6 +8,9 @@ const StickyCardsView = ({ data, isEditMode, className }) => {
   const cards = Array.isArray(data?.cards) ? data.cards : [];
   const cardHeight = data?.cardHeight || '400px';
   const borderRadius = data?.borderRadius || '20px';
+  const enableShiftRotate = data?.enableShiftRotate !== false;
+  const shiftAmount = data?.shiftAmount || 0;
+  const rotateAmount = data?.rotateAmount || 3;
 
   if (!cards.length) {
     return (
@@ -17,28 +20,57 @@ const StickyCardsView = ({ data, isEditMode, className }) => {
     );
   }
 
+  const resolveLink = (link) => {
+    if (!link) return '#';
+    if (Array.isArray(link) && link[0]?.['@id']) return link[0]['@id'];
+    if (typeof link === 'object' && link['@id']) return link['@id'];
+    return link;
+  };
+
   if (prefersReducedMotion) {
     return (
       <div className={cx('block cinematic-sticky-cards', className)}>
-        {cards.map((card, index) => (
-          <article
-            key={card['@id'] || index}
-            className="cinematic-sticky-cards__card"
-            style={{
-              position: 'relative',
-              height: cardHeight,
-              backgroundColor: card.bgColor || '#1a1a2e',
-              color: card.textColor || '#ffffff',
-              borderRadius,
-              marginBottom: '2rem',
-            }}
-          >
-            <div className="cinematic-sticky-cards__content">
-              <p className="cinematic-sticky-cards__title">{card.title}</p>
-              <p className="cinematic-sticky-cards__description">{card.description}</p>
-            </div>
-          </article>
-        ))}
+        {cards.map((card, index) => {
+          const rotateAngle = index % 2 === 0 ? rotateAmount : -rotateAmount;
+          const isFirst = index === 0;
+          const cardBgColor = card.bgColor || (isFirst ? '#000000' : 'transparent');
+          const cardTextColor = card.textColor || (isFirst ? '#ffffff' : '#000000');
+          return (
+            <article
+              key={card['@id'] || index}
+              className="cinematic-sticky-cards__card"
+              style={{
+                position: 'relative',
+                height: cardHeight,
+                backgroundColor: cardBgColor,
+                backgroundImage: card.bgImage ? `url('${card.bgImage}')` : 'none',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                color: cardTextColor,
+                borderRadius,
+                marginBottom: '2rem',
+                ...(enableShiftRotate && {
+                  transform: `translateX(${shiftAmount}px) rotate(${rotateAngle}deg)`,
+                }),
+              }}
+            >
+              <div className="cinematic-sticky-cards__content">
+                <p className="cinematic-sticky-cards__title">{card.title}</p>
+                <p className="cinematic-sticky-cards__description">{card.description}</p>
+                {card.buttonLabel && (
+                  <a
+                    href={isEditMode ? undefined : resolveLink(card.buttonLink)}
+                    className={`ui ${card.buttonPrimary ? 'primary' : 'secondary'} button`}
+                    onClick={(e) => isEditMode && e.preventDefault()}
+                    style={{ color: cardTextColor }}
+                  >
+                    {card.buttonLabel}
+                  </a>
+                )}
+              </div>
+            </article>
+          );
+        })}
       </div>
     );
   }
@@ -56,26 +88,48 @@ const StickyCardsView = ({ data, isEditMode, className }) => {
         }
       `}</style>
       <div className="cinematic-sticky-cards__cards-container">
-        {cards.map((card, index) => (
-          <article
-            key={card['@id'] || index}
-            className="cinematic-sticky-cards__card"
-            style={{
-              position: 'sticky',
-              top: `${300 + index * 40}px`,
-              height: cardHeight,
-              backgroundColor: card.bgColor || '#1a1a2e',
-              color: card.textColor || '#ffffff',
-              borderRadius,
-              zIndex: index,
-            }}
-          >
-            <div className="cinematic-sticky-cards__content">
-              <p className="cinematic-sticky-cards__title">{card.title}</p>
-              <p className="cinematic-sticky-cards__description">{card.description}</p>
-            </div>
-          </article>
-        ))}
+        {cards.map((card, index) => {
+          const rotateAngle = index % 2 === 0 ? rotateAmount : -rotateAmount;
+          const isFirst = index === 0;
+          const cardBgColor = card.bgColor || (isFirst ? '#000000' : 'transparent');
+          const cardTextColor = card.textColor || (isFirst ? '#ffffff' : '#000000');
+          return (
+            <article
+              key={card['@id'] || index}
+              className="cinematic-sticky-cards__card"
+              style={{
+                position: 'sticky',
+                top: `${300 + index * 40}px`,
+                height: cardHeight,
+                backgroundColor: cardBgColor,
+                backgroundImage: card.bgImage ? `url('${card.bgImage}')` : 'none',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                color: cardTextColor,
+                borderRadius,
+                zIndex: index,
+                ...(enableShiftRotate && {
+                  transform: `translateX(${shiftAmount}px) rotate(${rotateAngle}deg)`,
+                }),
+              }}
+            >
+              <div className="cinematic-sticky-cards__content">
+                <p className="cinematic-sticky-cards__title">{card.title}</p>
+                <p className="cinematic-sticky-cards__description">{card.description}</p>
+                {card.buttonLabel && (
+                  <a
+                    href={isEditMode ? undefined : resolveLink(card.buttonLink)}
+                    className={`ui ${card.buttonPrimary ? 'primary' : 'secondary'} button`}
+                    onClick={(e) => isEditMode && e.preventDefault()}
+                    style={{ color: cardTextColor }}
+                  >
+                    {card.buttonLabel}
+                  </a>
+                )}
+              </div>
+            </article>
+          );
+        })}
       </div>
     </div>
   );

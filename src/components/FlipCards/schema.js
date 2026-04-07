@@ -8,54 +8,40 @@ const messages = defineMessages({
   cardHeight: { id: 'cinematicFlipCardsHeight', defaultMessage: 'Card Height' },
   gap: { id: 'cinematicFlipCardsGap', defaultMessage: 'Gap' },
   borderRadius: { id: 'cinematicFlipCardsRadius', defaultMessage: 'Border Radius' },
-  frontTitleColor: { id: 'cinematicFlipCardsFrontTitleColor', defaultMessage: 'Front Title Color' },
-  backTitleColor: { id: 'cinematicFlipCardsBackTitleColor', defaultMessage: 'Back Title Color' },
-  backDescColor: { id: 'cinematicFlipCardsBackDescColor', defaultMessage: 'Back Description Color' },
-  ctaTextColor: { id: 'cinematicFlipCardsCTATextColor', defaultMessage: 'CTA Text Color' },
 });
 
-const CardSchema = (props) => {
-  const { intl } = props;
-  return {
-    title: 'Card',
-    addMessage: 'Add card',
-    fieldsets: [
-      {
-        id: 'default',
-        title: 'Front',
-        fields: ['frontTitle', 'frontBg', 'frontBgImage', 'frontTitleColor'],
-      },
-      {
-        id: 'back',
-        title: 'Back',
-        fields: ['backTitle', 'backDesc', 'backBg', 'backBgImage', 'backTitleColor', 'backDescColor', 'ctaText', 'ctaLink', 'ctaTextColor'],
-      },
-    ],
-    properties: {
-      frontTitle: { title: 'Front Title' },
-      frontBg: { title: 'Front Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#333' },
-      frontBgImage: { title: 'Front Background Image', widget: 'image', default: null },
-      frontTitleColor: { title: intl.formatMessage(messages.frontTitleColor), type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#fff' },
-      backTitle: { title: 'Back Title' },
-      backDesc: { title: 'Back Description' },
-      backBg: { title: 'Back Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#222' },
-      backBgImage: { title: 'Back Background Image', widget: 'image', default: null },
-      backTitleColor: { title: intl.formatMessage(messages.backTitleColor), type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#fff' },
-      backDescColor: { title: intl.formatMessage(messages.backDescColor), type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#ddd' },
-      ctaText: { title: 'CTA Text' },
-      ctaLink: { title: 'CTA Link', widget: 'url' },
-      ctaTextColor: { title: intl.formatMessage(messages.ctaTextColor), type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#fff' },
-    },
-    required: [],
-  };
-};
+const CardSchema = (props) => ({
+  title: 'Card',
+  addMessage: 'Add card',
+  fieldsets: [
+    { id: 'content', title: 'Content', fields: ['frontTitle', 'frontDesc', 'backTitle', 'backDesc', 'buttonLabel', 'buttonLink', 'buttonPrimary'] },
+    { id: 'styling', title: 'Styling', fields: ['frontBgImage', 'frontBgColor', 'frontTitleColor', 'backBgImage', 'backBgColor', 'backTitleColor', 'textColor'] },
+  ],
+  properties: {
+    frontTitle: { title: 'Front Title' },
+    frontDesc: { title: 'Front Description' },
+    backTitle: { title: 'Back Title' },
+    backDesc: { title: 'Back Description' },
+    frontBgImage: { title: 'Front Background Image', widget: 'image', default: null },
+    frontBgColor: { title: 'Front Fallback Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#000000' },
+    frontTitleColor: { title: 'Front Title Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#ffffff' },
+    backBgImage: { title: 'Back Background Image', widget: 'image', default: null },
+    backBgColor: { title: 'Back Fallback Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#000000' },
+    backTitleColor: { title: 'Back Title Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#ffffff' },
+    textColor: { title: 'Text Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#ffffff' },
+    buttonLabel: { title: 'Button Label' },
+    buttonLink: { title: 'Button Link', widget: 'url' },
+    buttonPrimary: { title: 'Primary Button', type: 'boolean', default: true },
+  },
+  required: [],
+});
 
 export const FlipCardsSchema = (props) => {
   const { intl } = props;
   return {
     title: intl.formatMessage(messages.FlipCardsBlock),
     fieldsets: [
-      { id: 'default', title: 'Cards', fields: ['cards'] },
+      { id: 'default', title: 'Content', fields: ['cards'] },
       { id: 'styling', title: 'Layout', fields: ['columns', 'cardHeight', 'gap', 'borderRadius'] },
     ],
     properties: {

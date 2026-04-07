@@ -25,6 +25,13 @@ const AccordionSliderView = ({ data, isEditMode, className }) => {
     );
   }
 
+  const resolveLink = (link) => {
+    if (!link) return '#';
+    if (Array.isArray(link) && link[0]?.['@id']) return link[0]['@id'];
+    if (typeof link === 'object' && link['@id']) return link['@id'];
+    return link;
+  };
+
   return (
     <div
       className={cx('block cinematic-accordion-slider', className)}
@@ -35,7 +42,7 @@ const AccordionSliderView = ({ data, isEditMode, className }) => {
       {panels.map((panel, index) => {
         const isActive = activeIndex === index;
         const flexValue = isActive ? expandedRatio : 1;
-        const imageUrl = getImageUrl(panel.image);
+        const imageUrl = getImageUrl(panel.bgImage);
 
         return (
           <div
@@ -54,10 +61,11 @@ const AccordionSliderView = ({ data, isEditMode, className }) => {
                 ? 'none'
                 : `flex ${transitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1)`,
               backgroundImage: imageUrl ? `url(${imageUrl})` : 'none',
-              backgroundColor: imageUrl ? 'transparent' : (panel.bgColor || '#333'),
+              backgroundColor: panel.bgColor || '#333',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               borderRadius,
+              color: panel.textColor || '#ffffff',
             }}
             onMouseEnter={() => setActiveIndex(index)}
             onMouseLeave={() => setActiveIndex(null)}
@@ -93,6 +101,15 @@ const AccordionSliderView = ({ data, isEditMode, className }) => {
                 <p className="cinematic-accordion-slider__description">
                   {panel.description}
                 </p>
+              )}
+              {panel.buttonLabel && (
+                <a
+                  href={isEditMode ? undefined : resolveLink(panel.buttonLink)}
+                  className={`ui ${panel.buttonPrimary ? 'primary' : 'secondary'} button`}
+                  onClick={(e) => isEditMode && e.preventDefault()}
+                >
+                  {panel.buttonLabel}
+                </a>
               )}
             </div>
           </div>

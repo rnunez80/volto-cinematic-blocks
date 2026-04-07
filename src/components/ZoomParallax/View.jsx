@@ -9,13 +9,16 @@ const ZoomParallaxView = ({ data, isEditMode, className }) => {
   const { gsap, ScrollTrigger, loaded } = useGsap();
 
   const backgroundImage = getImageUrl(data?.backgroundImage, '2k');
+  const fallbackBgColor = data?.fallbackBgColor || '#1a1a2e';
   const midgroundText = data?.midgroundText || 'Cinematic Depth';
   const foregroundText = data?.foregroundText || 'Scroll to experience layered parallax';
-  const ctaText = data?.ctaText || 'Get Started';
-  const ctaLink = data?.ctaLink || '#';
   const overlayColor = data?.overlayColor || '#000000';
   const overlayOpacity = data?.overlayOpacity || '0.4';
   const sectionHeight = data?.sectionHeight || '100vh';
+  const textColor = data?.textColor || '#ffffff';
+  const buttonLabel = data?.buttonLabel || 'Get Started';
+  const buttonLink = data?.buttonLink || '#';
+  const buttonPrimary = data?.buttonPrimary !== false;
 
   const sectionRef = useRef(null);
   const bgRef = useRef(null);
@@ -52,13 +55,12 @@ const ZoomParallaxView = ({ data, isEditMode, className }) => {
     };
   }, [loaded, gsap, ScrollTrigger, prefersReducedMotion, isEditMode]);
 
-  // Resolve CTA link
-  let resolvedLink = ctaLink;
-  if (ctaLink && Array.isArray(ctaLink)) {
-    resolvedLink = ctaLink[0]?.['@id'] || ctaLink[0] || '#';
-  } else if (ctaLink && typeof ctaLink === 'object') {
-    resolvedLink = ctaLink['@id'] || '#';
-  }
+  const resolveLink = (link) => {
+    if (!link) return '#';
+    if (Array.isArray(link) && link[0]?.['@id']) return link[0]['@id'];
+    if (typeof link === 'object' && link['@id']) return link['@id'];
+    return link;
+  };
 
   return (
     <div
@@ -72,7 +74,7 @@ const ZoomParallaxView = ({ data, isEditMode, className }) => {
         className="cinematic-zoom-parallax__bg"
         style={{
           backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'none',
-          backgroundColor: backgroundImage ? 'transparent' : '#1a1a2e',
+          backgroundColor: backgroundImage ? 'transparent' : fallbackBgColor,
         }}
         aria-hidden="true"
       />
@@ -91,6 +93,7 @@ const ZoomParallaxView = ({ data, isEditMode, className }) => {
       >
         <h2
           className="cinematic-zoom-parallax__mid-text"
+          style={{ color: textColor }}
         >
           {midgroundText}
         </h2>
@@ -103,18 +106,20 @@ const ZoomParallaxView = ({ data, isEditMode, className }) => {
       >
         <p
           className="cinematic-zoom-parallax__fg-text"
+          style={{ color: textColor }}
         >
           {foregroundText}
         </p>
-        {ctaText && (
+        {buttonLabel && (
           <a
-            href={isEditMode ? undefined : resolvedLink}
-            className="cinematic-zoom-parallax__cta"
+            href={isEditMode ? undefined : resolveLink(buttonLink)}
+            className={`ui ${buttonPrimary ? 'primary' : 'secondary'} button`}
             onClick={(e) => isEditMode && e.preventDefault()}
             role="button"
-            aria-label={ctaText}
+            aria-label={buttonLabel}
+            style={{ color: textColor }}
           >
-            {ctaText}
+            {buttonLabel}
           </a>
         )}
       </div>

@@ -3,15 +3,14 @@ import config from '@plone/volto/registry';
 
 const messages = defineMessages({
   ZoomParallaxBlock: { id: 'cinematicZoomParallax', defaultMessage: 'Zoom Parallax' },
-  backgroundImage: { id: 'cinematicZoomBgImage', defaultMessage: 'Background Image' },
   midgroundText: { id: 'cinematicZoomMidText', defaultMessage: 'Midground Headline' },
   foregroundText: { id: 'cinematicZoomFgText', defaultMessage: 'Foreground Text' },
-  ctaText: { id: 'cinematicZoomCtaText', defaultMessage: 'CTA Button Text' },
-  ctaLink: { id: 'cinematicZoomCtaLink', defaultMessage: 'CTA Link' },
   overlayColor: { id: 'cinematicZoomOverlayColor', defaultMessage: 'Overlay Color' },
   overlayOpacity: { id: 'cinematicZoomOverlayOpacity', defaultMessage: 'Overlay Opacity' },
   sectionHeight: { id: 'cinematicZoomSectionHeight', defaultMessage: 'Section Height' },
-
+  ctaText: { id: 'cinematicZoomCTAText', defaultMessage: 'CTA Button Text' },
+  ctaLink: { id: 'cinematicZoomCTALink', defaultMessage: 'CTA Link' },
+  ctaPrimary: { id: 'cinematicZoomCTAPrimary', defaultMessage: 'Primary CTA' },
 });
 
 export const ZoomParallaxSchema = (props) => {
@@ -19,13 +18,27 @@ export const ZoomParallaxSchema = (props) => {
   return {
     title: intl.formatMessage(messages.ZoomParallaxBlock),
     fieldsets: [
-      { id: 'default', title: 'Content', fields: ['backgroundImage', 'midgroundText', 'foregroundText', 'ctaText', 'ctaLink'] },
-      { id: 'styling', title: 'Styling', fields: ['overlayColor', 'overlayOpacity', 'sectionHeight'] },
+      { id: 'content', title: 'Content', fields: ['backgroundImage', 'midgroundText', 'foregroundText', 'ctaText', 'ctaLink', 'ctaPrimary'] },
+      { id: 'styling', title: 'Styling', fields: ['fallbackBgColor', 'textColor', 'overlayColor', 'overlayOpacity', 'sectionHeight'] },
     ],
     properties: {
       backgroundImage: {
-        title: intl.formatMessage(messages.backgroundImage),
+        title: 'Background Image',
         widget: 'image',
+      },
+      fallbackBgColor: {
+        title: 'Fallback Background Color',
+        type: 'color',
+        widget: 'style_simple_color',
+        available_colors: config.settings?.available_colors,
+        default: '#1a1a2e',
+      },
+      textColor: {
+        title: 'Text Color',
+        type: 'color',
+        widget: 'style_simple_color',
+        available_colors: config.settings?.available_colors,
+        default: '#ffffff',
       },
       midgroundText: {
         title: intl.formatMessage(messages.midgroundText),
@@ -34,15 +47,6 @@ export const ZoomParallaxSchema = (props) => {
       foregroundText: {
         title: intl.formatMessage(messages.foregroundText),
         default: 'Scroll to experience layered parallax',
-      },
-      ctaText: {
-        title: intl.formatMessage(messages.ctaText),
-        default: 'Get Started',
-      },
-      ctaLink: {
-        title: intl.formatMessage(messages.ctaLink),
-        widget: 'url',
-        default: '',
       },
       overlayColor: {
         title: intl.formatMessage(messages.overlayColor),
@@ -61,7 +65,18 @@ export const ZoomParallaxSchema = (props) => {
         default: '100vh',
         choices: [['60vh', 'Short'], ['80vh', 'Medium'], ['100vh', 'Full Screen'], ['120vh', 'Tall']],
       },
-
+      ctaText: {
+        title: intl.formatMessage(messages.ctaText),
+      },
+      ctaLink: {
+        title: intl.formatMessage(messages.ctaLink),
+        widget: 'url',
+      },
+      ctaPrimary: {
+        title: intl.formatMessage(messages.ctaPrimary),
+        type: 'boolean',
+        default: true,
+      },
     },
     required: [],
   };

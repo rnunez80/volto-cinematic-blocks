@@ -43,11 +43,6 @@ const messages = defineMessages({
     id: 'cinematicTypewriterFontSize',
     defaultMessage: 'Font Size',
   },
-  textColor: {
-    id: 'cinematicTypewriterTextColor',
-    defaultMessage: 'Text Color',
-  },
-
   textAlign: {
     id: 'cinematicTypewriterTextAlign',
     defaultMessage: 'Text Alignment',
@@ -60,7 +55,22 @@ const messages = defineMessages({
     id: 'cinematicTypewriterBlockHeight',
     defaultMessage: 'Block Height',
   },
-
+  foregroundText: {
+    id: 'cinematicTypewriterForegroundText',
+    defaultMessage: 'Foreground Text',
+  },
+  ctaText: {
+    id: 'cinematicTypewriterCTAText',
+    defaultMessage: 'CTA Button Text',
+  },
+  ctaLink: {
+    id: 'cinematicTypewriterCTALink',
+    defaultMessage: 'CTA Link',
+  },
+  ctaPrimary: {
+    id: 'cinematicTypewriterCTAPrimary',
+    defaultMessage: 'Primary CTA',
+  },
 });
 
 export const TypewriterSchema = (props) => {
@@ -69,29 +79,8 @@ export const TypewriterSchema = (props) => {
   return {
     title: intl.formatMessage(messages.TypewriterBlock),
     fieldsets: [
-      {
-        id: 'default',
-        title: 'Default',
-        fields: ['staticText', 'phrases', 'postfixText'],
-      },
-      {
-        id: 'animation',
-        title: 'Animation',
-        fields: ['typingSpeed', 'deleteSpeed', 'pauseDuration', 'loop'],
-      },
-      {
-        id: 'styling',
-        title: 'Styling',
-        fields: [
-          'fontSize',
-          'textColor',
-          'cursorChar',
-          'cursorColor',
-          'textAlign',
-          'blockHeight',
-          'backgroundImage',
-        ],
-      },
+      { id: 'content', title: 'Content', fields: ['staticText', 'phrases', 'postfixText', 'ctaText', 'ctaLink', 'ctaPrimary'] },
+      { id: 'styling', title: 'Styling', fields: ['backgroundImage', 'fallbackBgColor', 'fontSize', 'textColor', 'cursorChar', 'cursorColor', 'textAlign', 'blockHeight', 'typingSpeed', 'deleteSpeed', 'pauseDuration', 'loop'] },
     ],
     properties: {
       staticText: {
@@ -108,6 +97,17 @@ export const TypewriterSchema = (props) => {
       postfixText: {
         title: intl.formatMessage(messages.postfixText),
         description: 'Text that stays fixed after the cycling portion (optional)',
+      },
+      backgroundImage: {
+        title: 'Background Image',
+        widget: 'image',
+      },
+      fallbackBgColor: {
+        title: 'Fallback Background Color',
+        type: 'color',
+        widget: 'style_simple_color',
+        available_colors: config.settings?.available_colors,
+        default: '#000000',
       },
       typingSpeed: {
         title: intl.formatMessage(messages.typingSpeed),
@@ -158,7 +158,7 @@ export const TypewriterSchema = (props) => {
         ],
       },
       textColor: {
-        title: intl.formatMessage(messages.textColor),
+        title: 'Text Color',
         type: 'color',
         widget: 'style_simple_color',
         available_colors: config.settings?.available_colors,
@@ -169,14 +169,26 @@ export const TypewriterSchema = (props) => {
         actions: ['left', 'center', 'right'],
         default: 'center',
       },
-       blockHeight: {
+      blockHeight: {
         title: intl.formatMessage(messages.blockHeight),
         widget: 'image_size',
         default: 'm',
       },
-       backgroundImage: {
-        title: 'Background Image',
-        widget: 'image',
+      foregroundText: {
+        title: intl.formatMessage(messages.foregroundText),
+        description: 'Optional foreground text',
+      },
+      ctaText: {
+        title: intl.formatMessage(messages.ctaText),
+      },
+      ctaLink: {
+        title: intl.formatMessage(messages.ctaLink),
+        widget: 'url',
+      },
+      ctaPrimary: {
+        title: intl.formatMessage(messages.ctaPrimary),
+        type: 'boolean',
+        default: true,
       },
     },
     required: ['phrases'],

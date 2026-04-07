@@ -13,12 +13,18 @@ const ItemSchema = (props) => ({
   title: 'Item',
   addMessage: 'Add item',
   fieldsets: [
-    { id: 'default', title: 'Default', fields: ['title', 'description', 'bgColor'] },
+    { id: 'content', title: 'Content', fields: ['title', 'description', 'buttonLabel', 'buttonLink', 'buttonPrimary'] },
+    { id: 'styling', title: 'Styling', fields: ['bgImage', 'bgColor', 'textColor'] },
   ],
   properties: {
     title: { title: 'Title' },
     description: { title: 'Description' },
-    bgColor: { title: 'Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#333' },
+    bgImage: { title: 'Background Image', widget: 'image', default: null },
+    bgColor: { title: 'Fallback Background Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#333' },
+    textColor: { title: 'Text Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#ffffff' },
+    buttonLabel: { title: 'Button Label' },
+    buttonLink: { title: 'Button Link', widget: 'url' },
+    buttonPrimary: { title: 'Primary Button', type: 'boolean', default: true },
   },
   required: [],
 });
@@ -28,7 +34,7 @@ export const HorizontalScrollSchema = (props) => {
   return {
     title: intl.formatMessage(messages.HorizontalScrollBlock),
     fieldsets: [
-      { id: 'default', title: 'Items', fields: ['items'] },
+      { id: 'default', title: 'Content', fields: ['items'] },
       { id: 'styling', title: 'Layout', fields: ['sectionHeight', 'itemWidth', 'gap'] },
     ],
     properties: {

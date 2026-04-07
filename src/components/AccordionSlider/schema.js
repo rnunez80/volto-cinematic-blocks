@@ -15,17 +15,18 @@ const PanelSchema = (props) => ({
   title: 'Panel',
   addMessage: 'Add panel',
   fieldsets: [
-    {
-      id: 'default',
-      title: 'Default',
-      fields: ['title', 'description', 'image', 'bgColor'],
-    },
+    { id: 'content', title: 'Content', fields: ['title', 'description', 'buttonLabel', 'buttonLink', 'buttonPrimary'] },
+    { id: 'styling', title: 'Styling', fields: ['bgImage', 'bgColor', 'textColor'] },
   ],
   properties: {
     title: { title: 'Title' },
     description: { title: 'Description' },
-    image: { title: 'Background Image', widget: 'image' },
-    bgColor: { title: 'Fallback Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#333' },
+    bgImage: { title: 'Background Image', widget: 'image', default: null },
+    bgColor: { title: 'Fallback Background Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#000000' },
+    textColor: { title: 'Text Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#ffffff' },
+    buttonLabel: { title: 'Button Label' },
+    buttonLink: { title: 'Button Link', widget: 'url' },
+    buttonPrimary: { title: 'Primary Button', type: 'boolean', default: true },
   },
   required: [],
 });
@@ -35,8 +36,8 @@ export const AccordionSliderSchema = (props) => {
   return {
     title: intl.formatMessage(messages.AccordionSliderBlock),
     fieldsets: [
-      { id: 'default', title: 'Panels', fields: ['panels'] },
-      { id: 'styling', title: 'Styling', fields: ['panelHeight', 'transitionSpeed', 'expandedRatio', 'overlayOpacity', 'borderRadius'] },
+      { id: 'default', title: 'Content', fields: ['panels'] },
+      { id: 'styling', title: 'Layout', fields: ['panelHeight', 'transitionSpeed', 'expandedRatio', 'overlayOpacity', 'borderRadius'] },
     ],
     properties: {
       panels: {

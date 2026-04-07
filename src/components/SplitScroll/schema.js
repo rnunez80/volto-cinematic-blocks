@@ -1,4 +1,5 @@
 import { defineMessages } from 'react-intl';
+import config from '@plone/volto/registry';
 
 const messages = defineMessages({
   SplitScrollBlock: { id: 'cinematicSplitScroll', defaultMessage: 'Split Scroll' },
@@ -9,39 +10,45 @@ const messages = defineMessages({
   scrollRatio: { id: 'cinematicSplitRatio', defaultMessage: 'Scroll Speed Ratio' },
 });
 
-const ItemSchema = {
+const ItemSchema = (props) => ({
   title: 'Item',
   addMessage: 'Add item',
   fieldsets: [
-    { id: 'default', title: 'Default', fields: ['title', 'description', 'image'] },
+    { id: 'content', title: 'Content', fields: ['title', 'description', 'buttonLabel', 'buttonLink', 'buttonPrimary'] },
+    { id: 'styling', title: 'Styling', fields: ['image', 'bgImage', 'bgColor', 'textColor'] },
   ],
   properties: {
     title: { title: 'Title' },
     description: { title: 'Description' },
-    image: { title: 'Image', widget: 'image' },
+    image: { title: 'Image', widget: 'image', default: null },
+    bgImage: { title: 'Background Image', widget: 'image', default: null },
+    bgColor: { title: 'Fallback Background Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#333' },
+    textColor: { title: 'Text Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#ffffff' },
+    buttonLabel: { title: 'Button Label' },
+    buttonLink: { title: 'Button Link', widget: 'url' },
+    buttonPrimary: { title: 'Primary Button', type: 'boolean', default: true },
   },
   required: [],
-};
+});
 
 export const SplitScrollSchema = (props) => {
   const { intl } = props;
   return {
     title: intl.formatMessage(messages.SplitScrollBlock),
     fieldsets: [
-      { id: 'default', title: 'Left Column', fields: ['leftItems'] },
-      { id: 'right', title: 'Right Column', fields: ['rightItems'] },
+      { id: 'default', title: 'Content', fields: ['leftItems', 'rightItems'] },
       { id: 'styling', title: 'Layout', fields: ['sectionHeight', 'gap', 'scrollRatio'] },
     ],
     properties: {
       leftItems: {
         title: intl.formatMessage(messages.leftItems),
         widget: 'object_list',
-        schema: ItemSchema,
+        schema: ItemSchema(props),
       },
       rightItems: {
         title: intl.formatMessage(messages.rightItems),
         widget: 'object_list',
-        schema: ItemSchema,
+        schema: ItemSchema(props),
       },
       sectionHeight: {
         title: intl.formatMessage(messages.sectionHeight),

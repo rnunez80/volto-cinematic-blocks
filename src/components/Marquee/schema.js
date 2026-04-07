@@ -1,4 +1,5 @@
 import { defineMessages } from 'react-intl';
+import config from '@plone/volto/registry';
 
 const messages = defineMessages({
   MarqueeBlock: { id: 'cinematicMarquee', defaultMessage: 'Kinetic Marquee' },
@@ -11,17 +12,24 @@ const messages = defineMessages({
   pauseOnHover: { id: 'cinematicMarqueePause', defaultMessage: 'Pause on Hover' },
 });
 
-const BandSchema = {
+const BandSchema = (props) => ({
   title: 'Band',
   addMessage: 'Add band',
   fieldsets: [
-    { id: 'default', title: 'Default', fields: ['text'] },
+    { id: 'content', title: 'Content', fields: ['text', 'buttonLabel', 'buttonLink', 'buttonPrimary'] },
+    { id: 'styling', title: 'Styling', fields: ['bgImage', 'fallbackBgColor', 'textColor'] },
   ],
   properties: {
     text: { title: 'Text', default: 'STRATEGY · DESIGN · DEVELOPMENT · GROWTH' },
+    bgImage: { title: 'Background Image', widget: 'image', default: null },
+    fallbackBgColor: { title: 'Fallback Background Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#000000' },
+    textColor: { title: 'Text Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#ffffff' },
+    buttonLabel: { title: 'Button Label' },
+    buttonLink: { title: 'Button Link', widget: 'url' },
+    buttonPrimary: { title: 'Primary Button', type: 'boolean', default: true },
   },
   required: [],
-};
+});
 
 export const MarqueeSchema = (props) => {
   const { intl } = props;
@@ -29,14 +37,13 @@ export const MarqueeSchema = (props) => {
     title: intl.formatMessage(messages.MarqueeBlock),
     fieldsets: [
       { id: 'default', title: 'Content', fields: ['bands'] },
-      { id: 'animation', title: 'Animation', fields: ['speed', 'direction', 'pauseOnHover'] },
-      { id: 'styling', title: 'Typography', fields: ['fontSize', 'separator', 'fontWeight'] },
+      { id: 'styling', title: 'Layout', fields: ['speed', 'direction', 'fontSize', 'separator', 'fontWeight', 'pauseOnHover'] },
     ],
     properties: {
       bands: {
         title: intl.formatMessage(messages.bands),
         widget: 'object_list',
-        schema: BandSchema,
+        schema: BandSchema(props),
       },
       speed: {
         title: intl.formatMessage(messages.speed),
@@ -47,11 +54,6 @@ export const MarqueeSchema = (props) => {
         title: intl.formatMessage(messages.direction),
         default: 'left',
         choices: [['left', 'Left'], ['right', 'Right']],
-      },
-      pauseOnHover: {
-        title: intl.formatMessage(messages.pauseOnHover),
-        type: 'boolean',
-        default: true,
       },
       fontSize: {
         title: intl.formatMessage(messages.fontSize),
@@ -66,6 +68,11 @@ export const MarqueeSchema = (props) => {
         title: intl.formatMessage(messages.fontWeight),
         default: '800',
         choices: [['400', 'Normal'], ['600', 'Semi Bold'], ['800', 'Bold'], ['900', 'Black']],
+      },
+      pauseOnHover: {
+        title: intl.formatMessage(messages.pauseOnHover),
+        type: 'boolean',
+        default: true,
       },
     },
     required: [],

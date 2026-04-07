@@ -44,6 +44,13 @@ const HorizontalScrollView = ({ data, isEditMode, className }) => {
     };
   }, [loaded, gsap, ScrollTrigger, prefersReducedMotion, isEditMode, items]);
 
+  const resolveLink = (link) => {
+    if (!link) return '#';
+    if (Array.isArray(link) && link[0]?.['@id']) return link[0]['@id'];
+    if (typeof link === 'object' && link['@id']) return link['@id'];
+    return link;
+  };
+
   if (!items.length) {
     return (
       <div className={cx('block cinematic-horizontal-scroll', className)}>
@@ -64,11 +71,27 @@ const HorizontalScrollView = ({ data, isEditMode, className }) => {
             <article
               key={item['@id'] || index}
               className="cinematic-horizontal-scroll__item"
-              style={{ width: itemWidth, backgroundColor: item.bgColor || '#333' }}
+              style={{
+                width: itemWidth,
+                backgroundColor: item.bgColor || '#333',
+                backgroundImage: item.bgImage ? `url('${item.bgImage}')` : 'none',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                color: item.textColor || '#ffffff',
+              }}
               aria-label={item.title}
             >
               <h3 className="cinematic-horizontal-scroll__item-title">{item.title}</h3>
               <p className="cinematic-horizontal-scroll__item-desc">{item.description}</p>
+              {item.buttonLabel && (
+                <a
+                  href={isEditMode ? undefined : resolveLink(item.buttonLink)}
+                  className={`ui ${item.buttonPrimary ? 'primary' : 'secondary'} button`}
+                  onClick={(e) => isEditMode && e.preventDefault()}
+                >
+                  {item.buttonLabel}
+                </a>
+              )}
             </article>
           ))}
         </div>
@@ -89,11 +112,28 @@ const HorizontalScrollView = ({ data, isEditMode, className }) => {
           <article
             key={item['@id'] || index}
             className="cinematic-horizontal-scroll__item"
-            style={{ width: itemWidth, minWidth: itemWidth, backgroundColor: item.bgColor || '#333' }}
+            style={{
+              width: itemWidth,
+              minWidth: itemWidth,
+              backgroundColor: item.bgColor || '#333',
+              backgroundImage: item.bgImage ? `url('${item.bgImage}')` : 'none',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              color: item.textColor || '#ffffff',
+            }}
             aria-label={item.title}
           >
             <h3 className="cinematic-horizontal-scroll__item-title">{item.title}</h3>
             <p className="cinematic-horizontal-scroll__item-desc">{item.description}</p>
+            {item.buttonLabel && (
+              <a
+                href={isEditMode ? undefined : resolveLink(item.buttonLink)}
+                className={`ui ${item.buttonPrimary ? 'primary' : 'secondary'} button`}
+                onClick={(e) => isEditMode && e.preventDefault()}
+              >
+                {item.buttonLabel}
+              </a>
+            )}
           </article>
         ))}
       </div>

@@ -44,10 +44,27 @@ const SplitScrollView = ({ data, isEditMode, className }) => {
     };
   }, [loaded, gsap, ScrollTrigger, prefersReducedMotion, isEditMode, scrollRatio]);
 
+  const resolveLink = (link) => {
+    if (!link) return '#';
+    if (Array.isArray(link) && link[0]?.['@id']) return link[0]['@id'];
+    if (typeof link === 'object' && link['@id']) return link['@id'];
+    return link;
+  };
+
   const renderItem = (item, index) => {
     const imageUrl = getImageUrl(item.image);
     return (
-      <article key={item['@id'] || index} className="cinematic-split-scroll__item">
+      <article
+        key={item['@id'] || index}
+        className="cinematic-split-scroll__item"
+        style={{
+          backgroundColor: item.bgColor || '#333',
+          backgroundImage: item.bgImage ? `url('${item.bgImage}')` : 'none',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          color: item.textColor || '#ffffff',
+        }}
+      >
         {imageUrl && (
           <img
             src={imageUrl}
@@ -58,6 +75,15 @@ const SplitScrollView = ({ data, isEditMode, className }) => {
         )}
         <h3 className="cinematic-split-scroll__title">{item.title}</h3>
         <p className="cinematic-split-scroll__desc">{item.description}</p>
+        {item.buttonLabel && (
+          <a
+            href={isEditMode ? undefined : resolveLink(item.buttonLink)}
+            className={`ui ${item.buttonPrimary ? 'primary' : 'secondary'} button`}
+            onClick={(e) => isEditMode && e.preventDefault()}
+          >
+            {item.buttonLabel}
+          </a>
+        )}
       </article>
     );
   };

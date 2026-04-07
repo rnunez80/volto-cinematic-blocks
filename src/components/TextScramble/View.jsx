@@ -16,6 +16,10 @@ const TextScrambleView = ({ data, isEditMode, className }) => {
   const textColor = data?.textColor || '';
   const blockHeight = data?.blockHeight || 'm';
   const backgroundImage = data?.backgroundImage || null;
+  const fallbackBgColor = data?.fallbackBgColor || '#000000';
+  const buttonLabel = data?.buttonLabel || '';
+  const buttonLink = data?.buttonLink || '#';
+  const buttonPrimary = data?.buttonPrimary !== false;
 
   const [displayText, setDisplayText] = useState(prefersReducedMotion ? headline : '');
   const [hasTriggered, setHasTriggered] = useState(false);
@@ -53,7 +57,6 @@ const TextScrambleView = ({ data, isEditMode, className }) => {
     animate();
   }, [headline, scrambleChars, decodeSpeed, prefersReducedMotion]);
 
-  // Intersection Observer for on-scroll trigger
   useEffect(() => {
     if (prefersReducedMotion) {
       setDisplayText(headline);
@@ -90,6 +93,13 @@ const TextScrambleView = ({ data, isEditMode, className }) => {
     };
   }, [trigger, scramble, hasTriggered, prefersReducedMotion, headline]);
 
+  const resolveLink = (link) => {
+    if (!link) return '#';
+    if (Array.isArray(link) && link[0]?.['@id']) return link[0]['@id'];
+    if (typeof link === 'object' && link['@id']) return link['@id'];
+    return link;
+  };
+
   const imageUrl = getImageUrl(backgroundImage);
   const heightClass = `cinematic-text-scramble--h-${blockHeight}`;
 
@@ -101,6 +111,7 @@ const TextScrambleView = ({ data, isEditMode, className }) => {
         textAlign,
         color: textColor || undefined,
         backgroundImage: imageUrl ? `url(${imageUrl})` : 'none',
+        backgroundColor: fallbackBgColor,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
@@ -116,6 +127,16 @@ const TextScrambleView = ({ data, isEditMode, className }) => {
         >
           {prefersReducedMotion ? headline : displayText}
         </h2>
+        {buttonLabel && (
+          <a
+            href={isEditMode ? undefined : resolveLink(buttonLink)}
+            className={`ui ${buttonPrimary ? 'primary' : 'secondary'} button`}
+            onClick={(e) => isEditMode && e.preventDefault()}
+            style={{ color: textColor || undefined }}
+          >
+            {buttonLabel}
+          </a>
+        )}
       </div>
     </div>
   );

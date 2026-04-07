@@ -11,12 +11,15 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
   const title = data?.title || 'Reveal what matters';
   const description = data?.description || '';
   const backgroundImage = getImageUrl(data?.backgroundImage, '2k');
-  const ctaText = data?.ctaText || '';
-  const ctaLink = data?.ctaLink || '#';
+  const fallbackBgColor = data?.fallbackBgColor || '#1a1a2e';
   const curtainColor = data?.curtainColor || '#1a1a2e';
   const curtainGradient = data?.curtainGradient || '';
   const revealDirection = data?.revealDirection || 'left';
   const sectionHeight = data?.sectionHeight || '100vh';
+  const textColor = data?.textColor || '#ffffff';
+  const buttonLabel = data?.buttonLabel || '';
+  const buttonLink = data?.buttonLink || '#';
+  const buttonPrimary = data?.buttonPrimary !== false;
 
   const sectionRef = useRef(null);
   const curtainRef = useRef(null);
@@ -60,13 +63,12 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
     return () => { tween.kill(); };
   }, [loaded, gsap, ScrollTrigger, prefersReducedMotion, isEditMode, revealDirection]);
 
-  // Resolve CTA link
-  let resolvedLink = ctaLink;
-  if (ctaLink && Array.isArray(ctaLink)) {
-    resolvedLink = ctaLink[0]?.['@id'] || ctaLink[0] || '#';
-  } else if (ctaLink && typeof ctaLink === 'object') {
-    resolvedLink = ctaLink['@id'] || '#';
-  }
+  const resolveLink = (link) => {
+    if (!link) return '#';
+    if (Array.isArray(link) && link[0]?.['@id']) return link[0]['@id'];
+    if (typeof link === 'object' && link['@id']) return link['@id'];
+    return link;
+  };
 
   const curtainBg = curtainGradient
     ? { background: curtainGradient }
@@ -81,7 +83,7 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
         position: 'relative',
         overflow: 'hidden',
         backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'none',
-        backgroundColor: backgroundImage ? 'transparent' : '#111',
+        backgroundColor: backgroundImage ? 'transparent' : fallbackBgColor,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
@@ -102,26 +104,28 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
       <div className="cinematic-curtain-reveal__content">
         <h2
           className="cinematic-curtain-reveal__title"
+          style={{ color: textColor }}
         >
           {title}
         </h2>
         {description && (
           <p
             className="cinematic-curtain-reveal__description"
-            style={{ opacity: 0.85 }}
+            style={{ opacity: 0.85, color: textColor }}
           >
             {description}
           </p>
         )}
-        {ctaText && (
+        {buttonLabel && (
           <a
-            href={isEditMode ? undefined : resolvedLink}
-            className="cinematic-curtain-reveal__cta"
+            href={isEditMode ? undefined : resolveLink(buttonLink)}
+            className={`ui ${buttonPrimary ? 'primary' : 'secondary'} button`}
             onClick={(e) => isEditMode && e.preventDefault()}
             role="button"
-            aria-label={ctaText}
+            aria-label={buttonLabel}
+            style={{ color: textColor }}
           >
-            {ctaText}
+            {buttonLabel}
           </a>
         )}
       </div>
