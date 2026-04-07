@@ -25,6 +25,13 @@ const FlipCardsView = ({ data, isEditMode, className }) => {
     );
   }
 
+  const resolveLink = (link) => {
+    if (!link) return '#';
+    if (Array.isArray(link) && link[0]?.['@id']) return link[0]['@id'];
+    if (typeof link === 'object' && link['@id']) return link['@id'];
+    return link;
+  };
+
   return (
     <div
       className={cx('block cinematic-flip-cards', className)}
@@ -36,13 +43,14 @@ const FlipCardsView = ({ data, isEditMode, className }) => {
     >
       {cards.map((card, index) => {
         const isFlipped = flippedStates[index] || false;
+        const isFirst = index === 0;
 
-        const resolveLink = (link) => {
-          if (!link) return '#';
-          if (Array.isArray(link) && link[0]?.['@id']) return link[0]['@id'];
-          if (typeof link === 'object' && link['@id']) return link['@id'];
-          return link;
-        };
+        const frontBgColor = card.frontBgColor || (isFirst ? '#000000' : 'transparent');
+        const frontTitleColor = card.frontTitleColor || (isFirst ? '#ffffff' : '#000000');
+        const frontDescColor = card.frontDescColor || (isFirst ? '#ffffff' : '#000000');
+        const backBgColor = card.backBgColor || (isFirst ? '#000000' : 'transparent');
+        const backTitleColor = card.backTitleColor || (isFirst ? '#ffffff' : '#000000');
+        const backDescColor = card.backDescColor || (isFirst ? '#ffffff' : '#000000');
 
         return (
           <div
@@ -77,7 +85,7 @@ const FlipCardsView = ({ data, isEditMode, className }) => {
                <div
                   className="cinematic-flip-cards__front"
                   style={{
-                    backgroundColor: card.frontBgColor || '#333',
+                    backgroundColor: frontBgColor,
                     backgroundImage: card.frontBgImage ? `url('${card.frontBgImage}')` : 'none',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
@@ -85,13 +93,13 @@ const FlipCardsView = ({ data, isEditMode, className }) => {
                   }}
                   aria-hidden={isFlipped}
                 >
-                  <h3 className="cinematic-flip-cards__front-title" style={{ color: card.frontTitleColor || '#fff' }}>{card.frontTitle}</h3>
-                  {card.frontDesc && <p className="cinematic-flip-cards__front-desc" style={{ color: card.frontDescColor || '#ddd' }}>{card.frontDesc}</p>}
+                  <h3 className="cinematic-flip-cards__front-title" style={{ color: frontTitleColor }}>{card.frontTitle}</h3>
+                  {card.frontDesc && <p className="cinematic-flip-cards__front-desc" style={{ color: frontDescColor }}>{card.frontDesc}</p>}
                 </div>
                 <div
                   className="cinematic-flip-cards__back"
                   style={{
-                    backgroundColor: card.backBgColor || '#222',
+                    backgroundColor: backBgColor,
                     backgroundImage: card.backBgImage ? `url('${card.backBgImage}')` : 'none',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
@@ -99,14 +107,13 @@ const FlipCardsView = ({ data, isEditMode, className }) => {
                   }}
                   aria-hidden={!isFlipped}
                 >
-                  <h3 className="cinematic-flip-cards__back-title" style={{ color: card.backTitleColor || '#fff' }}>{card.backTitle}</h3>
-                  <p className="cinematic-flip-cards__back-desc" style={{ color: card.backDescColor || '#ddd' }}>{card.backDesc}</p>
+                  <h3 className="cinematic-flip-cards__back-title" style={{ color: backTitleColor }}>{card.backTitle}</h3>
+                  <p className="cinematic-flip-cards__back-desc" style={{ color: backDescColor }}>{card.backDesc}</p>
                   {card.buttonLabel && (
                     <a
                       href={isEditMode ? undefined : resolveLink(card.buttonLink)}
                       className={`ui ${card.buttonPrimary ? 'primary' : 'secondary'} button`}
                       onClick={(e) => isEditMode && e.preventDefault()}
-                      style={{ color: card.backTitleColor || '#fff' }}
                     >
                       {card.buttonLabel}
                     </a>

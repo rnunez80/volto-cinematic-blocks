@@ -9,8 +9,8 @@ const StickyCardsView = ({ data, isEditMode, className }) => {
   const cardHeight = data?.cardHeight || '400px';
   const borderRadius = data?.borderRadius || '20px';
   const enableShiftRotate = data?.enableShiftRotate !== false;
-  const shiftAmount = data?.shiftAmount || 0;
-  const rotateAmount = data?.rotateAmount || 3;
+  const shiftAmount = data?.shiftAmount || 100;
+  const rotateAmount = data?.rotateAmount || 10;
 
   if (!cards.length) {
     return (
@@ -62,7 +62,6 @@ const StickyCardsView = ({ data, isEditMode, className }) => {
                     href={isEditMode ? undefined : resolveLink(card.buttonLink)}
                     className={`ui ${card.buttonPrimary ? 'primary' : 'secondary'} button`}
                     onClick={(e) => isEditMode && e.preventDefault()}
-                    style={{ color: cardTextColor }}
                   >
                     {card.buttonLabel}
                   </a>
@@ -121,7 +120,6 @@ const StickyCardsView = ({ data, isEditMode, className }) => {
                     href={isEditMode ? undefined : resolveLink(card.buttonLink)}
                     className={`ui ${card.buttonPrimary ? 'primary' : 'secondary'} button`}
                     onClick={(e) => isEditMode && e.preventDefault()}
-                    style={{ color: cardTextColor }}
                   >
                     {card.buttonLabel}
                   </a>

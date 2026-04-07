@@ -52,17 +52,20 @@ const SplitScrollView = ({ data, isEditMode, className }) => {
   };
 
   const renderItem = (item, index) => {
+    const isFirst = index === 0;
+    const itemBgColor = item.bgColor || (isFirst ? '#000000' : 'transparent');
+    const itemTextColor = item.textColor || (isFirst ? '#ffffff' : '#000000');
     const imageUrl = getImageUrl(item.image);
     return (
       <article
         key={item['@id'] || index}
         className="cinematic-split-scroll__item"
         style={{
-          backgroundColor: item.bgColor || '#333',
+          backgroundColor: itemBgColor,
           backgroundImage: item.bgImage ? `url('${item.bgImage}')` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          color: item.textColor || '#ffffff',
+          color: itemTextColor,
         }}
       >
         {imageUrl && (
@@ -80,6 +83,7 @@ const SplitScrollView = ({ data, isEditMode, className }) => {
             href={isEditMode ? undefined : resolveLink(item.buttonLink)}
             className={`ui ${item.buttonPrimary ? 'primary' : 'secondary'} button`}
             onClick={(e) => isEditMode && e.preventDefault()}
+            style={{ color: itemTextColor }}
           >
             {item.buttonLabel}
           </a>

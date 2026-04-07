@@ -67,17 +67,68 @@ const HorizontalScrollView = ({ data, isEditMode, className }) => {
         aria-label="Horizontal scroll gallery"
       >
         <div className="cinematic-horizontal-scroll__fallback-grid">
-          {items.map((item, index) => (
+          {items.map((item, index) => {
+            const isFirst = index === 0;
+            const itemBgColor = item.bgColor || (isFirst ? '#000000' : 'transparent');
+            const itemTextColor = item.textColor || (isFirst ? '#ffffff' : '#000000');
+            return (
+              <article
+                key={item['@id'] || index}
+                className="cinematic-horizontal-scroll__item"
+                style={{
+                  width: itemWidth,
+                  backgroundColor: itemBgColor,
+                  backgroundImage: item.bgImage ? `url('${item.bgImage}')` : 'none',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  color: itemTextColor,
+                }}
+                aria-label={item.title}
+              >
+                <h3 className="cinematic-horizontal-scroll__item-title">{item.title}</h3>
+                <p className="cinematic-horizontal-scroll__item-desc">{item.description}</p>
+                {item.buttonLabel && (
+                  <a
+                    href={isEditMode ? undefined : resolveLink(item.buttonLink)}
+                    className={`ui ${item.buttonPrimary ? 'primary' : 'secondary'} button`}
+                    onClick={(e) => isEditMode && e.preventDefault()}
+                  >
+                    {item.buttonLabel}
+                  </a>
+                )}
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      ref={sectionRef}
+      className={cx('block cinematic-horizontal-scroll', className)}
+      style={{ height: `${parseInt(sectionHeight) * 100}vh` }}
+      aria-roledescription="carousel"
+      aria-label="Horizontal scroll gallery"
+    >
+      <div ref={trackRef} className="cinematic-horizontal-scroll__track" style={{ gap }}>
+        {items.map((item, index) => {
+          const isFirst = index === 0;
+          const itemBgColor = item.bgColor || (isFirst ? '#000000' : 'transparent');
+          const itemTextColor = item.textColor || (isFirst ? '#ffffff' : '#000000');
+          return (
             <article
               key={item['@id'] || index}
               className="cinematic-horizontal-scroll__item"
               style={{
                 width: itemWidth,
-                backgroundColor: item.bgColor || '#333',
+                minWidth: itemWidth,
+                backgroundColor: itemBgColor,
                 backgroundImage: item.bgImage ? `url('${item.bgImage}')` : 'none',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                color: item.textColor || '#ffffff',
+                color: itemTextColor,
               }}
               aria-label={item.title}
             >
@@ -93,49 +144,8 @@ const HorizontalScrollView = ({ data, isEditMode, className }) => {
                 </a>
               )}
             </article>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div
-      ref={sectionRef}
-      className={cx('block cinematic-horizontal-scroll', className)}
-      style={{ height: `${parseInt(sectionHeight) * 100}vh` }}
-      aria-roledescription="carousel"
-      aria-label="Horizontal scroll gallery"
-    >
-      <div ref={trackRef} className="cinematic-horizontal-scroll__track" style={{ gap }}>
-        {items.map((item, index) => (
-          <article
-            key={item['@id'] || index}
-            className="cinematic-horizontal-scroll__item"
-            style={{
-              width: itemWidth,
-              minWidth: itemWidth,
-              backgroundColor: item.bgColor || '#333',
-              backgroundImage: item.bgImage ? `url('${item.bgImage}')` : 'none',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              color: item.textColor || '#ffffff',
-            }}
-            aria-label={item.title}
-          >
-            <h3 className="cinematic-horizontal-scroll__item-title">{item.title}</h3>
-            <p className="cinematic-horizontal-scroll__item-desc">{item.description}</p>
-            {item.buttonLabel && (
-              <a
-                href={isEditMode ? undefined : resolveLink(item.buttonLink)}
-                className={`ui ${item.buttonPrimary ? 'primary' : 'secondary'} button`}
-                onClick={(e) => isEditMode && e.preventDefault()}
-              >
-                {item.buttonLabel}
-              </a>
-            )}
-          </article>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

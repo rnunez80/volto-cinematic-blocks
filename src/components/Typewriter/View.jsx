@@ -8,7 +8,7 @@ const TypewriterView = ({ data, isEditMode, className }) => {
   const postfixText = data?.postfixText || '';
   const phrasesRaw = data?.phrases || 'websites, applications, experiences';
   const phrases = phrasesRaw.split(',').map((p) => p.trim()).filter(Boolean);
-  const textColor = data?.textColor || '';
+  const textColor = data?.textColor || '#ffffff';
   const typingSpeed = data?.typingSpeed || 80;
   const deleteSpeed = data?.deleteSpeed || 40;
   const pauseDuration = data?.pauseDuration || 1500;
@@ -109,7 +109,7 @@ const TypewriterView = ({ data, isEditMode, className }) => {
       <div className={`cinematic-typewriter__inner ${heightClass}`} style={{}}>
         <h2
           className="cinematic-typewriter__text"
-          style={{ fontSize, color: textColor || undefined }}
+          style={{ fontSize, color: textColor }}
           aria-live="polite"
           aria-atomic="true"
         >
@@ -135,7 +135,7 @@ const TypewriterView = ({ data, isEditMode, className }) => {
             href={isEditMode ? undefined : resolveLink(ctaLink)}
             className={`ui ${ctaPrimary ? 'primary' : 'secondary'} button`}
             onClick={(e) => isEditMode && e.preventDefault()}
-            style={{ color: textColor || undefined }}
+            style={{ color: textColor }}
           >
             {ctaText}
           </a>

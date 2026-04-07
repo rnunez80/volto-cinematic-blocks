@@ -41,14 +41,14 @@ export const CurtainRevealSchema = (props) => {
         type: 'color',
         widget: 'style_simple_color',
         available_colors: config.settings?.available_colors,
-        default: '#1a1a2e',
+        default: '#eeeeee',
       },
       textColor: {
         title: 'Text Color',
         type: 'color',
         widget: 'style_simple_color',
         available_colors: config.settings?.available_colors,
-        default: '#ffffff',
+        default: '#000000',
       },
       curtainColor: {
         title: intl.formatMessage(messages.curtainColor),

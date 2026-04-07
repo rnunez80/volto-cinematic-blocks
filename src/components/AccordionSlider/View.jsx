@@ -43,6 +43,9 @@ const AccordionSliderView = ({ data, isEditMode, className }) => {
         const isActive = activeIndex === index;
         const flexValue = isActive ? expandedRatio : 1;
         const imageUrl = getImageUrl(panel.bgImage);
+        const isFirst = index === 0;
+        const panelBgColor = panel.bgColor || (isFirst ? '#000000' : 'transparent');
+        const panelTextColor = panel.textColor || (isFirst ? '#ffffff' : '#000000');
 
         return (
           <div
@@ -61,11 +64,11 @@ const AccordionSliderView = ({ data, isEditMode, className }) => {
                 ? 'none'
                 : `flex ${transitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1)`,
               backgroundImage: imageUrl ? `url(${imageUrl})` : 'none',
-              backgroundColor: panel.bgColor || '#333',
+              backgroundColor: panelBgColor,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               borderRadius,
-              color: panel.textColor || '#ffffff',
+              color: panelTextColor,
             }}
             onMouseEnter={() => setActiveIndex(index)}
             onMouseLeave={() => setActiveIndex(null)}
@@ -93,6 +96,7 @@ const AccordionSliderView = ({ data, isEditMode, className }) => {
               id={`accordion-panel-content-${index}`}
               className="cinematic-accordion-slider__content"
               role="tabpanel"
+              style={{ color: panelTextColor }}
             >
               <p className="cinematic-accordion-slider__title">
                 {panel.title}

@@ -11,7 +11,7 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
   const title = data?.title || 'Reveal what matters';
   const description = data?.description || '';
   const backgroundImage = getImageUrl(data?.backgroundImage, '2k');
-  const fallbackBgColor = data?.fallbackBgColor || '#1a1a2e';
+  const fallbackBgColor = data?.fallbackBgColor || '#000000';
   const curtainColor = data?.curtainColor || '#1a1a2e';
   const curtainGradient = data?.curtainGradient || '';
   const revealDirection = data?.revealDirection || 'left';

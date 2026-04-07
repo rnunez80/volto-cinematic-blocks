@@ -13,7 +13,7 @@ const TextScrambleView = ({ data, isEditMode, className }) => {
   const fontSize = data?.fontSize || '3rem';
   const textAlign = data?.textAlign || 'center';
   const fontFamily = data?.fontFamily || 'monospace';
-  const textColor = data?.textColor || '';
+  const textColor = data?.textColor || '#ffffff';
   const blockHeight = data?.blockHeight || 'm';
   const backgroundImage = data?.backgroundImage || null;
   const fallbackBgColor = data?.fallbackBgColor || '#000000';
@@ -109,7 +109,7 @@ const TextScrambleView = ({ data, isEditMode, className }) => {
       className={cx('block cinematic-text-scramble', className, heightClass)}
       style={{
         textAlign,
-        color: textColor || undefined,
+        color: textColor,
         backgroundImage: imageUrl ? `url(${imageUrl})` : 'none',
         backgroundColor: fallbackBgColor,
         backgroundSize: 'cover',
@@ -132,7 +132,7 @@ const TextScrambleView = ({ data, isEditMode, className }) => {
             href={isEditMode ? undefined : resolveLink(buttonLink)}
             className={`ui ${buttonPrimary ? 'primary' : 'secondary'} button`}
             onClick={(e) => isEditMode && e.preventDefault()}
-            style={{ color: textColor || undefined }}
+            style={{ color: textColor }}
           >
             {buttonLabel}
           </a>

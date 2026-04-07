@@ -47,6 +47,9 @@ const MarqueeView = ({ data, isEditMode, className }) => {
           : index % 2 !== 0;
 
         const repeatedContent = `${bandText}${separator}`.repeat(6);
+        const isFirst = index === 0;
+        const bandBgColor = band.fallbackBgColor || (isFirst ? '#000000' : 'transparent');
+        const bandTextColor = band.textColor || (isFirst ? '#ffffff' : '#000000');
 
         return (
           <div
@@ -61,14 +64,14 @@ const MarqueeView = ({ data, isEditMode, className }) => {
               style={{
                 animationDuration: `${speed}s`,
                 animationPlayState: prefersReducedMotion ? 'paused' : 'running',
-                backgroundColor: band.fallbackBgColor || 'transparent',
+                backgroundColor: bandBgColor,
                 backgroundImage: band.bgImage ? `url('${band.bgImage}')` : 'none',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
               }}
             >
-              <span className="cinematic-marquee__text" style={{ color: band.textColor || '#ffffff' }}>{repeatedContent}</span>
-              <span className="cinematic-marquee__text" aria-hidden="true" style={{ color: band.textColor || '#ffffff' }}>
+              <span className="cinematic-marquee__text" style={{ color: bandTextColor }}>{repeatedContent}</span>
+              <span className="cinematic-marquee__text" aria-hidden="true" style={{ color: bandTextColor }}>
                 {repeatedContent}
               </span>
               {band.buttonLabel && (
@@ -76,7 +79,7 @@ const MarqueeView = ({ data, isEditMode, className }) => {
                   href={isEditMode ? undefined : resolveLink(band.buttonLink)}
                   className={`ui ${band.buttonPrimary ? 'primary' : 'secondary'} button`}
                   onClick={(e) => isEditMode && e.preventDefault()}
-                  style={{ color: band.textColor || '#ffffff' }}
+                  style={{ color: bandTextColor }}
                 >
                   {band.buttonLabel}
                 </a>

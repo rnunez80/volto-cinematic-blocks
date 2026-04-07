@@ -9,7 +9,7 @@ const ZoomParallaxView = ({ data, isEditMode, className }) => {
   const { gsap, ScrollTrigger, loaded } = useGsap();
 
   const backgroundImage = getImageUrl(data?.backgroundImage, '2k');
-  const fallbackBgColor = data?.fallbackBgColor || '#1a1a2e';
+  const fallbackBgColor = data?.fallbackBgColor || '#000000';
   const midgroundText = data?.midgroundText || 'Cinematic Depth';
   const foregroundText = data?.foregroundText || 'Scroll to experience layered parallax';
   const overlayColor = data?.overlayColor || '#000000';

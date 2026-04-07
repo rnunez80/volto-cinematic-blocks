@@ -107,7 +107,7 @@ export const TypewriterSchema = (props) => {
         type: 'color',
         widget: 'style_simple_color',
         available_colors: config.settings?.available_colors,
-        default: '#000000',
+        default: '#eeeeee',
       },
       typingSpeed: {
         title: intl.formatMessage(messages.typingSpeed),
@@ -144,7 +144,7 @@ export const TypewriterSchema = (props) => {
         type: 'color',
         widget: 'style_simple_color',
         available_colors: config.settings?.available_colors,
-        default: '#e74c3c',
+        default: '#000000',
       },
       fontSize: {
         title: intl.formatMessage(messages.fontSize),
@@ -162,6 +162,7 @@ export const TypewriterSchema = (props) => {
         type: 'color',
         widget: 'style_simple_color',
         available_colors: config.settings?.available_colors,
+        default: '#000000',
       },
       textAlign: {
         title: intl.formatMessage(messages.textAlign),

@@ -33,6 +33,9 @@ import SplitScrollView from './components/SplitScroll/View';
 import CurtainRevealEdit from './components/CurtainReveal/Edit';
 import CurtainRevealView from './components/CurtainReveal/View';
 
+import SliderCrazyEffectsEdit from './components/SliderCrazyEffects/Edit';
+import SliderCrazyEffectsView from './components/SliderCrazyEffects/View';
+
 // All cinematic block IDs — used to apply volto-block-style wrapper after registration
 const CINEMATIC_BLOCKS = [
   'cinematicTypewriter',
@@ -45,6 +48,7 @@ const CINEMATIC_BLOCKS = [
   'cinematicZoomParallax',
   'cinematicSplitScroll',
   'cinematicCurtainReveal',
+  'cinematicSlider',
 ];
 
 const applyConfig = (config) => {
@@ -179,6 +183,19 @@ const applyConfig = (config) => {
     group: 'cinematic',
     view: CurtainRevealView,
     edit: CurtainRevealEdit,
+    restricted: false,
+    mostUsed: false,
+    sidebarTab: 1,
+  };
+
+  // 11. Slider Crazy Effects
+  config.blocks.blocksConfig.cinematicSlider = {
+    id: 'cinematicSlider',
+    title: 'Slider Crazy Effects',
+    icon: paintSVG, // Temporarily using paintSVG as per existing pattern
+    group: 'cinematic',
+    view: SliderCrazyEffectsView,
+    edit: SliderCrazyEffectsEdit,
     restricted: false,
     mostUsed: false,
     sidebarTab: 1,

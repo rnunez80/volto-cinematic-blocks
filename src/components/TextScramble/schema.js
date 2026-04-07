@@ -35,7 +35,7 @@ export const TextScrambleSchema = (props) => {
         type: 'color',
         widget: 'style_simple_color',
         available_colors: config.settings?.available_colors,
-        default: '#000000',
+        default: '#eeeeee',
       },
       fontSize: {
         title: intl.formatMessage(messages.fontSize),
@@ -63,6 +63,7 @@ export const TextScrambleSchema = (props) => {
         type: 'color',
         widget: 'style_simple_color',
         available_colors: config.settings?.available_colors,
+        default: '#000000',
       },
       trigger: {
         title: intl.formatMessage(messages.trigger),
