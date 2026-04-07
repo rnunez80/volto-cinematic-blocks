@@ -22,7 +22,7 @@ const ItemSchema = (props) => ({
     description: { title: 'Description' },
     image: { title: 'Image', widget: 'image', default: null },
     bgImage: { title: 'Background Image', widget: 'image', default: null },
-    bgColor: { title: 'Fallback Background Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#333' },
+    bgColor: { title: 'Fallback Background Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#000000' },
     textColor: { title: 'Text Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#ffffff' },
     buttonLabel: { title: 'Button Label' },
     buttonLink: { title: 'Button Link', widget: 'url' },
