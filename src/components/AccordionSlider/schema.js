@@ -2,7 +2,7 @@ import { defineMessages } from 'react-intl';
 import config from '@plone/volto/registry';
 
 const messages = defineMessages({
-  AccordionSliderBlock: { id: 'cinematicAccordionSlider', defaultMessage: 'Accordion Slider' },
+  AccordionSliderBlock: { id: 'cinematicAccordionSlider', defaultMessage: 'Accordion Gallery' },
   panels: { id: 'cinematicAccordionPanels', defaultMessage: 'Panels' },
   panelHeight: { id: 'cinematicAccordionHeight', defaultMessage: 'Panel Height' },
   transitionSpeed: { id: 'cinematicAccordionSpeed', defaultMessage: 'Transition Speed (ms)' },

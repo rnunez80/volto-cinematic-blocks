@@ -71,10 +71,10 @@ const applyConfig = (config) => {
     sidebarTab: 1,
   };
 
-  // 2. Accordion Slider
+  // 2. Accordion Gallery
   config.blocks.blocksConfig.cinematicAccordionSlider = {
     id: 'cinematicAccordionSlider',
-    title: 'Accordion Slider',
+    title: 'Accordion Gallery',
     icon: paintSVG,
     group: 'cinematic',
     view: AccordionSliderView,
