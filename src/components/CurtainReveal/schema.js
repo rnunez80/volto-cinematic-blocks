@@ -23,9 +23,10 @@ export const CurtainRevealSchema = (props) => {
   return {
     title: intl.formatMessage(messages.CurtainRevealBlock),
     fieldsets: [
-      { id: 'default', title: 'Content', fields: ['title', 'description'] },
-      { id: 'styling', title: 'Styling', fields: ['fallbackBgColor', 'textColor', 'curtainColor', 'curtainGradient', 'curtainGradientStart', 'curtainGradientEnd', 'curtainGradientAngle', 'revealDirection', 'sectionHeight', 'backgroundImage'] },
-      { id: 'cta', title: 'Call to Action', fields: ['ctaText', 'ctaLink', 'ctaPrimary', 'ctaColor', 'ctaTextColor'] },
+      { id: 'default', title: 'Content', fields: ['title', 'description','ctaText', 'ctaLink', 'ctaPrimary', 'ctaColor', 'ctaTextColor'] },
+      { id: 'styling', title: 'Styling', fields: [ 'textColor', 'revealDirection', 'sectionHeight', 'backgroundImage','fallbackBgColor']}
+      // { id: 'styling', title: 'Styling', fields: ['fallbackBgColor', 'textColor',  'curtainColor',  'curtainGradientStart', 'curtainGradientEnd', 'curtainGradientAngle', 'revealDirection', 'sectionHeight', 'backgroundImage'] },
+
     ],
     properties: {
       title: {
@@ -68,7 +69,6 @@ export const CurtainRevealSchema = (props) => {
       },
       curtainGradient: {
         title: intl.formatMessage(messages.curtainGradient),
-        description: 'Enable gradient curtain',
         type: 'boolean',
         default: false,
       },

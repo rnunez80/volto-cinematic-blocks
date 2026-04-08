@@ -12,18 +12,16 @@ const CurtainRevealData = (props) => {
   useEffect(() => {
     if (intl) {
       let newSchema = CurtainRevealSchema({ ...props, intl });
-      
+
       if (!newSchema) return;
-      
+
       if (curtainGradient) {
         newSchema = {
           ...newSchema,
           fieldsets: [
             ...newSchema.fieldsets.slice(0, 2),
-            { ...newSchema.fieldsets[1], fields: [
-              'fallbackBgColor', 'textColor', 'curtainColor', 'curtainGradient', 
-              'curtainGradientStart', 'curtainGradientEnd', 'curtainGradientAngle',
-              'revealDirection', 'sectionHeight', 'backgroundImage'
+            { ...newSchema.fieldsets[1], title: 'Curtain Color', fields: [
+              'curtainGradient','curtainGradientStart', 'curtainGradientEnd', 'curtainGradientAngle'
             ]},
             ...newSchema.fieldsets.slice(2)
           ]
@@ -33,15 +31,14 @@ const CurtainRevealData = (props) => {
           ...newSchema,
           fieldsets: [
             ...newSchema.fieldsets.slice(0, 2),
-            { ...newSchema.fieldsets[1], fields: [
-              'fallbackBgColor', 'textColor', 'curtainColor', 'curtainGradient',
-              'revealDirection', 'sectionHeight', 'backgroundImage'
+            { ...newSchema.fieldsets[1], title: 'Curtain Color', fields: [
+              'curtainGradient', 'curtainColor'
             ]},
             ...newSchema.fieldsets.slice(2)
           ]
         };
       }
-      
+
       setSchema(newSchema);
     }
   }, [intl, props, curtainGradient]);
