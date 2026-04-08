@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import cx from 'classnames';
 import useReducedMotion from '../../hooks/useReducedMotion';
 
-const FlipCardsView = ({ data, isEditMode, className }) => {
+const FlipCardsView = ({data, isEditMode, className}) => {
   const prefersReducedMotion = useReducedMotion();
 
   const cards = Array.isArray(data?.cards) ? data.cards : [];
@@ -14,7 +14,7 @@ const FlipCardsView = ({ data, isEditMode, className }) => {
   const [flippedStates, setFlippedStates] = useState({});
 
   const toggleFlip = (index) => {
-    setFlippedStates((prev) => ({ ...prev, [index]: !prev[index] }));
+    setFlippedStates((prev) => ({...prev, [index]: !prev[index]}));
   };
 
   if (!cards.length) {
@@ -46,10 +46,10 @@ const FlipCardsView = ({ data, isEditMode, className }) => {
         const isFirst = index === 0;
 
         const frontBgColor = card.frontBgColor || (isFirst ? '#000000' : 'transparent');
-        const frontTitleColor = card.frontTitleColor || (isFirst ? '#ffffff' : '#000000');
+        const frontTextColor = card.frontTextColor || (isFirst ? '#ffffff' : '#000000');
         const frontDescColor = card.frontDescColor || (isFirst ? '#ffffff' : '#000000');
         const backBgColor = card.backBgColor || (isFirst ? '#000000' : 'transparent');
-        const backTitleColor = card.backTitleColor || (isFirst ? '#ffffff' : '#000000');
+        const backTextColor = card.backTextColor || (isFirst ? '#ffffff' : '#000000');
         const backDescColor = card.backDescColor || (isFirst ? '#ffffff' : '#000000');
 
         return (
@@ -59,14 +59,14 @@ const FlipCardsView = ({ data, isEditMode, className }) => {
               'cinematic-flip-cards__card--flipped': isFlipped,
               'cinematic-flip-cards__card--reduced': prefersReducedMotion,
             })}
-            style={{ height: cardHeight, perspective: '1000px' }}
+            style={{height: cardHeight, perspective: '1000px'}}
             role="button"
             tabIndex={0}
             aria-label={`${card.frontTitle || 'Card'}: ${isFlipped ? 'showing details' : 'click to reveal details'}`}
-            onMouseEnter={() => !prefersReducedMotion && setFlippedStates((prev) => ({ ...prev, [index]: true }))}
-            onMouseLeave={() => !prefersReducedMotion && setFlippedStates((prev) => ({ ...prev, [index]: false }))}
-            onFocus={() => setFlippedStates((prev) => ({ ...prev, [index]: true }))}
-            onBlur={() => setFlippedStates((prev) => ({ ...prev, [index]: false }))}
+            onMouseEnter={() => !prefersReducedMotion && setFlippedStates((prev) => ({...prev, [index]: true}))}
+            onMouseLeave={() => !prefersReducedMotion && setFlippedStates((prev) => ({...prev, [index]: false}))}
+            onFocus={() => setFlippedStates((prev) => ({...prev, [index]: true}))}
+            onBlur={() => setFlippedStates((prev) => ({...prev, [index]: false}))}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
@@ -82,52 +82,58 @@ const FlipCardsView = ({ data, isEditMode, className }) => {
                 transition: prefersReducedMotion ? 'none' : 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
               }}
             >
-               <div
-                  className="cinematic-flip-cards__front"
-                  style={{
-                    backgroundColor: frontBgColor,
-                    backgroundImage: card.frontBgImage ? `url('${card.frontBgImage}')` : 'none',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    borderRadius,
-                  }}
-                  aria-hidden={isFlipped}
-                >
-                  <h3 className="cinematic-flip-cards__front-title" style={{ color: frontTitleColor }}>{card.frontTitle}</h3>
-                  {card.frontDesc && <p className="cinematic-flip-cards__front-desc" style={{ color: frontDescColor }}>{card.frontDesc}</p>}
-                </div>
-                <div
-                  className="cinematic-flip-cards__back"
-                  style={{
-                    backgroundColor: backBgColor,
-                    backgroundImage: card.backBgImage ? `url('${card.backBgImage}')` : 'none',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    borderRadius,
-                  }}
-                  aria-hidden={!isFlipped}
-                >
-                  <h3 className="cinematic-flip-cards__back-title" style={{ color: backTitleColor }}>{card.backTitle}</h3>
-                  <p className="cinematic-flip-cards__back-desc" style={{ color: backDescColor }}>{card.backDesc}</p>
-                  {card.buttonLabel && (
-                    <a
-                      href={isEditMode ? undefined : resolveLink(card.buttonLink)}
-                      className={`ui ${card.buttonPrimary ? 'primary' : 'secondary'} button`}
-                      onClick={(e) => isEditMode && e.preventDefault()}
-                    >
-                      {card.buttonLabel}
-                    </a>
-                  )}
-                </div>
+              <div
+                className="cinematic-flip-cards__front"
+                style={{
+                  backgroundColor: frontBgColor,
+                  backgroundImage: card.frontBgImage ? `url('${card.frontBgImage}')` : 'none',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  borderRadius,
+                }}
+                aria-hidden={isFlipped}
+              >
+                <p className="cinematic-title" style={{color: frontTextColor}}>{card.frontTitle}</p>
+                {card.frontDesc &&
+                  <p className="cinematic-desc" style={{color: frontTextColor}}>{card.frontDesc}</p>}
+              </div>
+              <div
+                className="cinematic-flip-cards__back"
+                style={{
+                  backgroundColor: backBgColor,
+                  backgroundImage: card.backBgImage ? `url('${card.backBgImage}')` : 'none',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  borderRadius,
+                }}
+                aria-hidden={!isFlipped}
+              >
+                <p className="cinematic-title" style={{color: backTextColor}}>{card.backTitle}</p>
+                {card.backDesc &&
+                  <p className="cinematic-desc" style={{color: backTextColor}}>{card.backDesc}</p>}
+                {card.buttonLabel && (
+                  <a
+                    href={isEditMode ? undefined : resolveLink(card.buttonLink)}
+                    className={`ui ${card.buttonPrimary ? 'ui button primary' : 'ui button secondary'} button`}
+                    onClick={(e) => isEditMode && e.preventDefault()}
+                  >
+                    {card.buttonLabel}
+                  </a>
+                )}
+              </div>
             </div>
 
             {prefersReducedMotion && (
-              <div className="cinematic-flip-cards__reduced-fallback" style={{ borderRadius }}>
-                <h3>{card.frontTitle}</h3>
+              <div className="cinematic-flip-cards__reduced-fallback" style={{borderRadius}}>
+                <p><strong className="cinematic-accordion-slider__title">{card.frontTitle}</strong></p>
                 {card.frontDesc && <p>{card.frontDesc}</p>}
                 <p>{card.backDesc}</p>
                 {card.buttonLabel && (
-                  <a href={isEditMode ? undefined : resolveLink(card.buttonLink)} onClick={(e) => isEditMode && e.preventDefault()}>
+                  <a
+                    href={isEditMode ? undefined : resolveLink(card.buttonLink)}
+                    className={`ui ${card.buttonPrimary ? 'ui button primary' : 'ui button secondary'} button`}
+                    onClick={(e) => isEditMode && e.preventDefault()}
+                  >
                     {card.buttonLabel}
                   </a>
                 )}

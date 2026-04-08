@@ -14,8 +14,11 @@ const CardSchema = (props) => ({
   title: 'Card',
   addMessage: 'Add card',
   fieldsets: [
-    { id: 'content', title: 'Content', fields: ['frontTitle', 'frontDesc', 'backTitle', 'backDesc', 'buttonLabel', 'buttonLink', 'buttonPrimary'] },
-    { id: 'styling', title: 'Styling', fields: ['frontBgImage', 'frontBgColor', 'frontTitleColor', 'backBgImage', 'backBgColor', 'backTitleColor', 'textColor'] },
+    // { id: 'content', title: 'Content', fields: ['frontTitle', 'frontDesc', 'backTitle', 'backDesc', 'buttonLabel', 'buttonLink', 'buttonPrimary'] },
+    // { id: 'styling', title: 'Styling', fields: ['frontBgImage', 'frontBgColor', 'frontTextColor', 'backBgImage', 'backBgColor', 'backTextColor', 'textColor'] },
+    //
+    { id: 'front', title: 'Front', fields: ['frontTitle', 'frontDesc', 'frontTextColor', 'frontBgImage', 'frontBgColor'] },
+    { id: 'back', title: 'Back', fields: ['backTitle', 'backDesc', 'backTextColor', 'buttonPrimary', 'buttonLabel', 'buttonLink', 'backBgImage', 'backBgColor'] },
   ],
   properties: {
     frontTitle: { title: 'Front Title' },
@@ -24,11 +27,10 @@ const CardSchema = (props) => ({
     backDesc: { title: 'Back Description' },
     frontBgImage: { title: 'Front Background Image', widget: 'image', default: null },
     frontBgColor: { title: 'Front Fallback Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#eeeeee' },
-    frontTitleColor: { title: 'Front Title Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#000000' },
+    frontTextColor: { title: 'Front Text Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#000000' },
     backBgImage: { title: 'Back Background Image', widget: 'image', default: null },
     backBgColor: { title: 'Back Fallback Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#eeeeee' },
-    backTitleColor: { title: 'Back Title Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#000000' },
-    textColor: { title: 'Text Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#000000' },
+    backTextColor: { title: 'Back Text Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#000000' },
     buttonLabel: { title: 'Button Label' },
     buttonLink: { title: 'Button Link', widget: 'url' },
     buttonPrimary: { title: 'Primary Button', type: 'boolean', default: true },

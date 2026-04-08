@@ -119,7 +119,7 @@ const AccordionSliderView = ({ data, isEditMode, className }) => {
               {panel.buttonLabel && (
                 <a
                   href={isEditMode ? undefined : resolveLink(panel.buttonLink)}
-                  className={`ui ${panel.buttonPrimary ? 'primary' : 'secondary'} button`}
+                  className={`ui ${panel.buttonPrimary ? 'ui button primary' : 'ui button secondary'} button`}
                   onClick={(e) => isEditMode && e.preventDefault()}
                 >
                   {panel.buttonLabel}
