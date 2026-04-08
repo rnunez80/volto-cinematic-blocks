@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import cx from 'classnames';
 import useReducedMotion from '../../hooks/useReducedMotion';
 import useGsap from '../../hooks/useGsap';
+import getImageUrl from '../../helpers/getImageUrl';
 
 const CurtainRevealView = ({ data, isEditMode, className }) => {
   const prefersReducedMotion = useReducedMotion();
@@ -58,7 +59,7 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
         animProps.xPercent = -110;
     }
 
-    gsap.fromTo(curtain, 
+    gsap.fromTo(curtain,
       {
         opacity: 1,
       },
@@ -77,8 +78,8 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
 
     gsap.fromTo(curtainContent,
       {
-        transform: revealDirection === 'left' || revealDirection === 'right' 
-          ? `translateX(${revealDirection === 'left' ? 200 : -200}px)` 
+        transform: revealDirection === 'left' || revealDirection === 'right'
+          ? `translateX(${revealDirection === 'left' ? 200 : -200}px)`
           : `translateY(${revealDirection === 'up' ? 200 : -200}px)`,
         opacity: 0,
       },
@@ -136,19 +137,18 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
 
   const scale = 'large';
   const imageValue = data?.backgroundImage;
-  const imageUrl = imageValue && typeof imageValue === 'string'
-    ? imageValue.includes('/@@images/image/')
-      ? imageValue
-      : `${imageValue}/@@images/image/${scale}`
-    : (imageValue?.url
-        ? imageValue.url.includes('/@@images/image/')
-          ? imageValue.url
-          : `${imageValue.url}/@@images/image/${scale}`
-        : (imageValue?.['@id'] || imageValue?.id || null));
+  const imageUrl = getImageUrl(imageValue, scale);
 
   const curtainBg = curtainGradient
     ? { background: `linear-gradient(${curtainGradientAngle}deg, ${curtainGradientStart}, ${curtainGradientEnd})` }
     : { backgroundColor: curtainColor };
+
+  const contentBg = {
+    backgroundImage: imageUrl ? `url(${imageUrl})` : 'none',
+    backgroundColor: fallbackBgColor,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  };
 
   return (
     <div
@@ -158,10 +158,6 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
         height: sectionHeight,
         position: 'relative',
         overflow: 'hidden',
-        backgroundImage: imageUrl ? `url(${imageUrl})` : 'none',
-        backgroundColor: imageUrl ? 'transparent' : fallbackBgColor,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
         marginLeft: '-50vw',
         marginRight: '-50vw',
         width: '100vw',
@@ -187,7 +183,10 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
         )}
 
       {/* Content underneath */}
-      <div className="cinematic-curtain-reveal__content">
+      <div
+        className="cinematic-curtain-reveal__content"
+        style={contentBg}
+      >
         <h2
           className="cinematic-curtain-reveal__title"
           style={{ color: textColor }}
@@ -205,7 +204,7 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
         {buttonLabel && (
           <a
             href={isEditMode ? undefined : resolveLink(buttonLink)}
-            className={`ui ${buttonPrimary ? 'primary' : 'secondary'} button`}
+            className={`ui ${buttonPrimary ? 'ui button primary' : 'ui button secondary'} button`}
             onClick={(e) => isEditMode && e.preventDefault()}
             role="button"
             aria-label={buttonLabel}
