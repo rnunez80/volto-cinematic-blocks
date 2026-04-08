@@ -720,14 +720,41 @@
 }
 
 /* ==========================================================================
-   10. Curtain Reveal Block
-   ========================================================================== */
+    10. Curtain Reveal Block
+    ========================================================================== */
+
+.cinematic-curtain-reveal.full-width {
+  position: relative;
+  right: 50%;
+  left: 50%;
+  width: 100vw !important;
+  max-width: initial !important;
+  margin-right: -50vw !important;
+  margin-left: -50vw !important;
+}
 
 .cinematic-curtain-reveal__curtain {
   position: absolute;
   inset: 0;
   z-index: 2;
   will-change: transform;
+  opacity: 1;
+}
+
+.cinematic-curtain-reveal__curtain-content {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cinematic-curtain-reveal__curtain-edge {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.3;
+  background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%);
+  mix-blend-mode: overlay;
 }
 
 .cinematic-curtain-reveal__content {
@@ -760,24 +787,21 @@
 .cinematic-curtain-reveal__cta {
   display: inline-block;
   padding: 0.9rem 2.5rem;
-  background: #e74c3c;
-  color: #fff;
   text-decoration: none;
   font-weight: 700;
   font-size: 1rem;
   border-radius: 8px;
   transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 20px rgba(231, 76, 60, 0.4);
 }
 
 .cinematic-curtain-reveal__cta:hover,
 .cinematic-curtain-reveal__cta:focus-visible {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 30px rgba(231, 76, 60, 0.6);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3);
 }
 
 .cinematic-curtain-reveal__cta:focus-visible {
-  outline: 3px solid #fff;
+  outline: 3px solid #4A90D9;
   outline-offset: 3px;
 }
 

@@ -10,57 +10,125 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
 
   const title = data?.title || 'Reveal what matters';
   const description = data?.description || '';
-  const backgroundImage = getImageUrl(data?.backgroundImage, '2k');
+  const backgroundImage = getImageUrl(data?.backgroundImage, '2k') || data?.backgroundImage;
   const fallbackBgColor = data?.fallbackBgColor || '#000000';
-  const curtainColor = data?.curtainColor || '#1a1a2e';
-  const curtainGradient = data?.curtainGradient || '';
+  const curtainGradient = data?.curtainGradient || false;
+  const curtainColor = data?.curtainColor !== undefined ? data?.curtainColor : '#1a1a2e';
+  const curtainGradientStart = curtainGradient ? (data?.curtainGradientStart !== undefined ? data?.curtainGradientStart : '#1a1a2e') : curtainColor;
+  const curtainGradientEnd = data?.curtainGradientEnd !== undefined ? data?.curtainGradientEnd : '#e94560';
+  const curtainGradientAngle = data?.curtainGradientAngle !== undefined ? data?.curtainGradientAngle : 45;
   const revealDirection = data?.revealDirection || 'left';
-  const sectionHeight = data?.sectionHeight || '100vh';
+  const sectionHeight = data?.sectionHeight || '60vh';
   const textColor = data?.textColor || '#ffffff';
-  const buttonLabel = data?.buttonLabel || '';
-  const buttonLink = data?.buttonLink || '#';
+  const buttonLabel = data?.buttonLabel || data?.ctaText || '';
+  const buttonLink = data?.buttonLink || data?.ctaLink || '#';
   const buttonPrimary = data?.buttonPrimary !== false;
+  const buttonColor = data?.ctaColor || '#e74c3c';
+  const buttonTextColor = data?.ctaTextColor || '#ffffff';
 
   const sectionRef = useRef(null);
   const curtainRef = useRef(null);
+  const curtainContentRef = useRef(null);
 
   useEffect(() => {
     if (!loaded || !gsap || !ScrollTrigger || prefersReducedMotion || isEditMode) return;
 
     const section = sectionRef.current;
     const curtain = curtainRef.current;
-    if (!section || !curtain) return;
+    const curtainContent = curtainContentRef.current;
+    if (!section || !curtain || !curtainContent) return;
+
+    gsap.registerPlugin(ScrollTrigger);
 
     const animProps = {};
     switch (revealDirection) {
       case 'left':
-        animProps.xPercent = -100;
+        animProps.xPercent = -110;
+        animProps.skewX = 5;
         break;
       case 'right':
-        animProps.xPercent = 100;
+        animProps.xPercent = 110;
+        animProps.skewX = -5;
         break;
       case 'up':
-        animProps.yPercent = -100;
+        animProps.yPercent = -110;
+        animProps.skewY = 5;
         break;
       case 'down':
         animProps.yPercent = 100;
+        animProps.skewY = -5;
         break;
       default:
-        animProps.xPercent = -100;
+        animProps.xPercent = -110;
     }
 
-    const tween = gsap.to(curtain, {
-      ...animProps,
-      ease: 'power2.inOut',
-      scrollTrigger: {
-        trigger: section,
-        start: 'top 60%',
-        end: 'top 10%',
-        scrub: 1,
+    gsap.fromTo(curtain, 
+      {
+        opacity: 1,
       },
-    });
+      {
+        ...animProps,
+        opacity: 0,
+        ease: 'power4.inOut',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 70%',
+          end: 'top 20%',
+          scrub: 1,
+        },
+      }
+    );
 
-    return () => { tween.kill(); };
+    gsap.fromTo(curtainContent,
+      {
+        transform: revealDirection === 'left' || revealDirection === 'right' 
+          ? `translateX(${revealDirection === 'left' ? 200 : -200}px)` 
+          : `translateY(${revealDirection === 'up' ? 200 : -200}px)`,
+        opacity: 0,
+      },
+      {
+        transform: 'translateX(0px) translateY(0px)',
+        opacity: 1,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 50%',
+          end: 'top 30%',
+          scrub: 1,
+        },
+      }
+    );
+
+    const curtainEdge = curtainRef.current.querySelector('.curtain-edge');
+    if (curtainEdge) {
+      gsap.fromTo(curtainEdge,
+        {
+          transform: revealDirection === 'left' || revealDirection === 'right'
+            ? `translateX(${revealDirection === 'left' ? 150 : -150}px) scale(1.5)`
+            : `translateY(${revealDirection === 'up' ? 150 : -150}px) scale(1.5)`,
+          opacity: 0.5,
+        },
+        {
+          transform: 'translateX(0px) translateY(0px) scale(1)',
+          opacity: 0.3,
+          duration: 0.8,
+          ease: 'back.out(1.7)',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 70%',
+            end: 'top 50%',
+            scrub: 1,
+          },
+        }
+      );
+    }
+
+    return () => {
+      gsap.killTweensOf(curtain);
+      gsap.killTweensOf(curtainContent);
+      gsap.killTweensOf(curtainEdge);
+    };
   }, [loaded, gsap, ScrollTrigger, prefersReducedMotion, isEditMode, revealDirection]);
 
   const resolveLink = (link) => {
@@ -71,13 +139,13 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
   };
 
   const curtainBg = curtainGradient
-    ? { background: curtainGradient }
+    ? { background: `linear-gradient(${curtainGradientAngle}deg, ${curtainGradientStart}, ${curtainGradientEnd})` }
     : { backgroundColor: curtainColor };
 
   return (
     <div
       ref={sectionRef}
-      className={cx('block cinematic-curtain-reveal', className)}
+      className={cx('block cinematic-curtain-reveal full-width', className)}
       style={{
         height: sectionHeight,
         position: 'relative',
@@ -86,19 +154,30 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
         backgroundColor: backgroundImage ? 'transparent' : fallbackBgColor,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        marginLeft: '-50vw',
+        marginRight: '-50vw',
+        width: '100vw',
+        maxWidth: 'initial',
       }}
       role="region"
       aria-label={title}
     >
-      {/* Curtain overlay */}
-      {!prefersReducedMotion && (
-        <div
-          ref={curtainRef}
-          className="cinematic-curtain-reveal__curtain"
-          style={curtainBg}
-          aria-hidden="true"
-        />
-      )}
+       {/* Curtain overlay */}
+       {!prefersReducedMotion && (
+         <div
+           ref={curtainRef}
+           className="cinematic-curtain-reveal__curtain"
+           style={curtainBg}
+           aria-hidden="true"
+         >
+           <div
+             ref={curtainContentRef}
+             className="cinematic-curtain-reveal__curtain-content"
+           >
+             <div className="cinematic-curtain-reveal__curtain-edge curtain-edge" />
+           </div>
+         </div>
+       )}
 
       {/* Content underneath */}
       <div className="cinematic-curtain-reveal__content">
@@ -123,7 +202,11 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
             onClick={(e) => isEditMode && e.preventDefault()}
             role="button"
             aria-label={buttonLabel}
-            style={{ color: textColor }}
+            style={{ 
+              backgroundColor: buttonPrimary ? buttonColor : 'transparent',
+              color: buttonPrimary ? buttonTextColor : buttonColor,
+              borderColor: buttonPrimary ? undefined : buttonColor 
+            }}
           >
             {buttonLabel}
           </a>

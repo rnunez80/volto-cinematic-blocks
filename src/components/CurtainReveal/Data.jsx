@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { CurtainRevealSchema } from './schema';
 import { BlockDataForm } from '@plone/volto/components';
 import { useIntl } from 'react-intl';
@@ -6,7 +6,54 @@ import { useIntl } from 'react-intl';
 const CurtainRevealData = (props) => {
   const { data, block, onChangeBlock } = props;
   const intl = useIntl();
-  const schema = CurtainRevealSchema({ ...props, intl });
+  const [schema, setSchema] = useState(null);
+  const [curtainGradient, setCurtainGradient] = useState(data?.curtainGradient || false);
+
+  useEffect(() => {
+    if (intl) {
+      let newSchema = CurtainRevealSchema({ ...props, intl });
+      
+      if (!newSchema) return;
+      
+      if (curtainGradient) {
+        newSchema = {
+          ...newSchema,
+          fieldsets: [
+            ...newSchema.fieldsets.slice(0, 2),
+            { ...newSchema.fieldsets[1], fields: [
+              'fallbackBgColor', 'textColor', 'curtainColor', 'curtainGradient', 
+              'curtainGradientStart', 'curtainGradientEnd', 'curtainGradientAngle',
+              'revealDirection', 'sectionHeight', 'backgroundImage'
+            ]},
+            ...newSchema.fieldsets.slice(2)
+          ]
+        };
+      } else {
+        newSchema = {
+          ...newSchema,
+          fieldsets: [
+            ...newSchema.fieldsets.slice(0, 2),
+            { ...newSchema.fieldsets[1], fields: [
+              'fallbackBgColor', 'textColor', 'curtainColor', 'curtainGradient',
+              'revealDirection', 'sectionHeight', 'backgroundImage'
+            ]},
+            ...newSchema.fieldsets.slice(2)
+          ]
+        };
+      }
+      
+      setSchema(newSchema);
+    }
+  }, [intl, props, curtainGradient]);
+
+  useEffect(() => {
+    if (data?.curtainGradient !== undefined) {
+      setCurtainGradient(data.curtainGradient);
+    }
+  }, [data?.curtainGradient]);
+
+  if (!schema) return null;
+
   return (
     <BlockDataForm
       schema={schema}
