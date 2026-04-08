@@ -20,9 +20,7 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
   const textColor = data?.textColor || '#ffffff';
   const buttonLabel = data?.buttonLabel || data?.ctaText || '';
   const buttonLink = data?.buttonLink || data?.ctaLink || '#';
-  const buttonPrimary = data?.buttonPrimary !== false;
-  const buttonColor = data?.ctaColor || '#e74c3c';
-  const buttonTextColor = data?.ctaTextColor || '#ffffff';
+  const buttonPrimary = data?.buttonPrimary === true;
 
   const sectionRef = useRef(null);
   const curtainRef = useRef(null);
@@ -211,11 +209,6 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
             onClick={(e) => isEditMode && e.preventDefault()}
             role="button"
             aria-label={buttonLabel}
-            style={{ 
-              backgroundColor: buttonPrimary ? buttonColor : 'transparent',
-              color: buttonPrimary ? buttonTextColor : buttonColor,
-              borderColor: buttonPrimary ? undefined : buttonColor 
-            }}
           >
             {buttonLabel}
           </a>

@@ -14,8 +14,6 @@ const messages = defineMessages({
   ctaText: { id: 'cinematicCurtainCTAText', defaultMessage: 'CTA Button Text' },
   ctaLink: { id: 'cinematicCurtainCTALink', defaultMessage: 'CTA Link' },
   ctaPrimary: { id: 'cinematicCurtainCTAPrimary', defaultMessage: 'Primary CTA' },
-  ctaColor: { id: 'cinematicCurtainCTAColor', defaultMessage: 'Button Color' },
-  ctaTextColor: { id: 'cinematicCurtainCTATextColor', defaultMessage: 'Button Text Color' },
 });
 
 export const CurtainRevealSchema = (props) => {
@@ -23,7 +21,7 @@ export const CurtainRevealSchema = (props) => {
   return {
     title: intl.formatMessage(messages.CurtainRevealBlock),
     fieldsets: [
-      { id: 'default', title: 'Content', fields: ['title', 'description','ctaText', 'ctaLink', 'ctaPrimary', 'ctaColor', 'ctaTextColor'] },
+      { id: 'default', title: 'Content', fields: ['title', 'description','ctaText', 'ctaLink', 'ctaPrimary'] },
       { id: 'styling', title: 'Styling', fields: [ 'textColor', 'revealDirection', 'sectionHeight', 'backgroundImage','fallbackBgColor']}
       // { id: 'styling', title: 'Styling', fields: ['fallbackBgColor', 'textColor',  'curtainColor',  'curtainGradientStart', 'curtainGradientEnd', 'curtainGradientAngle', 'revealDirection', 'sectionHeight', 'backgroundImage'] },
 
@@ -117,19 +115,7 @@ export const CurtainRevealSchema = (props) => {
       ctaPrimary: {
         title: intl.formatMessage(messages.ctaPrimary),
         type: 'boolean',
-        default: true,
-      },
-      ctaColor: {
-        title: intl.formatMessage(messages.ctaColor),
-        type: 'color',
-        widget: 'style_simple_color',
-        default: '#e74c3c',
-      },
-      ctaTextColor: {
-        title: intl.formatMessage(messages.ctaTextColor),
-        type: 'color',
-        widget: 'style_simple_color',
-        default: '#ffffff',
+        default: false,
       },
     },
     required: [],
