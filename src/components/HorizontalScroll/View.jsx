@@ -9,7 +9,7 @@ const HorizontalScrollView = ({data, isEditMode, className}) => {
   const {gsap, ScrollTrigger, loaded} = useGsap();
 
   const items = Array.isArray(data?.items) ? data.items : [];
-  const sectionHeight = data?.sectionHeight || '3';
+  const sectionHeight = data?.sectionHeight || '1';
   const itemWidth = data?.itemWidth || '400px';
   const gap = data?.gap || '2rem';
   const scale = 'large';
@@ -131,7 +131,7 @@ const HorizontalScrollView = ({data, isEditMode, className}) => {
     <div
       ref={sectionRef}
       className={cx('block cinematic-horizontal-scroll', className)}
-      style={{height: `${parseInt(sectionHeight) * 100}vh`}}
+      style={{height: `100vh`}}
       aria-roledescription="carousel"
       aria-label="Horizontal scroll gallery"
     >
