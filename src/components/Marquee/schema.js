@@ -16,17 +16,10 @@ const BandSchema = (props) => ({
   title: 'Band',
   addMessage: 'Add band',
   fieldsets: [
-    { id: 'content', title: 'Content', fields: ['text', 'buttonLabel', 'buttonLink', 'buttonPrimary'] },
-    { id: 'styling', title: 'Styling', fields: ['bgImage', 'fallbackBgColor', 'textColor'] },
+    { id: 'content', title: 'Content', fields: ['text'] },
   ],
   properties: {
     text: { title: 'Text', default: 'STRATEGY · DESIGN · DEVELOPMENT · GROWTH' },
-    bgImage: { title: 'Background Image', widget: 'image', default: null },
-    fallbackBgColor: { title: 'Fallback Background Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#eeeeee' },
-    textColor: { title: 'Text Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#000000' },
-    buttonLabel: { title: 'Button Label' },
-    buttonLink: { title: 'Button Link', widget: 'url' },
-    buttonPrimary: { title: 'Primary Button', type: 'boolean', default: true },
   },
   required: [],
 });
