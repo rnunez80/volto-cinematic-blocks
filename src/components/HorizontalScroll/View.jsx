@@ -1,11 +1,11 @@
-import React, { useRef, useEffect } from 'react';
+import React, {useRef, useEffect} from 'react';
 import cx from 'classnames';
 import useReducedMotion from '../../hooks/useReducedMotion';
 import useGsap from '../../hooks/useGsap';
 
-const HorizontalScrollView = ({ data, isEditMode, className }) => {
+const HorizontalScrollView = ({data, isEditMode, className}) => {
   const prefersReducedMotion = useReducedMotion();
-  const { gsap, ScrollTrigger, loaded } = useGsap();
+  const {gsap, ScrollTrigger, loaded} = useGsap();
 
   const items = Array.isArray(data?.items) ? data.items : [];
   const sectionHeight = data?.sectionHeight || '3';
@@ -85,8 +85,8 @@ const HorizontalScrollView = ({ data, isEditMode, className }) => {
                 }}
                 aria-label={item.title}
               >
-                <h3 className="cinematic-horizontal-scroll__item-title">{item.title}</h3>
-                <p className="cinematic-horizontal-scroll__item-desc">{item.description}</p>
+              <p className="cinematic-title">{item.title}</p>
+              <p className="cinematic-horizontal-scroll__item-desc">{item.description}</p>
                 {item.buttonLabel && (
                   <a
                     href={isEditMode ? undefined : resolveLink(item.buttonLink)}
@@ -108,11 +108,11 @@ const HorizontalScrollView = ({ data, isEditMode, className }) => {
     <div
       ref={sectionRef}
       className={cx('block cinematic-horizontal-scroll', className)}
-      style={{ height: `${parseInt(sectionHeight) * 100}vh` }}
+      style={{height: `${parseInt(sectionHeight) * 100}vh`}}
       aria-roledescription="carousel"
       aria-label="Horizontal scroll gallery"
     >
-      <div ref={trackRef} className="cinematic-horizontal-scroll__track" style={{ gap }}>
+      <div ref={trackRef} className="cinematic-horizontal-scroll__track" style={{gap}}>
         {items.map((item, index) => {
           const isFirst = index === 0;
           const itemBgColor = item.bgColor || (isFirst ? '#000000' : 'transparent');
@@ -132,7 +132,7 @@ const HorizontalScrollView = ({ data, isEditMode, className }) => {
               }}
               aria-label={item.title}
             >
-              <h3 className="cinematic-horizontal-scroll__item-title">{item.title}</h3>
+              <p className="cinematic-title">{item.title}</p>
               <p className="cinematic-horizontal-scroll__item-desc">{item.description}</p>
               {item.buttonLabel && (
                 <a

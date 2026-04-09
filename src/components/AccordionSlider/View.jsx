@@ -108,9 +108,7 @@ const AccordionSliderView = ({ data, isEditMode, className }) => {
               role="tabpanel"
               style={{ color: panelTextColor }}
             >
-              <p className="cinematic-title">
-                {panel.title}
-              </p>
+              <p className="cinematic-title">{panel.title}</p>
               {isActive && panel.description && (
                 <p className="cinematic-accordion-slider__description">
                   {panel.description}
