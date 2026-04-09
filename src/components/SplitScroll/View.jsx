@@ -10,39 +10,71 @@ const SplitScrollView = ({ data, isEditMode, className }) => {
 
   const leftItems = Array.isArray(data?.leftItems) ? data.leftItems : [];
   const rightItems = Array.isArray(data?.rightItems) ? data.rightItems : [];
-  const sectionHeight = data?.sectionHeight || '100vh';
-  const gap = data?.gap || '2rem';
-  const scrollRatio = parseFloat(data?.scrollRatio || '1.5');
+  const sectionHeight = data?.sectionHeight || '400vh';
+  const gap = data?.gap || '0rem';
+  const stickyColumn = data?.stickyColumn || 'left';
 
   const sectionRef = useRef(null);
-  const rightRef = useRef(null);
+  const leftColInnerRef = useRef(null);
+  const rightColInnerRef = useRef(null);
 
   useEffect(() => {
     if (!loaded || !gsap || !ScrollTrigger || prefersReducedMotion || isEditMode) return;
 
     const section = sectionRef.current;
-    const rightCol = rightRef.current;
-    if (!section || !rightCol) return;
+    const leftCol = leftColInnerRef.current;
+    const rightCol = rightColInnerRef.current;
+    
+    if (!section) return;
 
-    const tween = gsap.to(rightCol, {
-      yPercent: -(scrollRatio - 1) * 100,
-      ease: 'none',
-      scrollTrigger: {
+    const itemH = window.innerHeight;
+    const count = Math.max(leftItems.length, rightItems.length);
+    const totalDistance = -(count - 1) * itemH;
+
+    if (stickyColumn === 'left') {
+      gsap.to(leftCol, {
+        y: totalDistance,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 0.3,
+        },
+      });
+
+      gsap.fromTo(rightCol, { y: totalDistance }, { y: 0, ease: 'none', scrollTrigger: {
         trigger: section,
-        start: 'top center',
-        end: 'bottom center',
-        scrub: 1,
-        invalidateOnRefresh: true,
-      },
-    });
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 0.3,
+      }});
+    } else if (stickyColumn === 'right') {
+      gsap.fromTo(leftCol, { y: totalDistance }, { y: 0, ease: 'none', scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 0.3,
+      }});
+
+      gsap.to(rightCol, {
+        y: totalDistance,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 0.3,
+        },
+      });
+    }
 
     return () => {
-      tween.kill();
       ScrollTrigger.getAll().forEach((t) => {
         if (t.trigger === section) t.kill();
       });
     };
-  }, [loaded, gsap, ScrollTrigger, prefersReducedMotion, isEditMode, scrollRatio]);
+  }, [loaded, gsap, ScrollTrigger, prefersReducedMotion, isEditMode, stickyColumn, leftItems.length, rightItems.length]);
 
   const resolveLink = (link) => {
     if (!link) return '#';
@@ -97,18 +129,31 @@ const SplitScrollView = ({ data, isEditMode, className }) => {
       className={cx('block cinematic-split-scroll', className, {
         'cinematic-split-scroll--reduced': prefersReducedMotion,
       })}
-      style={{ minHeight: sectionHeight, gap }}
+      style={{ height: sectionHeight, gap }}
     >
-      <div className="cinematic-split-scroll__column cinematic-split-scroll__left">
-        {leftItems.map(renderItem)}
-        {!leftItems.length && isEditMode && <p>Add left column items in the sidebar →</p>}
+      <div
+        className={cx('cinematic-split-scroll__column', {
+          'cinematic-split-scroll__column--sticky': stickyColumn === 'left',
+        })}
+        style={{ width: '50%' }}
+      >
+        <div
+          ref={stickyColumn === 'left' ? leftColInnerRef : null}
+          className="cinematic-split-scroll__column-inner"
+        >
+          {leftItems.map(renderItem)}
+        </div>
       </div>
       <div
-        ref={rightRef}
-        className="cinematic-split-scroll__column cinematic-split-scroll__right"
+        className="cinematic-split-scroll__column cinematic-split-scroll__column--scroll"
+        style={{ width: '50%' }}
       >
-        {rightItems.map(renderItem)}
-        {!rightItems.length && isEditMode && <p>Add right column items in the sidebar →</p>}
+        <div
+          ref={stickyColumn === 'right' ? rightColInnerRef : null}
+          className="cinematic-split-scroll__column-inner"
+        >
+          {rightItems.map(renderItem)}
+        </div>
       </div>
     </div>
   );

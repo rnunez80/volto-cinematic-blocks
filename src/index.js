@@ -162,18 +162,18 @@ const applyConfig = (config) => {
     sidebarTab: 1,
   };
 
-  // 9. Split Scroll
-  config.blocks.blocksConfig.cinematicSplitScroll = {
-    id: 'cinematicSplitScroll',
-    title: 'Split Scroll',
-    icon: paintSVG,
-    group: 'cinematic',
-    view: SplitScrollView,
-    edit: SplitScrollEdit,
-    restricted: false,
-    mostUsed: false,
-    sidebarTab: 1,
-  };
+  // // 9. Split Scroll
+  // config.blocks.blocksConfig.cinematicSplitScroll = {
+  //   id: 'cinematicSplitScroll',
+  //   title: 'Split Scroll',
+  //   icon: paintSVG,
+  //   group: 'cinematic',
+  //   view: SplitScrollView,
+  //   edit: SplitScrollEdit,
+  //   restricted: false,
+  //   mostUsed: false,
+  //   sidebarTab: 1,
+  // };
 
   // 10. Curtain Reveal
   config.blocks.blocksConfig.cinematicCurtainReveal = {

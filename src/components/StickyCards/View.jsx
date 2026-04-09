@@ -9,8 +9,8 @@ const StickyCardsView = ({ data, isEditMode, className }) => {
   const cardHeight = data?.cardHeight || '400px';
   const borderRadius = data?.borderRadius || '20px';
   const enableShiftRotate = data?.enableShiftRotate !== false;
-  const shiftAmount = data?.shiftAmount || 100;
-  const rotateAmount = data?.rotateAmount || 10;
+  const shiftAmount = data?.shiftAmount || 10;
+  const rotateAmount = data?.rotateAmount || 3;
 
   if (!cards.length) {
     return (
@@ -113,7 +113,7 @@ const StickyCardsView = ({ data, isEditMode, className }) => {
               }}
             >
               <div className="cinematic-sticky-cards__content">
-                <p className="cinematic-sticky-cards__title">{card.title}</p>
+                <p className="cinematic-title">{card.title}</p>
                 <p className="cinematic-sticky-cards__description">{card.description}</p>
                 {card.buttonLabel && (
                   <a

@@ -14,8 +14,8 @@ const ItemSchema = (props) => ({
   title: 'Item',
   addMessage: 'Add item',
   fieldsets: [
-    { id: 'content', title: 'Content', fields: ['title', 'description', 'buttonLabel', 'buttonLink', 'buttonPrimary'] },
-    { id: 'styling', title: 'Styling', fields: ['image', 'bgImage', 'bgColor', 'textColor'] },
+    { id: 'content', title: 'Content', fields: ['image','title', 'description', 'buttonLabel', 'buttonLink', 'buttonPrimary'] },
+    { id: 'styling', title: 'Styling', fields: ['bgColor', 'textColor'] },
   ],
   properties: {
     title: { title: 'Title' },
