@@ -2,7 +2,6 @@ import React, { useRef, useEffect } from 'react';
 import cx from 'classnames';
 import useReducedMotion from '../../hooks/useReducedMotion';
 import useGsap from '../../hooks/useGsap';
-import getImageUrl from '../../helpers/getImageUrl';
 
 const CurtainRevealView = ({ data, isEditMode, className }) => {
   const prefersReducedMotion = useReducedMotion();
@@ -128,16 +127,24 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
     };
   }, [loaded, gsap, ScrollTrigger, prefersReducedMotion, isEditMode, revealDirection]);
 
+  const scale = 'large';
+  const imageValue = data?.backgroundImage;
+  const imageUrl = imageValue && typeof imageValue === 'string'
+    ? imageValue.includes('/@@images/image/')
+      ? imageValue
+      : `${imageValue}/@@images/image`
+    : (imageValue?.url
+        ? imageValue.url.includes('/@@images/image/')
+          ? imageValue.url
+          : `${imageValue.url}/@@images/image`
+        : (imageValue?.['@id'] || imageValue?.id || null));
+
   const resolveLink = (link) => {
     if (!link) return '#';
     if (Array.isArray(link) && link[0]?.['@id']) return link[0]['@id'];
     if (typeof link === 'object' && link['@id']) return link['@id'];
     return link;
   };
-
-  const scale = 'large';
-  const imageValue = data?.backgroundImage;
-  const imageUrl = getImageUrl(imageValue, scale);
 
   const curtainBg = curtainGradient
     ? { background: `linear-gradient(${curtainGradientAngle}deg, ${curtainGradientStart}, ${curtainGradientEnd})` }
@@ -187,12 +194,9 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
         className="cinematic-curtain-reveal__content"
         style={contentBg}
       >
-        <h2
-          className="cinematic-curtain-reveal__title"
-          style={{ color: textColor }}
-        >
+        <p className="cinematic-title" style={{ color: textColor }}>
           {title}
-        </h2>
+        </p>
         {description && (
           <p
             className="cinematic-curtain-reveal__description"

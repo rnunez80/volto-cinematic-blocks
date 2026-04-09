@@ -10,11 +10,51 @@ const FlipCardsView = ({data, isEditMode, className}) => {
   const cardHeight = data?.cardHeight || '300px';
   const gap = data?.gap || '1.5rem';
   const borderRadius = data?.borderRadius || '16px';
+  const scale = 'large';
 
   const [flippedStates, setFlippedStates] = useState({});
 
+  const getFrontImageUrl = (image) => {
+    if (typeof image === 'string') {
+      return image.includes('/@@images/image/') ? image : `${image}/@@images/image/${scale}`;
+    }
+    if (image?.url) {
+      return image.url.includes('/@@images/image/') ? image.url : `${image.url}/@@images/image/${scale}`;
+    }
+    if (Array.isArray(image) && image[0]?.['@id']) {
+      return image[0]['@id'].includes('/@@images/image/') ? image[0]['@id'] : `${image[0]['@id']}/@@images/image/${scale}`;
+    }
+    if (image?.['@id']) {
+      return image['@id'].includes('/@@images/image/') ? image['@id'] : `${image['@id']}/@@images/image/${scale}`;
+    }
+    if (image?.id) {
+      return image.id.includes('/@@images/image/') ? image.id : `${image.id}/@@images/image/${scale}`;
+    }
+    return null;
+  };
+
+  const getBackImageUrl = (image) => {
+    if (!image) return null;
+    if (typeof image === 'string') {
+      return image.includes('/@@images/image/') ? image : `${image}/@@images/image/${scale}`;
+    }
+    if (image?.url) {
+      return image.url.includes('/@@images/image/') ? image.url : `${image.url}/@@images/image/${scale}`;
+    }
+    if (Array.isArray(image) && image[0]?.['@id']) {
+      return image[0]['@id'].includes('/@@images/image/') ? image[0]['@id'] : `${image[0]['@id']}/@@images/image/${scale}`;
+    }
+    if (image?.['@id']) {
+      return image['@id'].includes('/@@images/image/') ? image['@id'] : `${image['@id']}/@@images/image/${scale}`;
+    }
+    if (image?.id) {
+      return image.id.includes('/@@images/image/') ? image.id : `${image.id}/@@images/image/${scale}`;
+    }
+    return null;
+  };
+
   const toggleFlip = (index) => {
-    setFlippedStates((prev) => ({...prev, [index]: !prev[index]}));
+    setFlippedStates((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
   if (!cards.length) {
@@ -52,6 +92,9 @@ const FlipCardsView = ({data, isEditMode, className}) => {
         const backTextColor = card.backTextColor || (isFirst ? '#ffffff' : '#000000');
         const backDescColor = card.backDescColor || (isFirst ? '#ffffff' : '#000000');
 
+        const frontImageUrl = getFrontImageUrl(card.frontBgImage);
+        const backImageUrl = getBackImageUrl(card.backBgImage);
+
         return (
           <div
             key={card['@id'] || index}
@@ -63,10 +106,10 @@ const FlipCardsView = ({data, isEditMode, className}) => {
             role="button"
             tabIndex={0}
             aria-label={`${card.frontTitle || 'Card'}: ${isFlipped ? 'showing details' : 'click to reveal details'}`}
-            onMouseEnter={() => !prefersReducedMotion && setFlippedStates((prev) => ({...prev, [index]: true}))}
-            onMouseLeave={() => !prefersReducedMotion && setFlippedStates((prev) => ({...prev, [index]: false}))}
-            onFocus={() => setFlippedStates((prev) => ({...prev, [index]: true}))}
-            onBlur={() => setFlippedStates((prev) => ({...prev, [index]: false}))}
+            onMouseEnter={() => !prefersReducedMotion && setFlippedStates((prev) => ({ ...prev, [index]: true}))}
+            onMouseLeave={() => !prefersReducedMotion && setFlippedStates((prev) => ({ ...prev, [index]: false}))}
+            onFocus={() => setFlippedStates((prev) => ({ ...prev, [index]: true}))}
+            onBlur={() => setFlippedStates((prev) => ({ ...prev, [index]: false}))}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
@@ -86,7 +129,7 @@ const FlipCardsView = ({data, isEditMode, className}) => {
                 className="cinematic-flip-cards__front"
                 style={{
                   backgroundColor: frontBgColor,
-                  backgroundImage: card.frontBgImage ? `url('${card.frontBgImage}')` : 'none',
+                  backgroundImage: frontImageUrl ? `url(${frontImageUrl})` : 'none',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   borderRadius,
@@ -94,14 +137,13 @@ const FlipCardsView = ({data, isEditMode, className}) => {
                 aria-hidden={isFlipped}
               >
                 <p className="cinematic-title" style={{color: frontTextColor}}>{card.frontTitle}</p>
-                {card.frontDesc &&
-                  <p className="cinematic-desc" style={{color: frontTextColor}}>{card.frontDesc}</p>}
+                {card.frontDesc && <p className="cinematic-desc" style={{color: frontTextColor}}>{card.frontDesc}</p>}
               </div>
               <div
                 className="cinematic-flip-cards__back"
                 style={{
                   backgroundColor: backBgColor,
-                  backgroundImage: card.backBgImage ? `url('${card.backBgImage}')` : 'none',
+                  backgroundImage: backImageUrl ? `url(${backImageUrl})` : 'none',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   borderRadius,
