@@ -2,6 +2,7 @@ import React, {useRef, useEffect} from 'react';
 import cx from 'classnames';
 import useReducedMotion from '../../hooks/useReducedMotion';
 import useGsap from '../../hooks/useGsap';
+import { flattenToAppURL } from '@plone/volto/helpers';
 
 const HorizontalScrollView = ({data, isEditMode, className}) => {
   const prefersReducedMotion = useReducedMotion();
@@ -11,9 +12,30 @@ const HorizontalScrollView = ({data, isEditMode, className}) => {
   const sectionHeight = data?.sectionHeight || '3';
   const itemWidth = data?.itemWidth || '400px';
   const gap = data?.gap || '2rem';
+  const scale = 'large';
 
   const sectionRef = useRef(null);
   const trackRef = useRef(null);
+
+  const getImageUrl = (image) => {
+    if (!image) return null;
+    if (typeof image === 'string') {
+      return image.includes('/@@images/image/') ? image : `${image}/@@images/image/${scale}`;
+    }
+    if (image?.url) {
+      return image.url.includes('/@@images/image/') ? image.url : `${image.url}/@@images/image/${scale}`;
+    }
+    if (Array.isArray(image) && image[0]?.['@id']) {
+      return image[0]['@id'].includes('/@@images/image/') ? image[0]['@id'] : `${image[0]['@id']}/@@images/image/${scale}`;
+    }
+    if (image?.['@id']) {
+      return image['@id'].includes('/@@images/image/') ? image['@id'] : `${image['@id']}/@@images/image/${scale}`;
+    }
+    if (image?.id) {
+      return image.id.includes('/@@images/image/') ? image.id : `${image.id}/@@images/image/${scale}`;
+    }
+    return null;
+  };
 
   useEffect(() => {
     if (!loaded || !gsap || !ScrollTrigger || prefersReducedMotion || isEditMode) return;
@@ -71,6 +93,7 @@ const HorizontalScrollView = ({data, isEditMode, className}) => {
             const isFirst = index === 0;
             const itemBgColor = item.bgColor || (isFirst ? '#000000' : 'transparent');
             const itemTextColor = item.textColor || (isFirst ? '#ffffff' : '#000000');
+            const itemImageUrl = getImageUrl(item.bgImage);
             return (
               <article
                 key={item['@id'] || index}
@@ -78,7 +101,7 @@ const HorizontalScrollView = ({data, isEditMode, className}) => {
                 style={{
                   width: itemWidth,
                   backgroundColor: itemBgColor,
-                  backgroundImage: item.bgImage ? `url('${item.bgImage}')` : 'none',
+                  backgroundImage: itemImageUrl ? `url(${itemImageUrl})` : 'none',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   color: itemTextColor,
@@ -117,6 +140,7 @@ const HorizontalScrollView = ({data, isEditMode, className}) => {
           const isFirst = index === 0;
           const itemBgColor = item.bgColor || (isFirst ? '#000000' : 'transparent');
           const itemTextColor = item.textColor || (isFirst ? '#ffffff' : '#000000');
+          const itemImageUrl = getImageUrl(item.bgImage);
           return (
             <article
               key={item['@id'] || index}
@@ -125,7 +149,7 @@ const HorizontalScrollView = ({data, isEditMode, className}) => {
                 width: itemWidth,
                 minWidth: itemWidth,
                 backgroundColor: itemBgColor,
-                backgroundImage: item.bgImage ? `url('${item.bgImage}')` : 'none',
+                backgroundImage: itemImageUrl ? `url(${itemImageUrl})` : 'none',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 color: itemTextColor,
