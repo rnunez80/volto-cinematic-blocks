@@ -184,6 +184,7 @@ const SliderCrazyEffectsView = ({ data, isEditMode, className }) => {
         <div className="time" style={{
           animationDuration: `${interval}ms`,
           backgroundColor: '#F15B4E',
+          animationIterationCount: 'infinite',
         }}></div>
       </div>
     </div>

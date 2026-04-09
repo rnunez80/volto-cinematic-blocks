@@ -2,7 +2,7 @@ import { defineMessages } from 'react-intl';
 import config from '@plone/volto/registry';
 
 const messages = defineMessages({
-  SliderCrazyEffectsBlock: { id: 'cinematicSlider', defaultMessage: 'Slider Crazy Effects' },
+  SliderCrazyEffectsBlock: { id: 'cinematicSlider', defaultMessage: 'Slider Hero' },
   slides: { id: 'cinematicSliderSlides', defaultMessage: 'Slides' },
   autoPlay: { id: 'cinematicSliderAutoPlay', defaultMessage: 'Auto Play' },
   interval: { id: 'cinematicSliderInterval', defaultMessage: 'Interval (ms)' },
@@ -15,8 +15,8 @@ const SlideSchema = (props) => ({
   title: 'Slide',
   addMessage: 'Add slide',
   fieldsets: [
-    { id: 'content', title: 'Content', fields: ['title', 'topic', 'description', 'buttonLabel', 'buttonLink', 'buttonPrimary', 'button2Label', 'button2Link', 'button2Primary'] },
-    { id: 'styling', title: 'Image', fields: ['image'] },
+    { id: 'content', title: 'Content', fields: ['image','title', 'topic', 'description', 'buttonLabel', 'buttonLink', 'buttonPrimary', 'button2Label', 'button2Link', 'button2Primary'] },
+    // { id: 'styling', title: 'Image', fields: ['image'] },
   ],
   properties: {
     title: { title: 'Title' },

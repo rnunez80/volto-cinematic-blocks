@@ -191,7 +191,7 @@ const applyConfig = (config) => {
   // 11. Slider Crazy Effects
   config.blocks.blocksConfig.cinematicSlider = {
     id: 'cinematicSlider',
-    title: 'Slider Crazy Effects',
+    title: 'Slider Hero',
     icon: paintSVG, // Temporarily using paintSVG as per existing pattern
     group: 'cinematic',
     view: SliderCrazyEffectsView,

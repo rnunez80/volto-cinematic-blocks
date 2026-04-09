@@ -879,6 +879,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top center;
 }
 
 .cinematic-slider .list .item .content {
@@ -911,40 +912,14 @@
 }
 
 .cinematic-slider .list .item .buttons {
-  display: grid;
-  grid-template-columns: repeat(2, 130px);
-  grid-template-rows: 40px;
-  gap: 15px;
+  //display: flex;
+  //gap: 15px;
   margin-top: 20px;
 }
 
-.cinematic-slider__button {
-  border: none;
-  background-color: #eee;
-  letter-spacing: 3px;
-  font-family: Poppins;
-  font-weight: 500;
-  color: #000;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  font-size: 0.8rem;
-}
-
-.cinematic-slider__button-secondary {
-  border: 1px solid #fff;
-  background-color: transparent;
-  color: #fff;
-  letter-spacing: 3px;
-  font-family: Poppins;
-  font-weight: 500;
-  font-size: 0.8rem;
-  cursor: pointer;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
+.cinematic-slider .list .item .buttons a {
+  flex: 1;
+  min-width: 0;
 }
 
 /* Thumbnails */
@@ -1174,7 +1149,7 @@
 .cinematic-slider .time {
   position: absolute;
   z-index: 1000;
-  width: 0%;
+  width: 100%;
   height: 3px;
   background-color: #F15B4E;
   left: 0;
@@ -1183,7 +1158,7 @@
 
 .cinematic-slider.next .time,
 .cinematic-slider.prev .time {
-  animation: runningTime 3s linear 1 forwards;
+  animation: runningTime linear infinite;
 }
 
 @keyframes runningTime {
