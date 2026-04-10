@@ -117,7 +117,7 @@ The Kinetic Marquee block creates an infinite scrolling text display with multip
 #### Settings
 
 **Content:**
-- **Text Bands**: Add multiple text bands with任意 text
+- **Text Bands**: Add multiple text bands with any text
 
 **Animation:**
 - **Speed**: Scroll speed ('Fast', 'Medium', 'Slow', 'Very Slow')
@@ -228,15 +228,47 @@ The Horizontal Scroll block creates a horizontal scrolling gallery with GSAP Scr
 
 ---
 
-### 8. Split Scroll Block
+### 8. Slider Hero Block
 
-The Split Scroll block creates a split-screen scrolling effect where the right column scrolls faster than the left column, creating a parallax effect.
+The Slider Hero block creates an interactive hero slider with thumbnail navigation, transitions, and automated playback.
 
 #### Features
 
-- Two columns: left (normal speed) and right (faster speed)
-- Configurable speed ratio between columns
-- Each column can have arbitrary content with images
+- Full-screen hero slider with background images
+- Thumbnail navigation at the bottom
+- Next/Previous arrow buttons
+- Smooth slide transitions with animations
+- Automated playback with progress bar
+- Responsive design for mobile devices
+
+#### Settings
+
+**Content:**
+- **Slides**: Add slides with title, topic, author, and image
+  - Each slide features large typography on top of a background image
+
+**Navigation:**
+- **Show Arrows**: Display left/right arrow buttons (default: true)
+- **Show Thumbnails**: Display thumbnail strip at bottom (default: true)
+- **Auto Play**: Automatically advance slides (default: true)
+
+**Styling:**
+- **Arrow Color**: Color of navigation arrows (default: white)
+- **Arrow Background**: Background of arrows (default: rgba(255,255,255,0.4))
+
+---
+
+### 9. Split Scroll Block
+
+The Split Scroll block creates a split-screen scrolling effect where the two columns move in opposite directions, creating visual tension and keeping the user's attention. One column stays pinned (sticky) while the other scrolls, then they swap roles depending on which column is designated as sticky.
+
+#### Features
+
+- Two columns that scroll in opposite directions
+- Sticky column stays fixed while the other scrolls relative to it
+- Left column scrolls down while right column scrolls up (or vice versa)
+- Perfect for comparisons, before/after, or dual narratives
+- Configurable sticky column (left, right, or none)
 - Smooth scroll interaction with reduced motion support
 
 #### Settings
@@ -244,16 +276,16 @@ The Split Scroll block creates a split-screen scrolling effect where the right c
 **Content:**
 - **Left Column Items**: Items in the left column
 - **Right Column Items**: Items in the right column
-  - Each item supports title, description, and image
+  - Each item supports title, description, image, background image/color, and button
 
 **Layout:**
-- **Section Height**: Height of the section (default: 100vh)
-- **Column Gap**: Spacing between columns (default: 2rem)
-- **Scroll Speed Ratio**: How much faster the right column scrolls (default: 1.5x)
+- **Section Height**: Height of the section (default: 400vh to allow scrolling)
+- **Column Gap**: Spacing between columns (default: 0rem)
+- **Sticky Column**: Which column stays pinned during scroll (left, right, or none)
 
 ---
 
-### 9. Curtain Reveal Block
+### 10. Curtain Reveal Block
 
 The Curtain Reveal block creates a dramatic reveal effect where a curtain slides away to reveal content.
 
@@ -283,7 +315,7 @@ The Curtain Reveal block creates a dramatic reveal effect where a curtain slides
 
 ---
 
-### 10. Zoom Parallax Block
+### 11. Zoom Parallax Block
 
 The Zoom Parallax block creates a 3D parallax effect with background, midground, and foreground layers that move at different speeds during scroll.
 
