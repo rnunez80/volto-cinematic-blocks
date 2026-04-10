@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import cx from 'classnames';
 import useReducedMotion from '../../hooks/useReducedMotion';
-import getImageUrl from '../../helpers/getImageUrl';
 
 const TypewriterView = ({ data, isEditMode, className }) => {
   const staticText = data?.staticText || '';
   const postfixText = data?.postfixText || '';
   const phrasesRaw = data?.phrases || 'websites, applications, experiences';
   const phrases = phrasesRaw.split(',').map((p) => p.trim()).filter(Boolean);
-  const textColor = data?.textColor || '#ffffff';
+  const textColor = data?.textColor || '';
   const typingSpeed = data?.typingSpeed || 80;
   const deleteSpeed = data?.deleteSpeed || 40;
   const pauseDuration = data?.pauseDuration || 1500;
@@ -16,14 +15,8 @@ const TypewriterView = ({ data, isEditMode, className }) => {
   const cursorColor = data?.cursorColor || '#e74c3c';
   const fontSize = data?.fontSize || '3rem';
   const textAlign = data?.textAlign || 'center';
-  const blockHeight = data?.blockHeight || 'm';
-  const backgroundImage = data?.backgroundImage || null;
-  const fallbackBgColor = data?.fallbackBgColor || '#000000';
+  const blockHeight = data?.blockHeight || 'auto';
   const loop = data?.loop !== false;
-  const foregroundText = data?.foregroundText || '';
-  const ctaText = data?.ctaText || '';
-  const ctaLink = data?.ctaLink || '#';
-  const ctaPrimary = data?.ctaPrimary !== false;
 
   const prefersReducedMotion = useReducedMotion();
   const [displayedText, setDisplayedText] = useState('');
@@ -37,19 +30,23 @@ const TypewriterView = ({ data, isEditMode, className }) => {
     if (prefersReducedMotion) return;
 
     if (!isDeleting) {
+      // Typing forward
       if (displayedText.length < fullPhrase.length) {
         setDisplayedText(fullPhrase.substring(0, displayedText.length + 1));
         timeoutRef.current = setTimeout(tick, typingSpeed);
       } else {
+        // Finished typing, pause then start deleting
         timeoutRef.current = setTimeout(() => {
           setIsDeleting(true);
         }, pauseDuration);
       }
     } else {
+      // Deleting
       if (displayedText.length > 0) {
         setDisplayedText(fullPhrase.substring(0, displayedText.length - 1));
         timeoutRef.current = setTimeout(tick, deleteSpeed);
       } else {
+        // Finished deleting, move to next phrase
         setIsDeleting(false);
         const nextIndex = (phraseIndex + 1) % phrases.length;
         if (!loop && nextIndex === 0) return;
@@ -80,36 +77,22 @@ const TypewriterView = ({ data, isEditMode, className }) => {
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, [tick, prefersReducedMotion]);
+  }, [tick, prefersReducedMotion]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const resolveLink = (link) => {
-    if (!link) return '#';
-    if (Array.isArray(link) && link[0]?.['@id']) return link[0]['@id'];
-    if (typeof link === 'object' && link['@id']) return link['@id'];
-    return link;
-  };
-
+  // Build the full text for aria-label
   const ariaText = `${staticText}${phrases.join(', ')} ${postfixText}`.trim();
-  const imageUrl = getImageUrl(backgroundImage);
-  const heightClass = `cinematic-typewriter--h-${blockHeight}`;
 
   return (
     <div
-      className={cx('block cinematic-typewriter', className, heightClass)}
-      style={{
-        textAlign,
-        backgroundImage: imageUrl ? `url(${imageUrl})` : 'none',
-        backgroundColor: fallbackBgColor,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
+      className={cx('block cinematic-typewriter', className)}
+      style={{ textAlign, height: blockHeight }}
       role="region"
       aria-label={ariaText}
     >
-      <div className={`cinematic-typewriter__inner ${heightClass}`} style={{}}>
+      <div className="cinematic-typewriter__inner" style={{ height: blockHeight }}>
         <h2
           className="cinematic-typewriter__text"
-          style={{ fontSize, color: textColor }}
+          style={{ fontSize, color: textColor || undefined }}
           aria-live="polite"
           aria-atomic="true"
         >
@@ -130,16 +113,6 @@ const TypewriterView = ({ data, isEditMode, className }) => {
             <span className="cinematic-typewriter__postfix">{postfixText}</span>
           )}
         </h2>
-        {ctaText && (
-          <a
-            href={isEditMode ? undefined : resolveLink(ctaLink)}
-            className={`ui ${ctaPrimary ? 'primary' : 'secondary'} button`}
-            onClick={(e) => isEditMode && e.preventDefault()}
-            style={{ color: textColor }}
-          >
-            {ctaText}
-          </a>
-        )}
       </div>
     </div>
   );

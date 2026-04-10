@@ -1,5 +1,4 @@
 import { defineMessages } from 'react-intl';
-import config from '@plone/volto/registry';
 
 const messages = defineMessages({
   TextScrambleBlock: { id: 'cinematicTextScramble', defaultMessage: 'Text Scramble' },
@@ -8,9 +7,9 @@ const messages = defineMessages({
   scrambleChars: { id: 'cinematicTextScrambleChars', defaultMessage: 'Scramble Characters' },
   decodeSpeed: { id: 'cinematicTextScrambleDecodeSpeed', defaultMessage: 'Decode Speed (ms)' },
   fontSize: { id: 'cinematicTextScrambleFontSize', defaultMessage: 'Font Size' },
+
   textAlign: { id: 'cinematicTextScrambleAlign', defaultMessage: 'Text Alignment' },
   fontFamily: { id: 'cinematicTextScrambleFont', defaultMessage: 'Font Family' },
-  blockHeight: { id: 'cinematicTextScrambleBlockHeight', defaultMessage: 'Block Height' },
 });
 
 export const TextScrambleSchema = (props) => {
@@ -18,52 +17,14 @@ export const TextScrambleSchema = (props) => {
   return {
     title: intl.formatMessage(messages.TextScrambleBlock),
     fieldsets: [
-      { id: 'content', title: 'Content', fields: ['headline'] },
-      { id: 'styling', title: 'Styling', fields: ['backgroundImage', 'fallbackBgColor', 'fontSize', 'textAlign', 'fontFamily', 'blockHeight', 'textColor', 'trigger', 'scrambleChars', 'decodeSpeed'] },
+      { id: 'default', title: 'Content', fields: ['headline'] },
+      { id: 'animation', title: 'Animation', fields: ['trigger', 'scrambleChars', 'decodeSpeed'] },
+      { id: 'styling', title: 'Styling', fields: ['fontSize', 'textAlign', 'fontFamily'] },
     ],
     properties: {
       headline: {
         title: intl.formatMessage(messages.headline),
         default: 'Characters decode into your headline',
-      },
-      backgroundImage: {
-        title: 'Background Image',
-        widget: 'image',
-      },
-      fallbackBgColor: {
-        title: 'Fallback Background Color',
-        type: 'color',
-        widget: 'style_simple_color',
-        available_colors: config.settings?.available_colors,
-        default: '#eeeeee',
-      },
-      fontSize: {
-        title: intl.formatMessage(messages.fontSize),
-        default: '3rem',
-        choices: [['1.5rem', 'Small'], ['2rem', 'Medium'], ['3rem', 'Large'], ['4rem', 'Extra Large'], ['5rem', 'Huge']],
-      },
-      textAlign: {
-        title: intl.formatMessage(messages.textAlign),
-        widget: 'align',
-        actions: ['left', 'center', 'right'],
-        default: 'center',
-      },
-      fontFamily: {
-        title: intl.formatMessage(messages.fontFamily),
-        default: 'monospace',
-        choices: [['monospace', 'Monospace'], ['inherit', 'Inherit'], ['sans-serif', 'Sans Serif']],
-      },
-      blockHeight: {
-        title: intl.formatMessage(messages.blockHeight),
-        widget: 'image_size',
-        default: 'm',
-      },
-      textColor: {
-        title: 'Text Color',
-        type: 'color',
-        widget: 'style_simple_color',
-        available_colors: config.settings?.available_colors,
-        default: '#000000',
       },
       trigger: {
         title: intl.formatMessage(messages.trigger),
@@ -80,6 +41,23 @@ export const TextScrambleSchema = (props) => {
         default: 50,
         minimum: 10,
         maximum: 200,
+      },
+      fontSize: {
+        title: intl.formatMessage(messages.fontSize),
+        default: '3rem',
+        choices: [['1.5rem', 'Small'], ['2rem', 'Medium'], ['3rem', 'Large'], ['4rem', 'Extra Large'], ['5rem', 'Huge']],
+      },
+
+      textAlign: {
+        title: intl.formatMessage(messages.textAlign),
+        widget: 'align',
+        actions: ['left', 'center', 'right'],
+        default: 'center',
+      },
+      fontFamily: {
+        title: intl.formatMessage(messages.fontFamily),
+        default: 'monospace',
+        choices: [['monospace', 'Monospace'], ['inherit', 'Inherit'], ['sans-serif', 'Sans Serif']],
       },
     },
     required: [],

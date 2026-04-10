@@ -1,6 +1,5 @@
 import { defineMessages } from 'react-intl';
 import config from '@plone/volto/registry';
-import { imageSizeChoices } from '@plone/volto/components/theme/ImageSize/ImageSizeWidget';
 
 const messages = defineMessages({
   TypewriterBlock: {
@@ -43,6 +42,11 @@ const messages = defineMessages({
     id: 'cinematicTypewriterFontSize',
     defaultMessage: 'Font Size',
   },
+  textColor: {
+    id: 'cinematicTypewriterTextColor',
+    defaultMessage: 'Text Color',
+  },
+
   textAlign: {
     id: 'cinematicTypewriterTextAlign',
     defaultMessage: 'Text Alignment',
@@ -55,22 +59,7 @@ const messages = defineMessages({
     id: 'cinematicTypewriterBlockHeight',
     defaultMessage: 'Block Height',
   },
-  foregroundText: {
-    id: 'cinematicTypewriterForegroundText',
-    defaultMessage: 'Foreground Text',
-  },
-  ctaText: {
-    id: 'cinematicTypewriterCTAText',
-    defaultMessage: 'CTA Button Text',
-  },
-  ctaLink: {
-    id: 'cinematicTypewriterCTALink',
-    defaultMessage: 'CTA Link',
-  },
-  ctaPrimary: {
-    id: 'cinematicTypewriterCTAPrimary',
-    defaultMessage: 'Primary CTA',
-  },
+
 });
 
 export const TypewriterSchema = (props) => {
@@ -79,8 +68,28 @@ export const TypewriterSchema = (props) => {
   return {
     title: intl.formatMessage(messages.TypewriterBlock),
     fieldsets: [
-      { id: 'content', title: 'Content', fields: ['staticText', 'phrases', 'postfixText', 'ctaText', 'ctaLink', 'ctaPrimary'] },
-      { id: 'styling', title: 'Styling', fields: ['backgroundImage', 'fallbackBgColor', 'fontSize', 'textColor', 'cursorChar', 'cursorColor', 'textAlign', 'blockHeight', 'typingSpeed', 'deleteSpeed', 'pauseDuration', 'loop'] },
+      {
+        id: 'default',
+        title: 'Default',
+        fields: ['staticText', 'phrases', 'postfixText'],
+      },
+      {
+        id: 'animation',
+        title: 'Animation',
+        fields: ['typingSpeed', 'deleteSpeed', 'pauseDuration', 'loop'],
+      },
+      {
+        id: 'styling',
+        title: 'Styling',
+        fields: [
+          'fontSize',
+          'textColor',
+          'cursorChar',
+          'cursorColor',
+          'textAlign',
+          'blockHeight',
+        ],
+      },
     ],
     properties: {
       staticText: {
@@ -97,17 +106,6 @@ export const TypewriterSchema = (props) => {
       postfixText: {
         title: intl.formatMessage(messages.postfixText),
         description: 'Text that stays fixed after the cycling portion (optional)',
-      },
-      backgroundImage: {
-        title: 'Background Image',
-        widget: 'image',
-      },
-      fallbackBgColor: {
-        title: 'Fallback Background Color',
-        type: 'color',
-        widget: 'style_simple_color',
-        available_colors: config.settings?.available_colors,
-        default: '#eeeeee',
       },
       typingSpeed: {
         title: intl.formatMessage(messages.typingSpeed),
@@ -144,7 +142,7 @@ export const TypewriterSchema = (props) => {
         type: 'color',
         widget: 'style_simple_color',
         available_colors: config.settings?.available_colors,
-        default: '#000000',
+        default: '#e74c3c',
       },
       fontSize: {
         title: intl.formatMessage(messages.fontSize),
@@ -158,11 +156,10 @@ export const TypewriterSchema = (props) => {
         ],
       },
       textColor: {
-        title: 'Text Color',
+        title: intl.formatMessage(messages.textColor),
         type: 'color',
         widget: 'style_simple_color',
         available_colors: config.settings?.available_colors,
-        default: '#000000',
       },
       textAlign: {
         title: intl.formatMessage(messages.textAlign),
@@ -172,24 +169,14 @@ export const TypewriterSchema = (props) => {
       },
       blockHeight: {
         title: intl.formatMessage(messages.blockHeight),
-        widget: 'image_size',
-        default: 'm',
-      },
-      foregroundText: {
-        title: intl.formatMessage(messages.foregroundText),
-        description: 'Optional foreground text',
-      },
-      ctaText: {
-        title: intl.formatMessage(messages.ctaText),
-      },
-      ctaLink: {
-        title: intl.formatMessage(messages.ctaLink),
-        widget: 'url',
-      },
-      ctaPrimary: {
-        title: intl.formatMessage(messages.ctaPrimary),
-        type: 'boolean',
-        default: true,
+        default: 'auto',
+        choices: [
+          ['auto', 'Auto'],
+          ['100px', 'Small'],
+          ['200px', 'Medium'],
+          ['300px', 'Large'],
+          ['400px', 'Extra Large'],
+        ],
       },
     },
     required: ['phrases'],
