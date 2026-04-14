@@ -75,7 +75,7 @@
 }
 
 .cinematic-typewriter--h-full {
-  height: 100vh;
+  min-height: 100dvh;
 }
 
 /* ==========================================================================
@@ -98,7 +98,7 @@
 }
 
 .cinematic-accordion-slider__panel:focus-visible {
-  outline: 3px solid #4A90D9;
+  outline: 3px solid #c8201a;
   outline-offset: -3px;
 }
 
@@ -158,7 +158,7 @@
 }
 
 .cinematic-flip-cards__card:focus-visible {
-  outline: 3px solid #4A90D9;
+  outline: 3px solid #c8201a;
   outline-offset: 4px;
   border-radius: 4px;
 }
@@ -384,7 +384,7 @@
 }
 
 .cinematic-text-scramble--h-full {
-  height: 100vh;
+  min-height: 100dvh;
 }
 
 /* ==========================================================================
@@ -434,7 +434,7 @@
 .cinematic-horizontal-scroll__track {
   display: flex;
   align-items: center;
-  height: 100vh;
+  height: 100dvh;
   padding: 0 4rem;
   will-change: transform;
 }
@@ -451,7 +451,7 @@
 }
 
 .cinematic-horizontal-scroll__item:focus-visible {
-  outline: 3px solid #4A90D9;
+  outline: 3px solid #c8201a;
   outline-offset: 4px;
 }
 
@@ -532,15 +532,15 @@
 .cinematic-zoom-parallax__cta {
   display: inline-block;
   padding: 0.9rem 2.5rem;
-  background: #e74c3c;
+  background: #c8201a;
   color: #fff;
   text-decoration: none;
   font-weight: 700;
   font-size: 1rem;
   border-radius: 8px;
   border: none;
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 20px rgba(231, 76, 60, 0.4);
+  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(200, 32, 26, 0.35);
 }
 
 .cinematic-zoom-parallax__cta:hover,
@@ -552,6 +552,7 @@
 .cinematic-zoom-parallax__cta:focus-visible {
   outline: 3px solid #fff;
   outline-offset: 3px;
+  box-shadow: 0 0 0 5px #c8201a;
 }
 
 @media (max-width: 768px) {
@@ -791,7 +792,7 @@
 }
 
 .cinematic-curtain-reveal__cta:focus-visible {
-  outline: 3px solid #4A90D9;
+  outline: 3px solid #c8201a;
   outline-offset: 3px;
 }
 
@@ -809,8 +810,9 @@
 [class*='cinematic-'] button:focus-visible,
 [class*='cinematic-'] [role='button']:focus-visible,
 [class*='cinematic-'] [role='tab']:focus-visible {
-  outline: 3px solid #4A90D9;
+  outline: 3px solid #c8201a;
   outline-offset: 2px;
+  border-radius: 3px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -841,12 +843,12 @@
   margin: 0;
   padding: 0;
   width: 100vw !important;
-  height: 100vh;
+  height: 100dvh;
   min-height: 500px;
   overflow: hidden;
-  background-color: #000;
+  background-color: #111111;
   color: #fff;
-  font-family: Poppins;
+  font-family: 'DM Sans', 'Open Sans Condensed', Helvetica, Arial, sans-serif;
   position: relative;
   left: 50%;
   right: 50%;
@@ -973,18 +975,19 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #eee4;
+  background-color: rgba(255, 255, 255, 0.25);
   border: none;
   color: #fff;
   font-family: monospace;
   font-weight: bold;
-  transition: .5s;
+  transition: background-color 160ms ease-out, color 160ms ease-out;
   cursor: pointer;
 }
 
 .cinematic-slider .arrows button:hover {
-  background-color: #fff;
-  color: #000;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #111;
+  transition: background-color 160ms ease-out, color 160ms ease-out;
 }
 
 /* Animation */
@@ -1113,12 +1116,12 @@
 
 .block p.cinematic-title {
   font-size: 2rem;
-  line-height: 1em;
-  font-display: swap;
-  font-weight: bold !important;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-weight: 700;
   text-transform: initial;
-  font-stretch: semi-condensed;
-  Margin: 0.2em;
+  font-family: 'DM Sans', 'Open Sans Condensed', Helvetica, Arial, sans-serif;
+  margin: 0.2em;
 }
 
 @keyframes contentOut {
@@ -1139,15 +1142,15 @@
   }
 }
 
-.cinematic-slider .time {
-  position: absolute;
-  z-index: 1000;
-  width: 100%;
-  height: 3px;
-  background-color: #F15B4E;
-  left: 0;
-  top: 0;
-}
+  .cinematic-slider .time {
+    position: absolute;
+    z-index: 1000;
+    width: 100%;
+    height: 3px;
+    background-color: #c8201a;
+    left: 0;
+    top: 0;
+  }
 
 .cinematic-slider.next .time,
 .cinematic-slider.prev .time {
