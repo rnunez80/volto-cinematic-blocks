@@ -117,7 +117,7 @@ const SliderCrazyEffectsView = ({ data, isEditMode, className }) => {
                   style={{ cursor: index !== 0 ? 'pointer' : 'default' }}
                 />
                 <div className="content">
-                  <div className="title">{slide.title || ''}</div>
+                  <h1 className="title">{slide.title || ''}</h1>
                   <div className="topic">{slide.topic || ''}</div>
                   <div className="des">
                     {slide.description || ''}
