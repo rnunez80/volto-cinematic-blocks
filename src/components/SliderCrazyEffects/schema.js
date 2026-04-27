@@ -16,13 +16,16 @@ const SlideSchema = (props) => ({
   addMessage: 'Add slide',
   fieldsets: [
     { id: 'content', title: 'Content', fields: ['image','title', 'topic', 'description', 'buttonLabel', 'buttonLink', 'buttonPrimary', 'button2Label', 'button2Link', 'button2Primary'] },
-    // { id: 'styling', title: 'Image', fields: ['image'] },
+    { id: 'styling', title: 'Styling', fields: ['titleColor', 'topicColor', 'descriptionColor'] },
   ],
   properties: {
     title: { title: 'Title' },
     topic: { title: 'Topic' },
     description: { title: 'Description' },
     image: { title: 'Image', widget: 'image', default: null },
+    titleColor: { title: 'Title Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#ffffff' },
+    topicColor: { title: 'Topic Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#F15B4E' },
+    descriptionColor: { title: 'Description Color', type: 'color', widget: 'style_simple_color', available_colors: config.settings?.available_colors, default: '#ffffff' },
     buttonLabel: { title: 'First Button Label' },
     buttonLink: { title: 'First Button Link', widget: 'url' },
     buttonPrimary: { title: 'First Button Primary', type: 'boolean', default: true },

@@ -116,10 +116,10 @@ const SliderCrazyEffectsView = ({ data, isEditMode, className }) => {
                   onClick={() => index !== 0 && doSlide('next', index)}
                   style={{ cursor: index !== 0 ? 'pointer' : 'default' }}
                 />
-                <div className="content">
+                <div className="content" style={{ color: slide.titleColor }}>
                   <h1 className="title">{slide.title || ''}</h1>
-                  <div className="topic">{slide.topic || ''}</div>
-                  <div className="des">
+                  <div className="topic" style={{ color: slide.topicColor }}>{slide.topic || ''}</div>
+                  <div className="des" style={{ color: slide.descriptionColor }}>
                     {slide.description || ''}
                   </div>
                   <div className="buttons">
@@ -161,10 +161,13 @@ const SliderCrazyEffectsView = ({ data, isEditMode, className }) => {
                   onClick={() => doSlide('next', targetIndexInItems)}
                   style={{ cursor: 'pointer' }}
                 >
-                  <img src={getImageUrl(slide.image)} alt={slide.title || 'thumbnail'} />
+                  <div className="image-wrapper">
+                    <img src={getImageUrl(slide.image)} alt={slide.title || 'thumbnail'} />
+                    <div className="gradient-overlay"></div>
+                  </div>
                   <div className="content">
-                    <div className="title">{slide.title}</div>
-                    <div className="description">{slide.topic}</div>
+                    <div className="title" style={{ color: slide.titleColor }}>{slide.title}</div>
+                    <div className="description" style={{ color: slide.descriptionColor }}>{slide.topic}</div>
                   </div>
                 </div>
               );
