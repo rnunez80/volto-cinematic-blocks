@@ -258,7 +258,7 @@ The Slider Hero block creates an interactive hero slider with thumbnail navigati
 
 ---
 
-### 9. Split Scroll Block
+### 9. Split Scroll Block (Work in Progress)
 
 The Split Scroll block creates a split-screen scrolling effect where the two columns move in opposite directions, creating visual tension and keeping the user's attention. One column stays pinned (sticky) while the other scrolls, then they swap roles depending on which column is designated as sticky.
 
@@ -285,7 +285,7 @@ The Split Scroll block creates a split-screen scrolling effect where the two col
 
 ---
 
-### 10. Curtain Reveal Block
+### 10. Curtain Reveal Block (Work in Progress)
 
 The Curtain Reveal block creates a dramatic reveal effect where a curtain slides away to reveal content.
 
@@ -315,7 +315,7 @@ The Curtain Reveal block creates a dramatic reveal effect where a curtain slides
 
 ---
 
-### 11. Zoom Parallax Block
+### 11. Zoom Parallax Block (Work in Progress)
 
 The Zoom Parallax block creates a 3D parallax effect with background, midground, and foreground layers that move at different speeds during scroll.
 
