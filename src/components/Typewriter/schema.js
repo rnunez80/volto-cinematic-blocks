@@ -100,8 +100,9 @@ export const TypewriterSchema = (props) => {
       phrases: {
         title: intl.formatMessage(messages.phrases),
         description:
-          'Comma-separated list of phrases to cycle through (e.g. "websites, apps, experiences")',
-        default: 'websites, applications, experiences',
+          'Line-separated list of phrases to cycle through (e.g. "websites\\napps\\nexperiences")',
+        default: 'websites\napplications\nexperiences',
+        widget: 'textarea',
       },
       postfixText: {
         title: intl.formatMessage(messages.postfixText),

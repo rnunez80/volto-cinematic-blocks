@@ -29,7 +29,7 @@ The Typewriter block adds an animated text effect that simulates typing and dele
 
 **Content:**
 - **Static Text**: Text that stays fixed before the cycling portion (default: "We build ")
-- **Cycling Phrases**: Comma-separated list of phrases to cycle through (e.g., "websites, applications, experiences")
+- **Cycling Phrases**: Line-separated list of phrases to cycle through
 - **Text After**: Optional text that stays fixed after the cycling portion
 
 **Animation:**
@@ -51,7 +51,7 @@ The Typewriter block adds an animated text effect that simulates typing and dele
 ```json
 {
   "staticText": "We create ",
-  "phrases": "modern websites, fast applications, amazing experiences",
+  "phrases": "modern websites\\nfast applications\\namazing experiences",
   "postfixText": "for your business",
   "typingSpeed": 100,
   "deleteSpeed": 50,

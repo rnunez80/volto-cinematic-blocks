@@ -1,6 +1,6 @@
 {
   "name": "volto-cinematic-blocks",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Volto add-on providing cinematic animated blocks — typewriter, accordion slider, flip cards, marquee, text scramble, sticky cards, horizontal scroll, zoom parallax, split scroll, curtain reveal.",
   "main": "src/index.js",
   "license": "MIT",

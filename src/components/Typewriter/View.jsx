@@ -5,8 +5,8 @@ import useReducedMotion from '../../hooks/useReducedMotion';
 const TypewriterView = ({ data, isEditMode, className }) => {
   const staticText = data?.staticText || '';
   const postfixText = data?.postfixText || '';
-  const phrasesRaw = data?.phrases || 'websites, applications, experiences';
-  const phrases = phrasesRaw.split(',').map((p) => p.trim()).filter(Boolean);
+  const phrasesRaw = data?.phrases || 'websites\napplications\nexperiences';
+  const phrases = phrasesRaw.split('\n').map((p) => p.trim()).filter(Boolean);
   const textColor = data?.textColor || '';
   const typingSpeed = data?.typingSpeed || 80;
   const deleteSpeed = data?.deleteSpeed || 40;
