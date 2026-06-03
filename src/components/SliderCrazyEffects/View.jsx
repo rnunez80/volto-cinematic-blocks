@@ -164,10 +164,10 @@ const SliderCrazyEffectsView = ({ data, isEditMode, className }) => {
                   <div className="image-wrapper">
                     <img src={getImageUrl(slide.image)} alt={slide.title || 'thumbnail'} />
                     <div className="gradient-overlay"></div>
-                  </div>
-                  <div className="content">
-                    <div className="title" style={{ color: slide.titleColor }}>{slide.title}</div>
-                    <div className="description" style={{ color: slide.descriptionColor }}>{slide.topic}</div>
+                    <div className="content">
+                      <div className="title">{slide.title}</div>
+                      <div className="description">{slide.topic}</div>
+                    </div>
                   </div>
                 </div>
               );
