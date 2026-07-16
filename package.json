@@ -17,7 +17,13 @@
   "scripts": {
     "i18n": "rm -rf build/messages && NODE_ENV=production i18n --addon"
   },
+  "addons": [
+    "@eeacms/volto-block-style"
+  ],
   "dependencies": {
     "gsap": "^3.12.5"
+  },
+  "peerDependencies": {
+    "@plone/volto": ">=19.1.5"
   }
 }
