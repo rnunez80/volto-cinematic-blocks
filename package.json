@@ -1,7 +1,7 @@
 {
   "name": "volto-cinematic-blocks",
   "version": "1.0.2",
-  "description": "Volto add-on providing cinematic animated blocks — typewriter, accordion slider, flip cards, marquee, text scramble, sticky cards, horizontal scroll, zoom parallax, split scroll, curtain reveal.",
+  "description": "Volto add-on providing cinematic animated blocks \u2014 typewriter, accordion slider, flip cards, marquee, text scramble, sticky cards, horizontal scroll, zoom parallax, split scroll, curtain reveal.",
   "main": "src/index.js",
   "license": "MIT",
   "keywords": [
@@ -19,5 +19,8 @@
   },
   "dependencies": {
     "gsap": "^3.12.5"
+  },
+  "peerDependencies": {
+    "@plone/volto": ">=17.0.0 || >=18.0.0-alpha.0 || >=19.0.0-alpha.0"
   }
 }
