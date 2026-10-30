@@ -43,10 +43,12 @@
 }
 
 @keyframes cinematic-cursor-blink {
-  0%, 50% {
+  0%,
+  50% {
     opacity: 1;
   }
-  51%, 100% {
+  51%,
+  100% {
     opacity: 0;
   }
 }
@@ -131,12 +133,16 @@
   opacity: 0;
   max-height: 0;
   overflow: hidden;
-  transition: opacity 0.3s ease, max-height 0.3s ease, padding 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    max-height 0.3s ease,
+    padding 0.3s ease;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
   margin: 0;
 }
 
-.cinematic-accordion-slider__panel--active .cinematic-accordion-slider__description {
+.cinematic-accordion-slider__panel--active
+  .cinematic-accordion-slider__description {
   opacity: 0.9;
   max-height: 200px;
   padding-top: 0.5rem;
@@ -151,7 +157,6 @@
 /* ==========================================================================
    3. Flip Cards Block
    ========================================================================== */
-
 
 .cinematic-flip-cards__card {
   cursor: pointer;
@@ -429,6 +434,18 @@
 .cinematic-horizontal-scroll {
   position: relative;
   overflow: hidden;
+  left: 50%;
+  right: 50%;
+  width: 100vw;
+  width: calc(100vw - var(--volto-toolbar-width, 0px));
+  max-width: 100vw;
+  max-width: calc(100vw - var(--volto-toolbar-width, 0px));
+  min-width: calc(100vw - var(--volto-toolbar-width, 0px));
+  margin-left: -50vw;
+  margin-left: calc(-50vw + (var(--volto-toolbar-width, 0px) / 2));
+  margin-right: -50vw;
+  margin-right: calc(-50vw + (var(--volto-toolbar-width, 0px) / 2));
+  box-sizing: border-box;
 }
 
 .cinematic-horizontal-scroll__track {
@@ -469,7 +486,8 @@
 }
 
 /* Fallback/edit mode */
-.cinematic-horizontal-scroll--fallback .cinematic-horizontal-scroll__fallback-grid {
+.cinematic-horizontal-scroll--fallback
+  .cinematic-horizontal-scroll__fallback-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
@@ -539,7 +557,9 @@
   font-size: 1rem;
   border-radius: 8px;
   border: none;
-  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    transform 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 4px 20px rgba(200, 32, 26, 0.35);
 }
 
@@ -744,7 +764,11 @@
   pointer-events: none;
   z-index: 1;
   opacity: 0.3;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 70%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0) 70%
+  );
   mix-blend-mode: overlay;
 }
 
@@ -782,7 +806,9 @@
   font-weight: 700;
   font-size: 1rem;
   border-radius: 8px;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 .cinematic-curtain-reveal__cta:hover,
@@ -843,8 +869,13 @@
   margin: 0;
   padding: 0;
   width: 100vw !important;
-  height: 100dvh;
-  min-height: 500px;
+  width: calc(100vw - var(--volto-toolbar-width, 0px)) !important;
+  max-width: 100vw !important;
+  max-width: calc(100vw - var(--volto-toolbar-width, 0px)) !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
   overflow: hidden;
   background-color: #111111;
   color: #fff;
@@ -853,8 +884,11 @@
   left: 50%;
   right: 50%;
   margin-left: -50vw !important;
+  margin-left: calc(-50vw + (var(--volto-toolbar-width, 0px) / 2)) !important;
   margin-right: -50vw !important;
-  max-width: initial !important;
+  margin-right: calc(-50vw + (var(--volto-toolbar-width, 0px) / 2)) !important;
+  box-sizing: border-box !important;
+  border-radius: 0 !important;
 }
 
 .cinematic-slider {
@@ -896,17 +930,17 @@
 }
 
 .cinematic-slider .list .item .title,
-.cinematic-slider .list .item .topic{
+.cinematic-slider .list .item .topic {
   font-size: 5em;
   font-weight: bold;
   line-height: 0.8em;
 }
 
 .cinematic-slider .list .item .topic {
-  color: #F15B4E;
+  color: #f15b4e;
   text-transform: uppercase;
   line-height: 1.3em;
-  margin-top: -0.3em
+  margin-top: -0.3em;
 }
 
 .cinematic-slider .list .item .buttons {
@@ -938,8 +972,6 @@
   position: relative;
 }
 
-
-
 .cinematic-slider .thumbnail .item .image-wrapper {
   position: relative;
   width: 100%;
@@ -960,7 +992,12 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
   pointer-events: none;
   z-index: 2;
   border-radius: 20px;
@@ -1025,14 +1062,18 @@
   color: #fff;
   font-family: monospace;
   font-weight: bold;
-  transition: background-color 160ms ease-out, color 160ms ease-out;
+  transition:
+    background-color 160ms ease-out,
+    color 160ms ease-out;
   cursor: pointer;
 }
 
 .cinematic-slider .arrows button:hover {
   background-color: rgba(255, 255, 255, 0.95);
   color: #111;
-  transition: background-color 160ms ease-out, color 160ms ease-out;
+  transition:
+    background-color 160ms ease-out,
+    color 160ms ease-out;
 }
 
 /* Animation */
@@ -1049,7 +1090,7 @@
   transform: translateY(50px);
   filter: blur(20px);
   opacity: 0;
-  animation: showContent .5s 1s linear 1 forwards;
+  animation: showContent 0.5s 1s linear 1 forwards;
 }
 
 @keyframes showContent {
@@ -1084,7 +1125,7 @@
   bottom: 50px;
   left: 50%;
   border-radius: 30px;
-  animation: showImage .5s linear 1 forwards;
+  animation: showImage 0.5s linear 1 forwards;
 }
 
 @keyframes showImage {
@@ -1099,7 +1140,7 @@
 
 .cinematic-slider.next .thumbnail .item:nth-last-child(1) {
   overflow: hidden;
-  animation: showThumbnail .5s linear 1 forwards;
+  animation: showThumbnail 0.5s linear 1 forwards;
 }
 
 .cinematic-slider.prev .list .item img {
@@ -1114,7 +1155,7 @@
 }
 
 .cinematic-slider.next .thumbnail {
-  animation: effectNext .5s linear 1 forwards;
+  animation: effectNext 0.5s linear 1 forwards;
 }
 
 @keyframes effectNext {
@@ -1148,7 +1189,7 @@
 .cinematic-slider.prev .thumbnail .item:nth-child(1) {
   overflow: hidden;
   opacity: 0;
-  animation: showThumbnail .5s linear 1 forwards;
+  animation: showThumbnail 0.5s linear 1 forwards;
 }
 
 .cinematic-slider.prev .list .item:nth-child(2) .content .author,
@@ -1187,15 +1228,15 @@
   }
 }
 
-  .cinematic-slider .time {
-    position: absolute;
-    z-index: 1000;
-    width: 100%;
-    height: 3px;
-    background-color: #c8201a;
-    left: 0;
-    top: 0;
-  }
+.cinematic-slider .time {
+  position: absolute;
+  z-index: 1000;
+  width: 100%;
+  height: 3px;
+  background-color: #c8201a;
+  left: 0;
+  top: 0;
+}
 
 .cinematic-slider.next .time,
 .cinematic-slider.prev .time {
@@ -1204,9 +1245,199 @@
 
 @keyframes runningTime {
   from {
-    width: 100%
+    width: 100%;
   }
   to {
-    width: 0
+    width: 0;
+  }
+}
+
+/* ==========================================================================
+   Full Width (VW) & Full Height (VH) for Slider Hero
+   View and Edit Mode rules
+   ========================================================================== */
+
+#page-document .block.cinematic-slider-wrapper,
+#page-document .cinematic-slider-wrapper,
+#page-document .block.cinematicSlider,
+.view-wrapper .block.cinematic-slider-wrapper,
+.view-wrapper .cinematic-slider-wrapper,
+.view-wrapper .block.cinematicSlider,
+#view .block.cinematic-slider-wrapper,
+#view .cinematic-slider-wrapper,
+#view .block.cinematicSlider,
+body:not(.view-editview):not(.content-view-edit)
+  .block.cinematic-slider-wrapper,
+body:not(.view-editview):not(.content-view-edit) .cinematic-slider-wrapper,
+body:not(.view-editview):not(.content-view-edit) .block.cinematicSlider {
+  position: relative !important;
+  left: 50% !important;
+  right: 50% !important;
+  width: 100vw !important;
+  width: calc(100vw - var(--volto-toolbar-width, 0px)) !important;
+  max-width: 100vw !important;
+  max-width: calc(100vw - var(--volto-toolbar-width, 0px)) !important;
+  min-width: calc(100vw - var(--volto-toolbar-width, 0px)) !important;
+  margin-left: -50vw !important;
+  margin-left: calc(-50vw + (var(--volto-toolbar-width, 0px) / 2)) !important;
+  margin-right: -50vw !important;
+  margin-right: calc(-50vw + (var(--volto-toolbar-width, 0px) / 2)) !important;
+  box-sizing: border-box !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
+}
+
+.block.cinematicSlider > .cinematic-slider-wrapper {
+  left: 0 !important;
+  right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+}
+
+body.view-editview,
+body.content-view-edit {
+  .blocks-form [class*='block-editor-cinematicSlider'],
+  [class*='block-editor-cinematicSlider'] {
+    width: 100% !important;
+    max-width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    box-sizing: border-box !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+
+    > div,
+    .ui.drag.block.inner {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 100% !important;
+      min-height: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border-radius: 0 !important;
+      box-sizing: border-box !important;
+    }
+
+    .block.cinematicSlider {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 100vh !important;
+      height: 100dvh !important;
+      min-height: 100vh !important;
+      min-height: 100dvh !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
+      box-sizing: border-box !important;
+    }
+  }
+
+  .cinematic-slider-wrapper {
+    left: 0 !important;
+    right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    border-radius: 0 !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* ==========================================================================
+   Full Width (VW) for Horizontal Scroll
+   ========================================================================== */
+
+/* Breakout on initial render when NOT wrapped in pin-spacer */
+:not(.pin-spacer) > .cinematic-horizontal-scroll {
+  position: relative;
+  left: 50% !important;
+  right: 50% !important;
+  width: 100vw !important;
+  width: calc(100vw - var(--volto-toolbar-width, 0px)) !important;
+  max-width: 100vw !important;
+  max-width: calc(100vw - var(--volto-toolbar-width, 0px)) !important;
+  min-width: calc(100vw - var(--volto-toolbar-width, 0px)) !important;
+  margin-left: -50vw !important;
+  margin-left: calc(-50vw + (var(--volto-toolbar-width, 0px) / 2)) !important;
+  margin-right: -50vw !important;
+  margin-right: calc(-50vw + (var(--volto-toolbar-width, 0px) / 2)) !important;
+  box-sizing: border-box !important;
+}
+
+/* GSAP pin-spacer breakout so the pinned track spans full viewport width */
+.pin-spacer:has(> .cinematic-horizontal-scroll) {
+  position: relative !important;
+  left: 50% !important;
+  right: 50% !important;
+  width: 100vw !important;
+  width: calc(100vw - var(--volto-toolbar-width, 0px)) !important;
+  max-width: 100vw !important;
+  max-width: calc(100vw - var(--volto-toolbar-width, 0px)) !important;
+  min-width: calc(100vw - var(--volto-toolbar-width, 0px)) !important;
+  margin-left: -50vw !important;
+  margin-left: calc(-50vw + (var(--volto-toolbar-width, 0px) / 2)) !important;
+  margin-right: -50vw !important;
+  margin-right: calc(-50vw + (var(--volto-toolbar-width, 0px) / 2)) !important;
+  box-sizing: border-box !important;
+}
+
+/* Edit Mode */
+body.view-editview,
+body.content-view-edit {
+  .blocks-form [class*='block-editor-cinematicHorizontalScroll'],
+  [class*='block-editor-cinematicHorizontalScroll'] {
+    width: 100% !important;
+    max-width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    box-sizing: border-box !important;
+
+    > div,
+    .ui.drag.block.inner {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border-radius: 0 !important;
+      box-sizing: border-box !important;
+    }
+  }
+
+  .cinematic-horizontal-scroll {
+    left: 0 !important;
+    right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    box-sizing: border-box !important;
+    border-radius: 0 !important;
   }
 }

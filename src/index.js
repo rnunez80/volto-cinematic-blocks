@@ -1,4 +1,13 @@
-import paintSVG from '@plone/volto/icons/paint.svg';
+import textSVG from '@plone/volto/icons/text.svg';
+import imagesSVG from '@plone/volto/icons/images.svg';
+import cardsSVG from '@plone/volto/icons/cards.svg';
+import fastForwardSVG from '@plone/volto/icons/fast-forward.svg';
+import randomSVG from '@plone/volto/icons/random.svg';
+import copySVG from '@plone/volto/icons/copy.svg';
+import horizontalSVG from '@plone/volto/icons/horizontal.svg';
+import zoomSVG from '@plone/volto/icons/zoom.svg';
+import openingSVG from '@plone/volto/icons/opening.svg';
+import sliderSVG from '@plone/volto/icons/slider.svg';
 import { applyStyleWrapperToBlock } from '@eeacms/volto-block-style';
 import './theme/main.less';
 
@@ -62,7 +71,7 @@ const applyConfig = (config) => {
   config.blocks.blocksConfig.cinematicTypewriter = {
     id: 'cinematicTypewriter',
     title: 'Typewriter',
-    icon: paintSVG,
+    icon: textSVG,
     group: 'cinematic',
     view: TypewriterView,
     edit: TypewriterEdit,
@@ -75,7 +84,7 @@ const applyConfig = (config) => {
   config.blocks.blocksConfig.cinematicAccordionSlider = {
     id: 'cinematicAccordionSlider',
     title: 'Accordion Gallery',
-    icon: paintSVG,
+    icon: imagesSVG,
     group: 'cinematic',
     view: AccordionSliderView,
     edit: AccordionSliderEdit,
@@ -88,7 +97,7 @@ const applyConfig = (config) => {
   config.blocks.blocksConfig.cinematicFlipCards = {
     id: 'cinematicFlipCards',
     title: 'Flip Cards',
-    icon: paintSVG,
+    icon: cardsSVG,
     group: 'cinematic',
     view: FlipCardsView,
     edit: FlipCardsEdit,
@@ -101,7 +110,7 @@ const applyConfig = (config) => {
   config.blocks.blocksConfig.cinematicMarquee = {
     id: 'cinematicMarquee',
     title: 'Kinetic Marquee',
-    icon: paintSVG,
+    icon: fastForwardSVG,
     group: 'cinematic',
     view: MarqueeView,
     edit: MarqueeEdit,
@@ -114,7 +123,7 @@ const applyConfig = (config) => {
   config.blocks.blocksConfig.cinematicTextScramble = {
     id: 'cinematicTextScramble',
     title: 'Text Scramble',
-    icon: paintSVG,
+    icon: randomSVG,
     group: 'cinematic',
     view: TextScrambleView,
     edit: TextScrambleEdit,
@@ -127,7 +136,7 @@ const applyConfig = (config) => {
   config.blocks.blocksConfig.cinematicStickyCards = {
     id: 'cinematicStickyCards',
     title: 'Sticky Cards',
-    icon: paintSVG,
+    icon: copySVG,
     group: 'cinematic',
     view: StickyCardsView,
     edit: StickyCardsEdit,
@@ -140,7 +149,7 @@ const applyConfig = (config) => {
   config.blocks.blocksConfig.cinematicHorizontalScroll = {
     id: 'cinematicHorizontalScroll',
     title: 'Horizontal Scroll',
-    icon: paintSVG,
+    icon: horizontalSVG,
     group: 'cinematic',
     view: HorizontalScrollView,
     edit: HorizontalScrollEdit,
@@ -153,7 +162,7 @@ const applyConfig = (config) => {
   config.blocks.blocksConfig.cinematicZoomParallax = {
     id: 'cinematicZoomParallax',
     title: 'Zoom Parallax',
-    icon: paintSVG,
+    icon: zoomSVG,
     group: 'cinematic',
     view: ZoomParallaxView,
     edit: ZoomParallaxEdit,
@@ -166,7 +175,7 @@ const applyConfig = (config) => {
   // config.blocks.blocksConfig.cinematicSplitScroll = {
   //   id: 'cinematicSplitScroll',
   //   title: 'Split Scroll',
-  //   icon: paintSVG,
+  //   icon: sliderSVG,
   //   group: 'cinematic',
   //   view: SplitScrollView,
   //   edit: SplitScrollEdit,
@@ -179,7 +188,7 @@ const applyConfig = (config) => {
   config.blocks.blocksConfig.cinematicCurtainReveal = {
     id: 'cinematicCurtainReveal',
     title: 'Curtain Reveal',
-    icon: paintSVG,
+    icon: openingSVG,
     group: 'cinematic',
     view: CurtainRevealView,
     edit: CurtainRevealEdit,
@@ -192,7 +201,7 @@ const applyConfig = (config) => {
   config.blocks.blocksConfig.cinematicSlider = {
     id: 'cinematicSlider',
     title: 'Slider Hero',
-    icon: paintSVG, // Temporarily using paintSVG as per existing pattern
+    icon: sliderSVG,
     group: 'cinematic',
     view: SliderCrazyEffectsView,
     edit: SliderCrazyEffectsEdit,
