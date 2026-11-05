@@ -44,18 +44,20 @@ const AccordionSliderView = ({ data, isEditMode, className }) => {
         const flexValue = isActive ? expandedRatio : 1;
         const scale = 'large';
         const imageValue = panel?.bgImage;
-        const imageUrl = imageValue && typeof imageValue === 'string'
-          ? imageValue.includes('/@@images/image/')
-            ? imageValue
-            : `${imageValue}/@@images/image/${scale}`
-          : (imageValue?.url
+        const imageUrl =
+          imageValue && typeof imageValue === 'string'
+            ? imageValue.includes('/@@images/image/')
+              ? imageValue
+              : `${imageValue}/@@images/image/${scale}`
+            : imageValue?.url
               ? imageValue.url.includes('/@@images/image/')
                 ? imageValue.url
                 : `${imageValue.url}/@@images/image/${scale}`
-              : (imageValue?.['@id'] || imageValue?.id || null));
+              : imageValue?.['@id'] || imageValue?.id || null;
         const isFirst = index === 0;
         const panelBgColor = panel.bgColor || (isFirst ? '#000000' : '#000000');
-        const panelTextColor = panel.textColor || (isFirst ? '#ffffff' : '#ffffff');
+        const panelTextColor =
+          panel.textColor || (isFirst ? '#ffffff' : '#ffffff');
 
         return (
           <div
@@ -69,7 +71,11 @@ const AccordionSliderView = ({ data, isEditMode, className }) => {
             aria-controls={`accordion-panel-content-${index}`}
             aria-label={panel.title || `Panel ${index + 1}`}
             style={{
-              flex: prefersReducedMotion ? (isActive ? expandedRatio : 1) : flexValue,
+              flex: prefersReducedMotion
+                ? isActive
+                  ? expandedRatio
+                  : 1
+                : flexValue,
               transition: prefersReducedMotion
                 ? 'none'
                 : `flex ${transitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1)`,

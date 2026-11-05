@@ -11,7 +11,9 @@ const ZoomParallaxData = (props) => {
     <BlockDataForm
       schema={schema}
       title={schema.title}
-      onChangeField={(id, value) => onChangeBlock(block, { ...data, [id]: value })}
+      onChangeField={(id, value) =>
+        onChangeBlock(block, { ...data, [id]: value })
+      }
       formData={data}
       block={block}
     />

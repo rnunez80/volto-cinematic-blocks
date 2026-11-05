@@ -11,7 +11,8 @@ const ZoomParallaxView = ({ data, isEditMode, className }) => {
   const backgroundImage = getImageUrl(data?.backgroundImage, '2k');
   const fallbackBgColor = data?.fallbackBgColor || '#000000';
   const midgroundText = data?.midgroundText || 'Cinematic Depth';
-  const foregroundText = data?.foregroundText || 'Scroll to experience layered parallax';
+  const foregroundText =
+    data?.foregroundText || 'Scroll to experience layered parallax';
   const overlayColor = data?.overlayColor || '#000000';
   const overlayOpacity = data?.overlayOpacity || '0.4';
   const sectionHeight = data?.sectionHeight || '100vh';
@@ -26,7 +27,14 @@ const ZoomParallaxView = ({ data, isEditMode, className }) => {
   const fgRef = useRef(null);
 
   useEffect(() => {
-    if (!loaded || !gsap || !ScrollTrigger || prefersReducedMotion || isEditMode) return;
+    if (
+      !loaded ||
+      !gsap ||
+      !ScrollTrigger ||
+      prefersReducedMotion ||
+      isEditMode
+    )
+      return;
 
     const section = sectionRef.current;
     if (!section) return;
@@ -66,7 +74,11 @@ const ZoomParallaxView = ({ data, isEditMode, className }) => {
     <div
       ref={sectionRef}
       className={cx('block cinematic-zoom-parallax', className)}
-      style={{ height: sectionHeight, overflow: 'hidden', position: 'relative' }}
+      style={{
+        height: sectionHeight,
+        overflow: 'hidden',
+        position: 'relative',
+      }}
     >
       {/* Background layer */}
       <div
@@ -87,10 +99,7 @@ const ZoomParallaxView = ({ data, isEditMode, className }) => {
       />
 
       {/* Midground */}
-      <div
-        ref={midRef}
-        className="cinematic-zoom-parallax__mid"
-      >
+      <div ref={midRef} className="cinematic-zoom-parallax__mid">
         <h2
           className="cinematic-zoom-parallax__mid-text"
           style={{ color: textColor }}
@@ -100,10 +109,7 @@ const ZoomParallaxView = ({ data, isEditMode, className }) => {
       </div>
 
       {/* Foreground */}
-      <div
-        ref={fgRef}
-        className="cinematic-zoom-parallax__fg"
-      >
+      <div ref={fgRef} className="cinematic-zoom-parallax__fg">
         <p
           className="cinematic-zoom-parallax__fg-text"
           style={{ color: textColor }}

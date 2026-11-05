@@ -37,39 +37,48 @@ const SliderCrazyEffectsView = ({ data, isEditMode, className }) => {
     }, interval);
   }, [autoPlay, isEditMode, interval]);
 
-  const doSlide = useCallback((type, targetIndex = null) => {
-    const currentItems = itemsRef.current;
-    if (isAnimatingRef.current || currentItems.length < 2) return;
+  const doSlide = useCallback(
+    (type, targetIndex = null) => {
+      const currentItems = itemsRef.current;
+      if (isAnimatingRef.current || currentItems.length < 2) return;
 
-    isAnimatingRef.current = true;
-    setAnimationType(type || 'next');
+      isAnimatingRef.current = true;
+      setAnimationType(type || 'next');
 
-    let newItems;
-    if (targetIndex !== null) {
-      newItems = [...currentItems.slice(targetIndex), ...currentItems.slice(0, targetIndex)];
-    } else if (type === 'next') {
-      newItems = [...currentItems.slice(1), currentItems[0]];
-    } else {
-      newItems = [currentItems[currentItems.length - 1], ...currentItems.slice(0, -1)];
-    }
+      let newItems;
+      if (targetIndex !== null) {
+        newItems = [
+          ...currentItems.slice(targetIndex),
+          ...currentItems.slice(0, targetIndex),
+        ];
+      } else if (type === 'next') {
+        newItems = [...currentItems.slice(1), currentItems[0]];
+      } else {
+        newItems = [
+          currentItems[currentItems.length - 1],
+          ...currentItems.slice(0, -1),
+        ];
+      }
 
-    setItems(newItems);
-    itemsRef.current = newItems;
+      setItems(newItems);
+      itemsRef.current = newItems;
 
-    clearTimeout(runningRef.current);
-    runningRef.current = setTimeout(() => {
-      setAnimationType('');
-      isAnimatingRef.current = false;
-    }, timeRunning);
+      clearTimeout(runningRef.current);
+      runningRef.current = setTimeout(() => {
+        setAnimationType('');
+        isAnimatingRef.current = false;
+      }, timeRunning);
 
-    // Schedule next auto-play after transition
-    if (autoPlay && !isEditMode) {
-      clearTimeout(timerRef.current);
-      timerRef.current = setTimeout(() => {
-        doSlide('next');
-      }, interval);
-    }
-  }, [autoPlay, isEditMode, interval, timeRunning]);
+      // Schedule next auto-play after transition
+      if (autoPlay && !isEditMode) {
+        clearTimeout(timerRef.current);
+        timerRef.current = setTimeout(() => {
+          doSlide('next');
+        }, interval);
+      }
+    },
+    [autoPlay, isEditMode, interval, timeRunning],
+  );
 
   // Initial auto-play kickoff
   useEffect(() => {
@@ -118,14 +127,21 @@ const SliderCrazyEffectsView = ({ data, isEditMode, className }) => {
                 />
                 <div className="content" style={{ color: slide.titleColor }}>
                   <h1 className="title">{slide.title || ''}</h1>
-                  <div className="topic" style={{ color: slide.topicColor }}>{slide.topic || ''}</div>
-                  <div className="des" style={{ color: slide.descriptionColor }}>
+                  <div className="topic" style={{ color: slide.topicColor }}>
+                    {slide.topic || ''}
+                  </div>
+                  <div
+                    className="des"
+                    style={{ color: slide.descriptionColor }}
+                  >
                     {slide.description || ''}
                   </div>
                   <div className="buttons">
                     {slide.buttonLabel && (
                       <a
-                        href={isEditMode ? undefined : resolveLink(slide.buttonLink)}
+                        href={
+                          isEditMode ? undefined : resolveLink(slide.buttonLink)
+                        }
                         className={`ui ${slide.buttonPrimary !== false ? 'primary' : 'secondary'} button`}
                         onClick={(e) => isEditMode && e.preventDefault()}
                       >
@@ -134,7 +150,11 @@ const SliderCrazyEffectsView = ({ data, isEditMode, className }) => {
                     )}
                     {slide.button2Label && (
                       <a
-                        href={isEditMode ? undefined : resolveLink(slide.button2Link)}
+                        href={
+                          isEditMode
+                            ? undefined
+                            : resolveLink(slide.button2Link)
+                        }
                         className={`ui ${slide.button2Primary ? 'primary' : 'secondary'} button`}
                         onClick={(e) => isEditMode && e.preventDefault()}
                       >
@@ -162,7 +182,10 @@ const SliderCrazyEffectsView = ({ data, isEditMode, className }) => {
                   style={{ cursor: 'pointer' }}
                 >
                   <div className="image-wrapper">
-                    <img src={getImageUrl(slide.image)} alt={slide.title || 'thumbnail'} />
+                    <img
+                      src={getImageUrl(slide.image)}
+                      alt={slide.title || 'thumbnail'}
+                    />
                     <div className="gradient-overlay"></div>
                     <div className="content">
                       <div className="title">{slide.title}</div>
@@ -184,11 +207,14 @@ const SliderCrazyEffectsView = ({ data, isEditMode, className }) => {
         )}
 
         {/* Time Progress Bar */}
-        <div className="time" style={{
-          animationDuration: `${interval}ms`,
-          backgroundColor: '#F15B4E',
-          animationIterationCount: 'infinite',
-        }}></div>
+        <div
+          className="time"
+          style={{
+            animationDuration: `${interval}ms`,
+            backgroundColor: '#F15B4E',
+            animationIterationCount: 'infinite',
+          }}
+        ></div>
       </div>
     </div>
   );

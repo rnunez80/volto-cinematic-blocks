@@ -8,18 +8,25 @@ const messages = defineMessages({
   direction: { id: 'cinematicMarqueeDirection', defaultMessage: 'Direction' },
   fontSize: { id: 'cinematicMarqueeFontSize', defaultMessage: 'Font Size' },
   separator: { id: 'cinematicMarqueeSep', defaultMessage: 'Separator' },
-  fontWeight: { id: 'cinematicMarqueeFontWeight', defaultMessage: 'Font Weight' },
-  pauseOnHover: { id: 'cinematicMarqueePause', defaultMessage: 'Pause on Hover' },
+  fontWeight: {
+    id: 'cinematicMarqueeFontWeight',
+    defaultMessage: 'Font Weight',
+  },
+  pauseOnHover: {
+    id: 'cinematicMarqueePause',
+    defaultMessage: 'Pause on Hover',
+  },
 });
 
 const BandSchema = (props) => ({
   title: 'Band',
   addMessage: 'Add band',
-  fieldsets: [
-    { id: 'content', title: 'Content', fields: ['text'] },
-  ],
+  fieldsets: [{ id: 'content', title: 'Content', fields: ['text'] }],
   properties: {
-    text: { title: 'Text', default: 'STRATEGY · DESIGN · DEVELOPMENT · GROWTH' },
+    text: {
+      title: 'Text',
+      default: 'STRATEGY · DESIGN · DEVELOPMENT · GROWTH',
+    },
   },
   required: [],
 });
@@ -30,7 +37,18 @@ export const MarqueeSchema = (props) => {
     title: intl.formatMessage(messages.MarqueeBlock),
     fieldsets: [
       { id: 'default', title: 'Content', fields: ['bands'] },
-      { id: 'styling', title: 'Layout', fields: ['speed', 'direction', 'fontSize', 'separator', 'fontWeight', 'pauseOnHover'] },
+      {
+        id: 'styling',
+        title: 'Layout',
+        fields: [
+          'speed',
+          'direction',
+          'fontSize',
+          'separator',
+          'fontWeight',
+          'pauseOnHover',
+        ],
+      },
     ],
     properties: {
       bands: {
@@ -41,17 +59,30 @@ export const MarqueeSchema = (props) => {
       speed: {
         title: intl.formatMessage(messages.speed),
         default: '30',
-        choices: [['15', 'Fast'], ['30', 'Medium'], ['50', 'Slow'], ['80', 'Very Slow']],
+        choices: [
+          ['15', 'Fast'],
+          ['30', 'Medium'],
+          ['50', 'Slow'],
+          ['80', 'Very Slow'],
+        ],
       },
       direction: {
         title: intl.formatMessage(messages.direction),
         default: 'left',
-        choices: [['left', 'Left'], ['right', 'Right']],
+        choices: [
+          ['left', 'Left'],
+          ['right', 'Right'],
+        ],
       },
       fontSize: {
         title: intl.formatMessage(messages.fontSize),
         default: '3rem',
-        choices: [['1.5rem', 'Small'], ['2rem', 'Medium'], ['3rem', 'Large'], ['5rem', 'Extra Large']],
+        choices: [
+          ['1.5rem', 'Small'],
+          ['2rem', 'Medium'],
+          ['3rem', 'Large'],
+          ['5rem', 'Extra Large'],
+        ],
       },
       separator: {
         title: intl.formatMessage(messages.separator),
@@ -60,7 +91,12 @@ export const MarqueeSchema = (props) => {
       fontWeight: {
         title: intl.formatMessage(messages.fontWeight),
         default: '800',
-        choices: [['400', 'Normal'], ['600', 'Semi Bold'], ['800', 'Bold'], ['900', 'Black']],
+        choices: [
+          ['400', 'Normal'],
+          ['600', 'Semi Bold'],
+          ['800', 'Bold'],
+          ['900', 'Black'],
+        ],
       },
       pauseOnHover: {
         title: intl.formatMessage(messages.pauseOnHover),

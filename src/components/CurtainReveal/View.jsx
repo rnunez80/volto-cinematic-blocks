@@ -11,10 +11,19 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
   const description = data?.description || '';
   const fallbackBgColor = data?.fallbackBgColor || '#000000';
   const curtainGradient = data?.curtainGradient || false;
-  const curtainColor = data?.curtainColor !== undefined ? data?.curtainColor : '#1a1a2e';
-  const curtainGradientStart = curtainGradient ? (data?.curtainGradientStart !== undefined ? data?.curtainGradientStart : '#1a1a2e') : curtainColor;
-  const curtainGradientEnd = data?.curtainGradientEnd !== undefined ? data?.curtainGradientEnd : '#e94560';
-  const curtainGradientAngle = data?.curtainGradientAngle !== undefined ? data?.curtainGradientAngle : 45;
+  const curtainColor =
+    data?.curtainColor !== undefined ? data?.curtainColor : '#1a1a2e';
+  const curtainGradientStart = curtainGradient
+    ? data?.curtainGradientStart !== undefined
+      ? data?.curtainGradientStart
+      : '#1a1a2e'
+    : curtainColor;
+  const curtainGradientEnd =
+    data?.curtainGradientEnd !== undefined
+      ? data?.curtainGradientEnd
+      : '#e94560';
+  const curtainGradientAngle =
+    data?.curtainGradientAngle !== undefined ? data?.curtainGradientAngle : 45;
   const revealDirection = data?.revealDirection || 'left';
   const sectionHeight = data?.sectionHeight || '60vh';
   const textColor = data?.textColor || '#ffffff';
@@ -27,7 +36,14 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
   const curtainContentRef = useRef(null);
 
   useEffect(() => {
-    if (!loaded || !gsap || !ScrollTrigger || prefersReducedMotion || isEditMode) return;
+    if (
+      !loaded ||
+      !gsap ||
+      !ScrollTrigger ||
+      prefersReducedMotion ||
+      isEditMode
+    )
+      return;
 
     const section = sectionRef.current;
     const curtain = curtainRef.current;
@@ -58,7 +74,8 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
         animProps.xPercent = -110;
     }
 
-    gsap.fromTo(curtain,
+    gsap.fromTo(
+      curtain,
       {
         opacity: 1,
       },
@@ -72,14 +89,16 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
           end: 'top 20%',
           scrub: 1,
         },
-      }
+      },
     );
 
-    gsap.fromTo(curtainContent,
+    gsap.fromTo(
+      curtainContent,
       {
-        transform: revealDirection === 'left' || revealDirection === 'right'
-          ? `translateX(${revealDirection === 'left' ? 200 : -200}px)`
-          : `translateY(${revealDirection === 'up' ? 200 : -200}px)`,
+        transform:
+          revealDirection === 'left' || revealDirection === 'right'
+            ? `translateX(${revealDirection === 'left' ? 200 : -200}px)`
+            : `translateY(${revealDirection === 'up' ? 200 : -200}px)`,
         opacity: 0,
       },
       {
@@ -93,16 +112,18 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
           end: 'top 30%',
           scrub: 1,
         },
-      }
+      },
     );
 
     const curtainEdge = curtainRef.current.querySelector('.curtain-edge');
     if (curtainEdge) {
-      gsap.fromTo(curtainEdge,
+      gsap.fromTo(
+        curtainEdge,
         {
-          transform: revealDirection === 'left' || revealDirection === 'right'
-            ? `translateX(${revealDirection === 'left' ? 150 : -150}px) scale(1.5)`
-            : `translateY(${revealDirection === 'up' ? 150 : -150}px) scale(1.5)`,
+          transform:
+            revealDirection === 'left' || revealDirection === 'right'
+              ? `translateX(${revealDirection === 'left' ? 150 : -150}px) scale(1.5)`
+              : `translateY(${revealDirection === 'up' ? 150 : -150}px) scale(1.5)`,
           opacity: 0.5,
         },
         {
@@ -116,7 +137,7 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
             end: 'top 50%',
             scrub: 1,
           },
-        }
+        },
       );
     }
 
@@ -125,19 +146,27 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
       gsap.killTweensOf(curtainContent);
       gsap.killTweensOf(curtainEdge);
     };
-  }, [loaded, gsap, ScrollTrigger, prefersReducedMotion, isEditMode, revealDirection]);
+  }, [
+    loaded,
+    gsap,
+    ScrollTrigger,
+    prefersReducedMotion,
+    isEditMode,
+    revealDirection,
+  ]);
 
   const scale = 'large';
   const imageValue = data?.backgroundImage;
-  const imageUrl = imageValue && typeof imageValue === 'string'
-    ? imageValue.includes('/@@images/image/')
-      ? imageValue
-      : `${imageValue}/@@images/image`
-    : (imageValue?.url
+  const imageUrl =
+    imageValue && typeof imageValue === 'string'
+      ? imageValue.includes('/@@images/image/')
+        ? imageValue
+        : `${imageValue}/@@images/image`
+      : imageValue?.url
         ? imageValue.url.includes('/@@images/image/')
           ? imageValue.url
           : `${imageValue.url}/@@images/image`
-        : (imageValue?.['@id'] || imageValue?.id || null));
+        : imageValue?.['@id'] || imageValue?.id || null;
 
   const resolveLink = (link) => {
     if (!link) return '#';
@@ -147,7 +176,9 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
   };
 
   const curtainBg = curtainGradient
-    ? { background: `linear-gradient(${curtainGradientAngle}deg, ${curtainGradientStart}, ${curtainGradientEnd})` }
+    ? {
+        background: `linear-gradient(${curtainGradientAngle}deg, ${curtainGradientStart}, ${curtainGradientEnd})`,
+      }
     : { backgroundColor: curtainColor };
 
   const contentBg = {
@@ -173,27 +204,24 @@ const CurtainRevealView = ({ data, isEditMode, className }) => {
       role="region"
       aria-label={title}
     >
-        {!prefersReducedMotion && (
+      {!prefersReducedMotion && (
+        <div
+          ref={curtainRef}
+          className="cinematic-curtain-reveal__curtain"
+          style={{ ...curtainBg }}
+          aria-hidden="true"
+        >
           <div
-            ref={curtainRef}
-            className="cinematic-curtain-reveal__curtain"
-            style={{ ...curtainBg }}
-            aria-hidden="true"
+            ref={curtainContentRef}
+            className="cinematic-curtain-reveal__curtain-content"
           >
-            <div
-              ref={curtainContentRef}
-              className="cinematic-curtain-reveal__curtain-content"
-            >
-              <div className="cinematic-curtain-reveal__curtain-edge curtain-edge" />
-            </div>
+            <div className="cinematic-curtain-reveal__curtain-edge curtain-edge" />
           </div>
-        )}
+        </div>
+      )}
 
       {/* Content underneath */}
-      <div
-        className="cinematic-curtain-reveal__content"
-        style={contentBg}
-      >
+      <div className="cinematic-curtain-reveal__content" style={contentBg}>
         <p className="cinematic-title" style={{ color: textColor }}>
           {title}
         </p>

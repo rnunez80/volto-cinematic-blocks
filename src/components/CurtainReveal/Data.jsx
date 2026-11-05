@@ -7,7 +7,9 @@ const CurtainRevealData = (props) => {
   const { data, block, onChangeBlock } = props;
   const intl = useIntl();
   const [schema, setSchema] = useState(null);
-  const [curtainGradient, setCurtainGradient] = useState(data?.curtainGradient || false);
+  const [curtainGradient, setCurtainGradient] = useState(
+    data?.curtainGradient || false,
+  );
 
   useEffect(() => {
     if (intl) {
@@ -20,22 +22,31 @@ const CurtainRevealData = (props) => {
           ...newSchema,
           fieldsets: [
             ...newSchema.fieldsets.slice(0, 2),
-            { ...newSchema.fieldsets[1], title: 'Curtain Color', fields: [
-              'curtainGradient','curtainGradientStart', 'curtainGradientEnd', 'curtainGradientAngle'
-            ]},
-            ...newSchema.fieldsets.slice(2)
-          ]
+            {
+              ...newSchema.fieldsets[1],
+              title: 'Curtain Color',
+              fields: [
+                'curtainGradient',
+                'curtainGradientStart',
+                'curtainGradientEnd',
+                'curtainGradientAngle',
+              ],
+            },
+            ...newSchema.fieldsets.slice(2),
+          ],
         };
       } else {
         newSchema = {
           ...newSchema,
           fieldsets: [
             ...newSchema.fieldsets.slice(0, 2),
-            { ...newSchema.fieldsets[1], title: 'Curtain Color', fields: [
-              'curtainGradient', 'curtainColor'
-            ]},
-            ...newSchema.fieldsets.slice(2)
-          ]
+            {
+              ...newSchema.fieldsets[1],
+              title: 'Curtain Color',
+              fields: ['curtainGradient', 'curtainColor'],
+            },
+            ...newSchema.fieldsets.slice(2),
+          ],
         };
       }
 
@@ -55,7 +66,9 @@ const CurtainRevealData = (props) => {
     <BlockDataForm
       schema={schema}
       title={schema.title}
-      onChangeField={(id, value) => onChangeBlock(block, { ...data, [id]: value })}
+      onChangeField={(id, value) =>
+        onChangeBlock(block, { ...data, [id]: value })
+      }
       formData={data}
       block={block}
     />

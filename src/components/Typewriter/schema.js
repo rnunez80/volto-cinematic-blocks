@@ -59,7 +59,6 @@ const messages = defineMessages({
     id: 'cinematicTypewriterBlockHeight',
     defaultMessage: 'Block Height',
   },
-
 });
 
 export const TypewriterSchema = (props) => {
@@ -106,7 +105,8 @@ export const TypewriterSchema = (props) => {
       },
       postfixText: {
         title: intl.formatMessage(messages.postfixText),
-        description: 'Text that stays fixed after the cycling portion (optional)',
+        description:
+          'Text that stays fixed after the cycling portion (optional)',
       },
       typingSpeed: {
         title: intl.formatMessage(messages.typingSpeed),

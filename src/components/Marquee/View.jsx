@@ -16,7 +16,11 @@ const MarqueeView = ({ data, isEditMode, className }) => {
           'cinematic-marquee--empty': isEditMode,
         })}
       >
-        {isEditMode && <span className="cinematic-marquee__empty-text">Configure marquee bands in the sidebar →</span>}
+        {isEditMode && (
+          <span className="cinematic-marquee__empty-text">
+            Configure marquee bands in the sidebar →
+          </span>
+        )}
       </div>
     );
   }
@@ -29,9 +33,8 @@ const MarqueeView = ({ data, isEditMode, className }) => {
     >
       {bands.map((band, index) => {
         const bandText = band.text || '';
-        const isReverse = direction === 'right'
-          ? index % 2 === 0
-          : index % 2 !== 0;
+        const isReverse =
+          direction === 'right' ? index % 2 === 0 : index % 2 !== 0;
 
         const repeatedContent = `${bandText}${separator}`.repeat(6);
         const isFirst = index === 0;

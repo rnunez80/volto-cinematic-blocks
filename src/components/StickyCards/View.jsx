@@ -33,8 +33,10 @@ const StickyCardsView = ({ data, isEditMode, className }) => {
         {cards.map((card, index) => {
           const rotateAngle = index % 2 === 0 ? rotateAmount : -rotateAmount;
           const isFirst = index === 0;
-          const cardBgColor = card.bgColor || (isFirst ? '#000000' : 'transparent');
-          const cardTextColor = card.textColor || (isFirst ? '#ffffff' : '#000000');
+          const cardBgColor =
+            card.bgColor || (isFirst ? '#000000' : 'transparent');
+          const cardTextColor =
+            card.textColor || (isFirst ? '#ffffff' : '#000000');
           return (
             <article
               key={card['@id'] || index}
@@ -43,7 +45,9 @@ const StickyCardsView = ({ data, isEditMode, className }) => {
                 position: 'relative',
                 height: cardHeight,
                 backgroundColor: cardBgColor,
-                backgroundImage: card.bgImage ? `url('${card.bgImage}')` : 'none',
+                backgroundImage: card.bgImage
+                  ? `url('${card.bgImage}')`
+                  : 'none',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 color: cardTextColor,
@@ -56,7 +60,9 @@ const StickyCardsView = ({ data, isEditMode, className }) => {
             >
               <div className="cinematic-sticky-cards__content">
                 <p className="cinematic-sticky-cards__title">{card.title}</p>
-                <p className="cinematic-sticky-cards__description">{card.description}</p>
+                <p className="cinematic-sticky-cards__description">
+                  {card.description}
+                </p>
                 {card.buttonLabel && (
                   <a
                     href={isEditMode ? undefined : resolveLink(card.buttonLink)}
@@ -90,8 +96,10 @@ const StickyCardsView = ({ data, isEditMode, className }) => {
         {cards.map((card, index) => {
           const rotateAngle = index % 2 === 0 ? rotateAmount : -rotateAmount;
           const isFirst = index === 0;
-          const cardBgColor = card.bgColor || (isFirst ? '#000000' : 'transparent');
-          const cardTextColor = card.textColor || (isFirst ? '#ffffff' : '#000000');
+          const cardBgColor =
+            card.bgColor || (isFirst ? '#000000' : 'transparent');
+          const cardTextColor =
+            card.textColor || (isFirst ? '#ffffff' : '#000000');
           return (
             <article
               key={card['@id'] || index}
@@ -101,7 +109,9 @@ const StickyCardsView = ({ data, isEditMode, className }) => {
                 top: `${300 + index * 40}px`,
                 height: cardHeight,
                 backgroundColor: cardBgColor,
-                backgroundImage: card.bgImage ? `url('${card.bgImage}')` : 'none',
+                backgroundImage: card.bgImage
+                  ? `url('${card.bgImage}')`
+                  : 'none',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 color: cardTextColor,
@@ -114,7 +124,9 @@ const StickyCardsView = ({ data, isEditMode, className }) => {
             >
               <div className="cinematic-sticky-cards__content">
                 <p className="cinematic-title">{card.title}</p>
-                <p className="cinematic-sticky-cards__description">{card.description}</p>
+                <p className="cinematic-sticky-cards__description">
+                  {card.description}
+                </p>
                 {card.buttonLabel && (
                   <a
                     href={isEditMode ? undefined : resolveLink(card.buttonLink)}

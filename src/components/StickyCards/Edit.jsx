@@ -9,7 +9,12 @@ const StickyCardsEdit = (props) => {
     <>
       <View {...props} isEditMode />
       <SidebarPortal selected={selected}>
-        <Sidebar {...props} data={data} block={block} onChangeBlock={onChangeBlock} />
+        <Sidebar
+          {...props}
+          data={data}
+          block={block}
+          onChangeBlock={onChangeBlock}
+        />
       </SidebarPortal>
     </>
   );

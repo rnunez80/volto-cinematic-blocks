@@ -13,7 +13,9 @@ const TextScrambleView = ({ data, isEditMode, className }) => {
   const textAlign = data?.textAlign || 'center';
   const fontFamily = data?.fontFamily || 'monospace';
 
-  const [displayText, setDisplayText] = useState(prefersReducedMotion ? headline : '');
+  const [displayText, setDisplayText] = useState(
+    prefersReducedMotion ? headline : '',
+  );
   const [hasTriggered, setHasTriggered] = useState(false);
   const containerRef = useRef(null);
   const frameRef = useRef(null);
@@ -34,7 +36,9 @@ const TextScrambleView = ({ data, isEditMode, className }) => {
         .map((char, index) => {
           if (index < iteration) return char;
           if (char === ' ') return ' ';
-          return scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+          return scrambleChars[
+            Math.floor(Math.random() * scrambleChars.length)
+          ];
         })
         .join('');
 

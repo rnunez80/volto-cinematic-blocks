@@ -6,7 +6,10 @@ const TypewriterView = ({ data, isEditMode, className }) => {
   const staticText = data?.staticText || '';
   const postfixText = data?.postfixText || '';
   const phrasesRaw = data?.phrases || 'websites\napplications\nexperiences';
-  const phrases = phrasesRaw.split('\n').map((p) => p.trim()).filter(Boolean);
+  const phrases = phrasesRaw
+    .split('\n')
+    .map((p) => p.trim())
+    .filter(Boolean);
   const textColor = data?.textColor || '';
   const typingSpeed = data?.typingSpeed || 80;
   const deleteSpeed = data?.deleteSpeed || 40;
@@ -72,7 +75,10 @@ const TypewriterView = ({ data, isEditMode, className }) => {
       return;
     }
 
-    timeoutRef.current = setTimeout(tick, isDeleting ? deleteSpeed : typingSpeed);
+    timeoutRef.current = setTimeout(
+      tick,
+      isDeleting ? deleteSpeed : typingSpeed,
+    );
 
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -89,7 +95,10 @@ const TypewriterView = ({ data, isEditMode, className }) => {
       role="region"
       aria-label={ariaText}
     >
-      <div className="cinematic-typewriter__inner" style={{ height: blockHeight }}>
+      <div
+        className="cinematic-typewriter__inner"
+        style={{ height: blockHeight }}
+      >
         <h2
           className="cinematic-typewriter__text"
           style={{ fontSize, color: textColor || undefined }}

@@ -19,12 +19,19 @@ const SplitScrollView = ({ data, isEditMode, className }) => {
   const rightColInnerRef = useRef(null);
 
   useEffect(() => {
-    if (!loaded || !gsap || !ScrollTrigger || prefersReducedMotion || isEditMode) return;
+    if (
+      !loaded ||
+      !gsap ||
+      !ScrollTrigger ||
+      prefersReducedMotion ||
+      isEditMode
+    )
+      return;
 
     const section = sectionRef.current;
     const leftCol = leftColInnerRef.current;
     const rightCol = rightColInnerRef.current;
-    
+
     if (!section) return;
 
     const itemH = window.innerHeight;
@@ -43,19 +50,35 @@ const SplitScrollView = ({ data, isEditMode, className }) => {
         },
       });
 
-      gsap.fromTo(rightCol, { y: totalDistance }, { y: 0, ease: 'none', scrollTrigger: {
-        trigger: section,
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 0.3,
-      }});
+      gsap.fromTo(
+        rightCol,
+        { y: totalDistance },
+        {
+          y: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 0.3,
+          },
+        },
+      );
     } else if (stickyColumn === 'right') {
-      gsap.fromTo(leftCol, { y: totalDistance }, { y: 0, ease: 'none', scrollTrigger: {
-        trigger: section,
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 0.3,
-      }});
+      gsap.fromTo(
+        leftCol,
+        { y: totalDistance },
+        {
+          y: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 0.3,
+          },
+        },
+      );
 
       gsap.to(rightCol, {
         y: totalDistance,
@@ -74,7 +97,16 @@ const SplitScrollView = ({ data, isEditMode, className }) => {
         if (t.trigger === section) t.kill();
       });
     };
-  }, [loaded, gsap, ScrollTrigger, prefersReducedMotion, isEditMode, stickyColumn, leftItems.length, rightItems.length]);
+  }, [
+    loaded,
+    gsap,
+    ScrollTrigger,
+    prefersReducedMotion,
+    isEditMode,
+    stickyColumn,
+    leftItems.length,
+    rightItems.length,
+  ]);
 
   const resolveLink = (link) => {
     if (!link) return '#';

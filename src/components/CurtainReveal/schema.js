@@ -1,19 +1,49 @@
 import { defineMessages } from 'react-intl';
 
 const messages = defineMessages({
-  CurtainRevealBlock: { id: 'cinematicCurtainReveal', defaultMessage: 'Curtain Reveal' },
-  curtainColor: { id: 'cinematicCurtainColor', defaultMessage: 'Curtain Color' },
-  curtainGradient: { id: 'cinematicCurtainGradient', defaultMessage: 'Curtain Gradient' },
-  curtainGradientStart: { id: 'cinematicCurtainGradientStart', defaultMessage: 'Gradient Start' },
-  curtainGradientEnd: { id: 'cinematicCurtainGradientEnd', defaultMessage: 'Gradient End' },
-  curtainGradientAngle: { id: 'cinematicCurtainGradientAngle', defaultMessage: 'Gradient Angle' },
-  revealDirection: { id: 'cinematicCurtainDirection', defaultMessage: 'Reveal Direction' },
+  CurtainRevealBlock: {
+    id: 'cinematicCurtainReveal',
+    defaultMessage: 'Curtain Reveal',
+  },
+  curtainColor: {
+    id: 'cinematicCurtainColor',
+    defaultMessage: 'Curtain Color',
+  },
+  curtainGradient: {
+    id: 'cinematicCurtainGradient',
+    defaultMessage: 'Curtain Gradient',
+  },
+  curtainGradientStart: {
+    id: 'cinematicCurtainGradientStart',
+    defaultMessage: 'Gradient Start',
+  },
+  curtainGradientEnd: {
+    id: 'cinematicCurtainGradientEnd',
+    defaultMessage: 'Gradient End',
+  },
+  curtainGradientAngle: {
+    id: 'cinematicCurtainGradientAngle',
+    defaultMessage: 'Gradient Angle',
+  },
+  revealDirection: {
+    id: 'cinematicCurtainDirection',
+    defaultMessage: 'Reveal Direction',
+  },
   title: { id: 'cinematicCurtainTitle', defaultMessage: 'Title' },
-  description: { id: 'cinematicCurtainDescription', defaultMessage: 'Description' },
-  sectionHeight: { id: 'cinematicCurtainHeight', defaultMessage: 'Section Height' },
+  description: {
+    id: 'cinematicCurtainDescription',
+    defaultMessage: 'Description',
+  },
+  sectionHeight: {
+    id: 'cinematicCurtainHeight',
+    defaultMessage: 'Section Height',
+  },
   ctaText: { id: 'cinematicCurtainCTAText', defaultMessage: 'CTA Button Text' },
   ctaLink: { id: 'cinematicCurtainCTALink', defaultMessage: 'CTA Link' },
-  ctaPrimary: { id: 'cinematicCurtainCTAPrimary', defaultMessage: 'Primary CTA' },
+  ctaPrimary: {
+    id: 'cinematicCurtainCTAPrimary',
+    defaultMessage: 'Primary CTA',
+  },
 });
 
 export const CurtainRevealSchema = (props) => {
@@ -21,10 +51,23 @@ export const CurtainRevealSchema = (props) => {
   return {
     title: intl.formatMessage(messages.CurtainRevealBlock),
     fieldsets: [
-      { id: 'default', title: 'Content', fields: ['title', 'description','ctaText', 'ctaLink', 'ctaPrimary'] },
-      { id: 'styling', title: 'Styling', fields: [ 'textColor', 'revealDirection', 'sectionHeight', 'backgroundImage','fallbackBgColor']}
+      {
+        id: 'default',
+        title: 'Content',
+        fields: ['title', 'description', 'ctaText', 'ctaLink', 'ctaPrimary'],
+      },
+      {
+        id: 'styling',
+        title: 'Styling',
+        fields: [
+          'textColor',
+          'revealDirection',
+          'sectionHeight',
+          'backgroundImage',
+          'fallbackBgColor',
+        ],
+      },
       // { id: 'styling', title: 'Styling', fields: ['fallbackBgColor', 'textColor',  'curtainColor',  'curtainGradientStart', 'curtainGradientEnd', 'curtainGradientAngle', 'revealDirection', 'sectionHeight', 'backgroundImage'] },
-
     ],
     properties: {
       title: {
@@ -34,7 +77,8 @@ export const CurtainRevealSchema = (props) => {
       description: {
         title: intl.formatMessage(messages.description),
         widget: 'textarea',
-        default: 'Content emerges as the curtain slides away, creating a dramatic reveal moment.',
+        default:
+          'Content emerges as the curtain slides away, creating a dramatic reveal moment.',
       },
       backgroundImage: {
         title: 'Background Image',
@@ -98,12 +142,21 @@ export const CurtainRevealSchema = (props) => {
       revealDirection: {
         title: intl.formatMessage(messages.revealDirection),
         default: 'left',
-        choices: [['left', 'Left'], ['right', 'Right'], ['up', 'Up'], ['down', 'Down']],
+        choices: [
+          ['left', 'Left'],
+          ['right', 'Right'],
+          ['up', 'Up'],
+          ['down', 'Down'],
+        ],
       },
       sectionHeight: {
         title: intl.formatMessage(messages.sectionHeight),
         default: '60vh',
-        choices: [['60vh', 'Short'], ['80vh', 'Medium'], ['100vh', 'Full Screen']],
+        choices: [
+          ['60vh', 'Short'],
+          ['80vh', 'Medium'],
+          ['100vh', 'Full Screen'],
+        ],
       },
       ctaText: {
         title: intl.formatMessage(messages.ctaText),
